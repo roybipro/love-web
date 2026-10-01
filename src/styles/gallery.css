@@ -1,0 +1,167 @@
+/* 2. gallery */
+.gallery {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(2.4rem, 6vw, 3.4rem) clamp(1.5rem, 4vw, 3rem);
+  max-width: var(--max);
+  margin-inline: auto;
+}
+
+@media (min-width: 680px) {
+  .gallery {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  /* the handmade, slightly-off rhythm */
+  .tile:nth-of-type(even):not(.tile--wide) {
+    transform: translateY(clamp(2rem, 6vw, 4.5rem));
+  }
+  .tile:nth-of-type(even):not(.tile--wide)[data-reveal] {
+    transform: translateY(calc(clamp(2rem, 6vw, 4.5rem) + 28px));
+  }
+  .tile:nth-of-type(even):not(.tile--wide)[data-reveal].in {
+    transform: translateY(clamp(2rem, 6vw, 4.5rem));
+  }
+}
+
+.tile {
+  position: relative;
+  display: block;
+  width: 100%;
+  text-align: left;
+  background: none;
+}
+
+/* one larger portrait, centred — breaks the rhythm without
+   changing the aspect ratio (keeps the zoom animation clean) */
+.tile--wide {
+  grid-column: 1 / -1;
+  width: min(100%, 420px);
+  margin-inline: auto;
+}
+
+.tile__media {
+  position: relative;
+  display: block;
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  border-radius: 2px;
+  background: var(--ink-2);
+  transform: rotate(var(--tilt, 0deg));
+  transition: transform 0.85s var(--ease), box-shadow 0.85s var(--ease);
+  box-shadow: 0 24px 60px -38px #000;
+}
+
+/* a whisper of rotation, like photos laid on a table */
+.tile:nth-of-type(4n + 1) .tile__media {
+  --tilt: -0.7deg;
+}
+.tile:nth-of-type(4n + 2) .tile__media {
+  --tilt: 0.5deg;
+}
+.tile:nth-of-type(4n + 3) .tile__media {
+  --tilt: -0.35deg;
+}
+.tile:nth-of-type(4n + 4) .tile__media {
+  --tilt: 0.8deg;
+}
+
+.tile__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 32%;
+  filter: saturate(0.9) brightness(0.9);
+  transform: scale(1.03);
+  transition: transform 1.5s var(--ease), filter 0.9s ease;
+}
+
+.tile__media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: 1px solid transparent;
+  border-radius: 2px;
+  transition: border-color 0.7s ease, box-shadow 0.7s ease;
+  pointer-events: none;
+}
+
+.tile:hover .tile__media,
+.tile:focus-visible .tile__media {
+  transform: rotate(0deg) translateY(-4px);
+  box-shadow: 0 40px 80px -40px #000, 0 0 70px -28px rgba(201, 168, 119, 0.35);
+}
+
+.tile:hover .tile__media::after,
+.tile:focus-visible .tile__media::after {
+  border-color: var(--hair);
+}
+
+.tile:hover .tile__media img,
+.tile:focus-visible .tile__media img {
+  transform: scale(1.09);
+  filter: saturate(1.02) brightness(1);
+}
+
+.tile__plus {
+  position: absolute;
+  top: 0.9rem;
+  right: 0.95rem;
+  width: 30px;
+  height: 30px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  border: 1px solid var(--hair);
+  background: rgba(10, 7, 8, 0.5);
+  color: var(--blush);
+  font-size: 0.95rem;
+  font-weight: 200;
+  line-height: 1;
+  opacity: 0;
+  transform: scale(0.7) rotate(-30deg);
+  transition: opacity 0.5s ease, transform 0.6s var(--ease);
+  pointer-events: none;
+}
+
+.tile:hover .tile__plus,
+.tile:focus-visible .tile__plus {
+  opacity: 1;
+  transform: scale(1) rotate(0deg);
+}
+
+.tile__cap {
+  display: block;
+  margin-top: 1.05rem;
+}
+
+.tile__date {
+  display: block;
+  font-family: var(--hand);
+  font-size: 1.1rem;
+  color: var(--gold);
+  opacity: 0.85;
+}
+
+.tile__title {
+  display: block;
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(1.25rem, 3.6vw, 1.55rem);
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  margin-top: 0.1rem;
+}
+
+.tile__hint {
+  display: block;
+  margin-top: 0.35rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(246, 240, 232, 0.26);
+  transition: color 0.5s ease;
+}
+
+.tile:hover .tile__hint {
+  color: rgba(233, 183, 192, 0.6);
+}

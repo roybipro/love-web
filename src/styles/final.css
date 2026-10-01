@@ -1,0 +1,47 @@
+/* 6. final */
+.final {
+  position: relative;
+  z-index: 2;
+  min-height: 100dvh;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  padding: clamp(5rem, 14vh, 8rem) var(--pad);
+  overflow: hidden;
+  background: radial-gradient(110% 75% at 50% 108%, rgba(74, 18, 29, 0.8), transparent 62%),
+    var(--ink);
+}
+
+.final__inner {
+  position: relative;
+  z-index: 2;
+  max-width: 720px;
+}
+
+.final__line {
+  font-family: var(--serif);
+  font-weight: 300;
+  font-size: clamp(1.45rem, 5.5vw, 2.35rem);
+  line-height: 1.45;
+  color: rgba(246, 240, 232, 0.8);
+}
+
+.final__line + .final__line {
+  margin-top: 0.5rem;
+}
+
+.final__love {
+  margin-top: clamp(2.6rem, 8vh, 4rem);
+  font-family: var(--serif);
+  font-weight: 300;
+  font-size: clamp(2.6rem, 12vw, 5.2rem);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  text-shadow: 0 0 70px rgba(233, 183, 192, 0.35);
+}
+
+.final__sign {
+  margin-top: clamp(1.8rem, 5vh, 2.6rem);
+  font-size: clamp(1.7rem, 5vw, 2.1rem);
+  color: var(--gold);
+}

@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>For You ❤️</title>
+    <meta name="description" content="A little scrapbook of us." />
+    <meta name="theme-color" content="#0a0708" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Inter:wght@300;400;500&family=Caveat:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="is-locked">
+    <!-- atmosphere -->
+    <div class="grain" aria-hidden="true"></div>
+    <div class="vignette" aria-hidden="true"></div>
+    <div class="cursorglow" aria-hidden="true"></div>
+    <div class="scrollline" aria-hidden="true"><i id="scrollline"></i></div>
+
+    <!-- 1. OPENING SCREEN -->
+    <section class="intro" id="intro">
+      <div class="intro__drift" id="introDrift" aria-hidden="true"></div>
+      <div class="intro__inner">
+        <h1 class="intro__title" data-fade style="--d:.25s">
+          Hey, <span id="introName">you</span> <span class="beat">❤️</span>
+        </h1>
+        <p class="intro__line" data-fade style="--d:.6s" id="introLine"></p>
+        <button class="btn btn--open" id="openBtn" data-fade style="--d:.85s">
+          <span id="openBtnLabel">Open it</span>
+          <svg class="btn__arrow" width="22" height="10" viewBox="0 0 22 10" aria-hidden="true">
+            <path d="M0 5h20M16 1l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.2" />
+          </svg>
+        </button>
+      </div>
+    </section>
+
+    <!-- THE SITE -->
+    <main class="site" id="site">
+      <!-- 2. PHOTOS -->
+      <section class="section" id="photos">
+        <header class="head" data-reveal>
+          <p class="head__kicker" id="galKicker"></p>
+          <h2 class="head__title" id="galTitle"></h2>
+          <p class="head__lead" id="galLead"></p>
+        </header>
+        <div class="gallery" id="gallery"></div>
+      </section>
+
+      <!-- 3. TIMELINE -->
+      <section class="section section--tight" id="timeline">
+        <header class="head" data-reveal>
+          <p class="head__kicker" id="tlKicker"></p>
+          <h2 class="head__title" id="tlTitle"></h2>
+          <p class="head__lead" id="tlLead"></p>
+        </header>
+        <ol class="tl" id="timeline-list"></ol>
+      </section>
+
+      <!-- 4. THINGS I LOVE -->
+      <section class="section" id="love">
+        <header class="head" data-reveal>
+          <p class="head__kicker" id="loveKicker"></p>
+          <h2 class="head__title" id="loveTitle"></h2>
+          <p class="head__lead" id="loveLead"></p>
+        </header>
+        <div class="cards" id="cards"></div>
+      </section>
+
+      <!-- 5. SURPRISE -->
+      <section class="section section--surprise" id="surprise">
+        <div class="surprise" data-reveal>
+          <p class="head__kicker" id="spKicker"></p>
+          <div class="surprise__stage" id="surpriseStage">
+            <p class="surprise__prompt" id="spPrompt"></p>
+            <button class="btn btn--gift" id="surpriseBtn">
+              <span id="spBtnLabel">Open it</span>
+              <span class="beat">❤️</span>
+            </button>
+          </div>
+          <figure class="reveal-card" id="surpriseCard" hidden>
+            <div class="reveal-card__frame"><img id="spImg" alt="" /></div>
+            <figcaption>
+              <p class="hand" id="spDate"></p>
+              <h3 class="reveal-card__title" id="spTitle"></h3>
+              <p class="reveal-card__text" id="spText"></p>
+              <p class="hand reveal-card__sign" id="spSign"></p>
+            </figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <!-- 6. FINAL MESSAGE -->
+      <footer class="final" id="final">
+        <div class="final__drift" id="finalDrift" aria-hidden="true"></div>
+        <div class="final__inner">
+          <p class="head__kicker" data-reveal id="finKicker"></p>
+          <p class="final__line" data-reveal style="--i:1" id="finLine1"></p>
+          <p class="final__line" data-reveal style="--i:2" id="finLine2"></p>
+          <p class="final__love" data-reveal style="--i:3" id="finLine3"></p>
+          <p class="final__sign hand" data-reveal style="--i:4" id="finSign"></p>
+        </div>
+      </footer>
+    </main>
+
+    <!-- LIGHTBOX -->
+    <div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Photo viewer" hidden>
+      <div class="lb__scrim" data-lb-close></div>
+      <button class="lb__x" id="lbX" aria-label="Close">✕</button>
+      <button class="lb__nav lb__nav--prev" id="lbPrev" aria-label="Previous photo">←</button>
+      <button class="lb__nav lb__nav--next" id="lbNext" aria-label="Next photo">→</button>
+      <figure class="lb__fig">
+        <div class="lb__frame"><img id="lbImg" alt="" /></div>
+        <figcaption class="lb__cap">
+          <p class="hand" id="lbDate"></p>
+          <h3 id="lbTitle"></h3>
+          <p id="lbCaption"></p>
+          <p class="lb__count" id="lbCount"></p>
+        </figcaption>
+      </figure>
+    </div>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

@@ -1,0 +1,25 @@
+/* tokens */
+:root {
+  --ink: #0a0708;
+  --ink-2: #120d0f;
+  --wine: #4a121d;
+  --wine-deep: #280a11;
+  --rose: #e9b7c0;
+  --blush: #f7dfe3;
+  --cream: #f6f0e8;
+  --gold: #c9a877;
+
+  --muted: rgba(246, 240, 232, 0.56);
+  --faint: rgba(246, 240, 232, 0.3);
+  --hair: rgba(201, 168, 119, 0.22);
+  --hair-soft: rgba(246, 240, 232, 0.08);
+
+  --serif: "Cormorant Garamond", "Hoefler Text", Georgia, serif;
+  --sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --hand: "Caveat", "Segoe Script", cursive;
+
+  --pad: clamp(1.25rem, 5vw, 4.5rem);
+  --max: 1180px;
+  --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --slow: cubic-bezier(0.7, 0, 0.2, 1);
+}

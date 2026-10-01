@@ -1,0 +1,136 @@
+/* 5. surprise */
+.section--surprise {
+  text-align: center;
+  padding-top: clamp(6rem, 18vh, 10rem);
+}
+
+.section--surprise .head__kicker {
+  margin-bottom: 1.6rem;
+}
+
+.surprise {
+  position: relative;
+  max-width: 620px;
+  margin-inline: auto;
+}
+
+.surprise__stage {
+  transition: opacity 0.5s ease, transform 0.7s var(--ease);
+}
+
+.surprise__stage.gone {
+  opacity: 0;
+  transform: scale(0.94);
+  pointer-events: none;
+}
+
+.surprise__prompt {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 300;
+  font-size: clamp(1.5rem, 5.5vw, 2.3rem);
+  line-height: 1.35;
+  margin-bottom: clamp(2rem, 6vh, 2.8rem);
+}
+
+.btn--gift {
+  animation: pulse 3.4s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(233, 183, 192, 0.28);
+  }
+  50% {
+    box-shadow: 0 0 44px -6px rgba(233, 183, 192, 0.34);
+  }
+}
+
+.burst {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+  z-index: 5;
+}
+
+.burst span {
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: var(--rose);
+  font-size: 14px;
+  will-change: transform, opacity;
+}
+
+.reveal-card[hidden] {
+  display: none;
+}
+
+.reveal-card {
+  display: grid;
+  gap: clamp(1.4rem, 4vw, 2.2rem);
+  justify-items: center;
+  opacity: 0;
+  transform: translateY(26px) scale(0.97);
+  transition: opacity 1.2s ease, transform 1.4s var(--ease);
+}
+
+.reveal-card.in {
+  opacity: 1;
+  transform: none;
+}
+
+.reveal-card__frame {
+  width: min(100%, 400px);
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  border-radius: 2px;
+  background: var(--ink-2);
+  box-shadow: 0 50px 100px -50px #000, 0 0 90px -36px rgba(201, 168, 119, 0.35);
+  position: relative;
+}
+
+.reveal-card__frame::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: 1px solid var(--hair);
+  border-radius: 2px;
+}
+
+.reveal-card__frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 26%;
+}
+
+.reveal-card figcaption {
+  max-width: 46ch;
+}
+
+.reveal-card__title {
+  font-family: var(--serif);
+  font-weight: 300;
+  font-style: italic;
+  font-size: clamp(1.5rem, 5.5vw, 2.2rem);
+  line-height: 1.3;
+  margin-top: 0.2rem;
+}
+
+.reveal-card__text {
+  margin-top: 1rem;
+  color: var(--muted);
+  font-size: 0.95rem;
+  font-weight: 300;
+  line-height: 1.85;
+}
+
+.reveal-card__sign {
+  margin-top: 1.4rem;
+  font-size: 1.6rem;
+}

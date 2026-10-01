@@ -1,0 +1,36 @@
+/* buttons */
+.btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 0.95rem 1.9rem;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 400;
+  letter-spacing: 0.19em;
+  text-transform: uppercase;
+  color: var(--blush);
+  border: 1px solid var(--hair);
+  background: rgba(74, 18, 29, 0.28);
+  transition: transform 0.5s var(--ease), border-color 0.5s, background 0.5s, box-shadow 0.5s;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  border-color: rgba(233, 183, 192, 0.5);
+  background: rgba(74, 18, 29, 0.55);
+  box-shadow: 0 18px 45px -22px rgba(233, 183, 192, 0.55), 0 0 0 4px rgba(201, 168, 119, 0.05);
+}
+
+.btn:active {
+  transform: translateY(0) scale(0.985);
+}
+
+.btn__arrow {
+  transition: transform 0.5s var(--ease);
+}
+
+.btn:hover .btn__arrow {
+  transform: translateX(5px);
+}

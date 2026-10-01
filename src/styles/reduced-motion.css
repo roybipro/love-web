@@ -1,0 +1,24 @@
+/* motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+
+  [data-reveal],
+  [data-fade] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .fh {
+    display: none;
+  }
+}

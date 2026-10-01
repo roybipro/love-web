@@ -1,0 +1,115 @@
+/* reset */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--ink);
+  color: var(--cream);
+  font-family: var(--sans);
+  font-weight: 300;
+  line-height: 1.6;
+  min-height: 100dvh;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+body.is-locked {
+  overflow: hidden;
+  height: 100dvh;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+
+ol,
+ul {
+  list-style: none;
+}
+
+:focus-visible {
+  outline: 1px solid var(--gold);
+  outline-offset: 4px;
+}
+
+::selection {
+  background: var(--wine);
+  color: var(--blush);
+}
+
+
+/* shared type */
+.hand {
+  font-family: var(--hand);
+  font-size: 1.25rem;
+  color: var(--gold);
+  letter-spacing: 0.01em;
+}
+
+.head {
+  max-width: var(--max);
+  margin: 0 auto clamp(2.6rem, 7vw, 4.5rem);
+}
+
+.head__kicker {
+  font-size: 0.66rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--faint);
+  margin-bottom: 1.15rem;
+}
+
+.head__title {
+  font-family: var(--serif);
+  font-weight: 300;
+  font-size: clamp(2.15rem, 7.5vw, 3.7rem);
+  line-height: 1.08;
+  letter-spacing: -0.015em;
+  max-width: 16ch;
+}
+
+.head__lead {
+  margin-top: 1.25rem;
+  max-width: 44ch;
+  color: var(--muted);
+  font-size: clamp(0.9rem, 2.6vw, 1rem);
+  font-weight: 300;
+}
+
+.section {
+  position: relative;
+  z-index: 2;
+  padding: clamp(5rem, 15vh, 9rem) var(--pad);
+}
+
+.section--tight {
+  padding-top: clamp(3rem, 8vh, 5rem);
+}
+
+.section > * {
+  max-width: var(--max);
+  margin-inline: auto;
+}

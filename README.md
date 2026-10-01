@@ -1,0 +1,134 @@
+# For You ❤️
+
+A small scrapbook website — one page, no login, no database, nothing to maintain.
+Built for one person.
+
+---
+
+## Run it
+
+```bash
+npm install     # once
+npm run dev     # then open the web address it prints
+```
+
+To make a real folder of files you can upload anywhere:
+
+```bash
+npm run build   # output lands in dist/
+```
+
+---
+
+## The only file you need to touch
+
+**`src/content/memory.js`**
+
+Every word and every photo on the site comes from that one file. Change the
+text, change a date, add a card. Save, and the browser updates itself.
+
+There are comments in the file showing exactly what each part does.
+
+---
+
+## Adding a photo
+
+1. Drop the file into **`public/photos/`**
+2. Add one block to the `photos` list in `memory.js`:
+
+```js
+{
+  image: "/photos/date-1.jpg",
+  date: "",
+  title: "Our First Date",
+  caption: "One of my favourite days with you ❤️",
+}
+```
+
+That's it — the grid grows on its own, and the new photo joins the swipe
+through the viewer.
+
+Add `feature: true` to any photo to make it sit larger and centred.
+`date` is optional everywhere: leave it `""` and no date is shown. Put
+`"12 January 2025"` in whenever you want one to appear.
+
+**Tips**
+
+- Portrait (taller than wide) photos look best — the layout is built around them.
+- Filenames with spaces are fine, but no spaces is easier to type.
+- The current photos are already resized for the web. New ones aren't, so very
+  large phone photos can be slow. Anything under ~500 KB is ideal.
+
+---
+
+## Changing a section
+
+| What you want to change       | Where                                   |
+| ----------------------------- | --------------------------------------- |
+| Photos, dates, captions       | `photos` in `memory.js`                 |
+| Timeline entries              | `timeline` in `memory.js`               |
+| "Things I love" cards         | `love` in `memory.js`                   |
+| The surprise photo + message  | `surprise` in `memory.js`               |
+| Opening words, final words    | `intro` / `final` in `memory.js`        |
+| Put her actual name on it     | `herName` at the top of `memory.js`     |
+| Colours                       | `src/styles/tokens.css`                 |
+| Fonts                         | the `<link>` in `index.html` + `tokens.css` |
+| Spacing and text sizes        | `src/styles/tokens.css`                 |
+
+---
+
+## Layout of the project
+
+```
+public/
+  photos/              drop images here, they're served at /photos/...
+src/
+  content/
+    memory.js          ← all of your words and photos (edit this)
+  components/          one file per section of the page
+    intro.js           opening screen and the button
+    gallery.js         the photo grid
+    lightbox.js        the zoom-in photo viewer
+    timeline.js        the dates
+    love-cards.js      the expanding cards
+    surprise.js        the gift reveal
+    copy.js            puts memory.js into the page
+  lib/
+    dom.js             small helpers (selecting elements, escaping text)
+    motion.js          floating hearts, bursts, reduced-motion switch
+    scroll.js          scroll reveals, progress line, timeline drawing
+  styles/
+    index.css          imports everything below, in order
+    tokens.css         colours, fonts, spacing
+    base.css           resets and shared text
+    atmosphere.css     grain, vignette, cursor glow, progress line
+    buttons.css  reveal.css  intro.css  gallery.css  lightbox.css
+    timeline.css  cards.css  surprise.css  final.css
+    reduced-motion.css
+index.html             the structure of the page
+vite.config.js         only matters when you deploy
+```
+
+The rule: **content lives in `memory.js`, behaviour lives in `components/`,
+looks live in `styles/`.** Nothing hardcodes a photo path or a sentence
+anywhere else.
+
+---
+
+## Publishing
+
+`npm run build` gives you a `dist/` folder of plain files. Upload it to any
+static host (Netlify, Vercel, Cloudflare Pages, GitHub Pages).
+
+If you put it on **GitHub Pages at `roybipro.github.io/repo-name/`**, open
+`vite.config.js` and change `base: "/"` to `base: "/repo-name/"` first,
+otherwise the photos won't load.
+
+---
+
+## One honest note
+
+No dates are shown anywhere, because I wasn't going to invent yours. The
+captions, the six "things I love" messages and the surprise line are my best
+guess at your voice — read them once and rewrite any line that isn't something
+you'd actually say. That's the change that makes it yours.

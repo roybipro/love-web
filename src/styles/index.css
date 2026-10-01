@@ -1,0 +1,21 @@
+/* =============================================================
+   FOR YOU — a small scrapbook
+   Palette lifted from the photos: winter black, boat-day red,
+   the gold embroidery, and a lot of pale sky.
+
+   This file only sets the order. Each part lives beside it.
+   ============================================================= */
+
+@import "./tokens.css";
+@import "./base.css";
+@import "./atmosphere.css";
+@import "./buttons.css";
+@import "./reveal.css";
+@import "./intro.css";
+@import "./gallery.css";
+@import "./lightbox.css";
+@import "./timeline.css";
+@import "./cards.css";
+@import "./surprise.css";
+@import "./final.css";
+@import "./reduced-motion.css";
