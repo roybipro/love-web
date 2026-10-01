@@ -1,4 +1,4 @@
-/* motion preferences */
+/* ---------- motion preferences ---------- */
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -16,6 +16,23 @@
   [data-fade] {
     opacity: 1 !important;
     transform: none !important;
+  }
+
+  /* word masks still need to end up visible */
+  [data-split] .w > i {
+    transform: none !important;
+  }
+
+  .intro__rule {
+    transform: scaleX(1) !important;
+  }
+
+  .intro__bleed img {
+    opacity: 0.4 !important;
+  }
+
+  .intro__bleed img:nth-child(1) {
+    opacity: 0.85 !important;
   }
 
   .fh {

@@ -1,56 +1,70 @@
-/* 4. things i love */
+/* ---------- 4. things i love ---------- */
 .cards {
   display: grid;
   grid-template-columns: 1fr;
-  gap: clamp(0.8rem, 2vw, 1.1rem);
+  gap: clamp(0.9rem, 2.2vw, 1.4rem);
   max-width: var(--max);
   margin-inline: auto;
 }
 
-@media (min-width: 640px) {
+@media (min-width: 660px) {
   .cards {
     grid-template-columns: repeat(2, 1fr);
   }
 }
 
-@media (min-width: 1020px) {
+@media (min-width: 1080px) {
   .cards {
     grid-template-columns: repeat(3, 1fr);
   }
 }
 
+/* a note pinned to a board */
 .card {
   position: relative;
   display: block;
   width: 100%;
   text-align: left;
-  padding: clamp(1.4rem, 4vw, 1.9rem);
+  padding: clamp(1.6rem, 4vw, 2.3rem) clamp(1.3rem, 3.5vw, 1.8rem) clamp(1.4rem, 3.5vw, 1.8rem);
   border: 1px solid var(--hair-soft);
   border-radius: 3px;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.006));
+  background: linear-gradient(175deg, rgba(247, 242, 234, 0.045), rgba(247, 242, 234, 0.008) 60%);
   overflow: hidden;
-  transition: border-color 0.6s ease, transform 0.6s var(--ease), box-shadow 0.6s ease,
-    background 0.6s ease;
+  isolation: isolate;
+  transition: border-color var(--t-mid) ease, transform var(--t-mid) var(--ease),
+    box-shadow var(--t-mid) ease;
 }
 
 .card::before {
   content: "";
   position: absolute;
   inset: 0;
-  background: radial-gradient(90% 70% at 50% 0%, rgba(74, 18, 29, 0.55), transparent 70%);
+  z-index: -1;
+  background: radial-gradient(120% 90% at 50% 0%, rgba(92, 23, 39, 0.85), transparent 72%);
   opacity: 0;
-  transition: opacity 0.7s ease;
-  pointer-events: none;
+  transition: opacity var(--t-slow) ease;
+}
+
+/* each note sits at a slightly different angle */
+.card:nth-of-type(3n + 1) {
+  transform: rotate(-0.35deg);
+}
+.card:nth-of-type(3n + 2) {
+  transform: rotate(0.25deg);
+}
+.card:nth-of-type(3n + 3) {
+  transform: rotate(-0.15deg);
 }
 
 .card:hover {
-  transform: translateY(-3px);
-  border-color: rgba(201, 168, 119, 0.32);
+  transform: rotate(0deg) translateY(-4px);
+  border-color: var(--gold-dim);
+  box-shadow: 0 34px 70px -46px #000;
 }
 
 .card.open {
-  border-color: rgba(233, 183, 192, 0.3);
-  box-shadow: 0 30px 70px -45px rgba(233, 183, 192, 0.5);
+  border-color: rgba(240, 191, 198, 0.3);
+  box-shadow: 0 34px 80px -48px rgba(240, 191, 198, 0.5);
 }
 
 .card.open::before {
@@ -60,32 +74,46 @@
 .card__top {
   position: relative;
   display: flex;
-  align-items: baseline;
+  align-items: flex-start;
   justify-content: space-between;
   gap: 1rem;
 }
 
 .card__idx {
-  font-size: 0.62rem;
-  letter-spacing: 0.24em;
-  color: rgba(246, 240, 232, 0.24);
+  position: absolute;
+  top: -0.55em;
+  left: -0.1em;
+  z-index: -1;
+  font-family: var(--display);
+  font-weight: 300;
+  font-size: clamp(3.4rem, 11vw, 4.6rem);
+  line-height: 1;
+  letter-spacing: -0.05em;
+  color: var(--ghost);
+  transition: color var(--t-mid) ease;
+}
+
+.card.open .card__idx {
+  color: rgba(240, 191, 198, 0.16);
 }
 
 .card__title {
-  font-family: var(--serif);
-  font-weight: 400;
-  font-size: clamp(1.35rem, 4vw, 1.7rem);
-  line-height: 1.2;
-  letter-spacing: -0.01em;
+  position: relative;
+  font-family: var(--display);
+  font-weight: 300;
+  font-size: clamp(1.4rem, 4.2vw, 1.85rem);
+  line-height: 1.12;
+  letter-spacing: -0.035em;
   flex: 1;
+  padding-top: 0.15em;
 }
 
 .card__toggle {
   position: relative;
-  width: 26px;
-  height: 26px;
   flex: none;
-  align-self: center;
+  width: 28px;
+  height: 28px;
+  margin-top: 0.45em;
 }
 
 .card__toggle::before,
@@ -97,11 +125,11 @@
   width: 13px;
   height: 1px;
   background: var(--gold);
-  transition: transform 0.6s var(--ease), opacity 0.4s;
+  transition: transform var(--t-mid) var(--ease), opacity var(--t-fast) ease;
 }
 
 .card__toggle::before {
-  transform: translate(-50%, -50%) rotate(0deg);
+  transform: translate(-50%, -50%);
 }
 .card__toggle::after {
   transform: translate(-50%, -50%) rotate(90deg);
@@ -116,7 +144,7 @@
   position: relative;
   display: grid;
   grid-template-rows: 0fr;
-  transition: grid-template-rows 0.7s var(--ease);
+  transition: grid-template-rows 0.85s var(--ease);
 }
 
 .card.open .card__body {
@@ -129,15 +157,15 @@
 
 .card__text {
   display: block;
-  padding-top: 1.1rem;
+  padding-top: 1.15rem;
   color: var(--muted);
-  font-size: 0.93rem;
+  font-size: 0.95rem;
   font-weight: 300;
-  line-height: 1.8;
-  max-width: 44ch;
+  line-height: 1.85;
+  max-width: 42ch;
   opacity: 0;
-  transform: translateY(8px);
-  transition: opacity 0.6s ease 0.12s, transform 0.8s var(--ease) 0.12s;
+  transform: translateY(10px);
+  transition: opacity 0.7s ease 0.14s, transform 0.9s var(--ease) 0.14s;
 }
 
 .card.open .card__text {

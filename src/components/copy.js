@@ -1,4 +1,4 @@
-import { $, heart } from "../lib/dom.js";
+import { $, heart, esc } from "../lib/dom.js";
 
 /**
  * Puts every piece of copy from memory.js into its slot in index.html.
@@ -14,9 +14,12 @@ export function mountCopy(c) {
     if (node) node.innerHTML = heart(value);
   };
 
+  /* the opening line — hers, or a plain "you" if no name is set */
+  const title = $("#introTitle");
+  if (title) title.innerHTML = `Hey, ${esc(c.herName || "you")} <span class="beat">❤️</span>`;
+
   set("#introLine", c.intro.line);
   set("#openBtnLabel", c.intro.button);
-  if (c.herName) set("#introName", c.herName);
 
   set("#galKicker", c.galleryHeading.kicker);
   set("#galTitle", c.galleryHeading.title);

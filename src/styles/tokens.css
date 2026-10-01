@@ -1,25 +1,53 @@
-/* tokens */
+/* =============================================================
+   FOR YOU — a small scrapbook
+   Palette lifted from the photos: winter black, boat-day red,
+   the gold embroidery, and a lot of pale sky.
+   ============================================================= */
+
 :root {
-  --ink: #0a0708;
-  --ink-2: #120d0f;
-  --wine: #4a121d;
-  --wine-deep: #280a11;
-  --rose: #e9b7c0;
-  --blush: #f7dfe3;
-  --cream: #f6f0e8;
-  --gold: #c9a877;
+  /* ink — warm near-blacks, never pure grey */
+  --ink: #090607;
+  --ink-2: #14100f;
+  --ink-3: #1c1618;
 
-  --muted: rgba(246, 240, 232, 0.56);
-  --faint: rgba(246, 240, 232, 0.3);
-  --hair: rgba(201, 168, 119, 0.22);
-  --hair-soft: rgba(246, 240, 232, 0.08);
+  /* the reds from the boat day */
+  --wine: #5c1727;
+  --wine-deep: #2c0a13;
+  --wine-glow: rgba(140, 32, 55, 0.5);
 
-  --serif: "Cormorant Garamond", "Hoefler Text", Georgia, serif;
+  /* soft pinks and creams */
+  --rose: #f0bfc6;
+  --blush: #f9e7ea;
+  --cream: #f7f2ea;
+
+  /* the gold embroidery */
+  --gold: #d6b285;
+  --gold-dim: rgba(214, 178, 133, 0.42);
+
+  --muted: rgba(247, 242, 234, 0.6);
+  --faint: rgba(247, 242, 234, 0.34);
+  --ghost: rgba(247, 242, 234, 0.13);
+  --hair: rgba(214, 178, 133, 0.2);
+  --hair-soft: rgba(247, 242, 234, 0.08);
+
+  /* type — Fraunces carries the voice, Inter stays out of its way */
+  --display: "Fraunces", "Hoefler Text", Georgia, serif;
   --sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  --hand: "Caveat", "Segoe Script", cursive;
+  --script: "Mrs Saint Delafield", "Snell Roundhand", cursive;
 
-  --pad: clamp(1.25rem, 5vw, 4.5rem);
-  --max: 1180px;
-  --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
-  --slow: cubic-bezier(0.7, 0, 0.2, 1);
+  --fs-hero: clamp(3.1rem, 15vw, 7.5rem);
+  --fs-h2: clamp(2.3rem, 8.5vw, 4.4rem);
+  --fs-h3: clamp(1.5rem, 5vw, 2.3rem);
+  --fs-body: clamp(0.94rem, 2.6vw, 1.02rem);
+
+  --pad: clamp(1.25rem, 5vw, 5rem);
+  --max: 1240px;
+
+  /* motion — long, soft, unhurried */
+  --ease: cubic-bezier(0.16, 0.84, 0.24, 1);
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --slow: cubic-bezier(0.76, 0, 0.24, 1);
+  --t-fast: 0.45s;
+  --t-mid: 0.8s;
+  --t-slow: 1.4s;
 }

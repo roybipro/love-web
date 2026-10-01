@@ -18,7 +18,7 @@ export function observeReveals() {
     },
     { rootMargin: "0px 0px -12% 0px", threshold: 0.08 },
   );
-  $$("[data-reveal]").forEach((el) => observer.observe(el));
+  $$("[data-reveal], [data-split]").forEach((el) => observer.observe(el));
 }
 
 /** The hairline at the top that fills as the page is read. */

@@ -1,4 +1,4 @@
-/* 6. final */
+/* ---------- 6. the last page ---------- */
 .final {
   position: relative;
   z-index: 2;
@@ -8,40 +8,49 @@
   text-align: center;
   padding: clamp(5rem, 14vh, 8rem) var(--pad);
   overflow: hidden;
-  background: radial-gradient(110% 75% at 50% 108%, rgba(74, 18, 29, 0.8), transparent 62%),
+  background: radial-gradient(115% 80% at 50% 112%, rgba(92, 23, 39, 0.85), transparent 60%),
     var(--ink);
 }
 
 .final__inner {
   position: relative;
   z-index: 2;
-  max-width: 720px;
+  max-width: 780px;
+}
+
+.final .head__kicker {
+  justify-content: center;
+  margin-bottom: clamp(2.4rem, 7vh, 3.6rem);
+}
+
+.final .head__kicker::before {
+  display: none;
 }
 
 .final__line {
-  font-family: var(--serif);
+  font-family: var(--display);
   font-weight: 300;
-  font-size: clamp(1.45rem, 5.5vw, 2.35rem);
-  line-height: 1.45;
-  color: rgba(246, 240, 232, 0.8);
+  font-size: clamp(1.5rem, 5.6vw, 2.6rem);
+  line-height: 1.4;
+  letter-spacing: -0.03em;
+  color: rgba(247, 242, 234, 0.78);
 }
 
 .final__line + .final__line {
-  margin-top: 0.5rem;
+  margin-top: 0.35rem;
 }
 
 .final__love {
-  margin-top: clamp(2.6rem, 8vh, 4rem);
-  font-family: var(--serif);
+  margin-top: clamp(2.8rem, 9vh, 4.5rem);
+  font-family: var(--display);
   font-weight: 300;
-  font-size: clamp(2.6rem, 12vw, 5.2rem);
-  line-height: 1.05;
-  letter-spacing: -0.02em;
-  text-shadow: 0 0 70px rgba(233, 183, 192, 0.35);
+  font-size: clamp(2.9rem, 13vw, 6.4rem);
+  line-height: 1.02;
+  letter-spacing: -0.05em;
+  text-shadow: 0 0 90px rgba(240, 191, 198, 0.4);
 }
 
 .final__sign {
-  margin-top: clamp(1.8rem, 5vh, 2.6rem);
-  font-size: clamp(1.7rem, 5vw, 2.1rem);
-  color: var(--gold);
+  margin-top: clamp(1.4rem, 4vh, 2.2rem);
+  transform: rotate(-3deg);
 }

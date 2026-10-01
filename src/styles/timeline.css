@@ -1,20 +1,21 @@
-/* 3. timeline */
+/* ---------- 3. the timeline ---------- */
 .tl {
   position: relative;
   display: grid;
-  gap: clamp(3.2rem, 9vw, 5.5rem);
-  max-width: 940px;
+  gap: clamp(3.4rem, 9vw, 6rem);
+  max-width: 1080px;
   margin-inline: auto;
-  padding: 0.5rem 0;
+  padding: 0.5rem 0 0.5rem clamp(1.6rem, 5vw, 3.4rem);
 }
 
+/* the rail, and the gold that fills it as she reads down */
 .tl::before,
 .tl::after {
   content: "";
   position: absolute;
   top: 0;
   bottom: 0;
-  left: 5px;
+  left: 0;
   width: 1px;
 }
 
@@ -25,70 +26,88 @@
 .tl::after {
   bottom: auto;
   height: 100%;
-  background: linear-gradient(180deg, var(--gold), var(--rose) 60%, transparent);
+  background: linear-gradient(180deg, var(--gold), var(--rose) 55%, transparent);
   transform-origin: top;
   transform: scaleY(var(--draw, 0));
-  transition: transform 0.2s linear;
+  transition: transform 0.18s linear;
 }
 
 .tl__item {
   position: relative;
-  padding-left: 2.4rem;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem clamp(2rem, 5vw, 4rem);
+  align-items: center;
 }
 
+/* the node that sits on the rail */
 .tl__item::before {
   content: "";
   position: absolute;
-  left: 0;
-  top: 0.62em;
+  left: calc(-1 * clamp(1.6rem, 5vw, 3.4rem) - 5px);
+  top: 0.7em;
   width: 11px;
   height: 11px;
   border-radius: 50%;
   background: var(--ink);
-  border: 1px solid rgba(201, 168, 119, 0.45);
-  transition: background 0.7s ease, box-shadow 0.7s ease, border-color 0.7s ease;
+  border: 1px solid var(--gold-dim);
+  transition: background var(--t-slow) ease, box-shadow var(--t-slow) ease,
+    border-color var(--t-slow) ease;
 }
 
 .tl__item.in::before {
   background: var(--rose);
   border-color: var(--rose);
-  box-shadow: 0 0 0 4px rgba(233, 183, 192, 0.12), 0 0 22px rgba(233, 183, 192, 0.55);
+  box-shadow: 0 0 0 5px rgba(240, 191, 198, 0.1), 0 0 26px rgba(240, 191, 198, 0.6);
 }
 
-.tl__date {
-  font-family: var(--hand);
-  font-size: 1.3rem;
-  color: var(--gold);
+/* a numeral sitting behind the words, barely there */
+.tl__num {
+  position: absolute;
+  left: -0.35em;
+  top: -0.45em;
+  z-index: 0;
+  font-family: var(--display);
+  font-weight: 300;
+  font-size: clamp(4.5rem, 17vw, 10rem);
   line-height: 1;
+  letter-spacing: -0.06em;
+  color: var(--ghost);
+  pointer-events: none;
+  user-select: none;
+}
+
+.tl__body {
+  position: relative;
+  z-index: 1;
 }
 
 .tl__title {
-  font-family: var(--serif);
-  font-weight: 400;
-  font-size: clamp(1.5rem, 5vw, 2.1rem);
-  line-height: 1.2;
-  margin-top: 0.35rem;
+  font-family: var(--display);
+  font-weight: 300;
+  font-size: var(--fs-h3);
+  line-height: 1.1;
+  letter-spacing: -0.035em;
+  margin-top: 0.5rem;
 }
 
 .tl__text {
-  margin-top: 0.6rem;
+  margin-top: 0.8rem;
   color: var(--muted);
-  font-size: 0.94rem;
-  font-weight: 300;
-  max-width: 40ch;
+  max-width: 38ch;
 }
 
 .tl__shot {
-  margin-top: 1.5rem;
-  display: block;
   position: relative;
-  width: min(100%, 260px);
+  z-index: 1;
+  display: block;
+  width: min(100%, 300px);
   aspect-ratio: 3 / 4;
   overflow: hidden;
   border-radius: 2px;
   background: var(--ink-2);
-  box-shadow: 0 30px 60px -40px #000;
-  transition: transform 0.8s var(--ease), box-shadow 0.8s var(--ease);
+  box-shadow: 0 34px 70px -46px #000;
+  transition: transform var(--t-slow) var(--ease), box-shadow var(--t-slow) var(--ease);
 }
 
 .tl__shot img {
@@ -96,8 +115,8 @@
   height: 100%;
   object-fit: cover;
   object-position: center 30%;
-  filter: saturate(0.88) brightness(0.88);
-  transition: transform 1.5s var(--ease), filter 0.9s ease;
+  filter: saturate(0.82) brightness(0.84);
+  transition: transform 1.6s var(--ease), filter 1s ease;
 }
 
 .tl__shot::after {
@@ -105,13 +124,13 @@
   position: absolute;
   inset: 0;
   border: 1px solid transparent;
-  transition: border-color 0.6s;
+  transition: border-color var(--t-mid) ease;
 }
 
 .tl__shot:hover,
 .tl__shot:focus-visible {
-  transform: translateY(-4px);
-  box-shadow: 0 40px 70px -40px #000, 0 0 60px -26px rgba(201, 168, 119, 0.4);
+  transform: translateY(-6px);
+  box-shadow: 0 46px 84px -46px #000, 0 0 70px -28px rgba(214, 178, 133, 0.34);
 }
 
 .tl__shot:hover::after,
@@ -121,43 +140,24 @@
 
 .tl__shot:hover img,
 .tl__shot:focus-visible img {
-  transform: scale(1.07);
+  transform: scale(1.08);
   filter: saturate(1.02) brightness(1);
 }
 
-@media (min-width: 900px) {
-  .tl::before,
-  .tl::after {
-    left: 50%;
-  }
-
+@media (min-width: 880px) {
   .tl__item {
-    width: calc(50% - 3.4rem);
-    padding-left: 0;
+    grid-template-columns: 1.1fr 0.9fr;
   }
 
-  .tl__item:nth-child(odd) {
-    text-align: right;
+  .tl__item:nth-child(even) .tl__body {
+    order: 2;
   }
 
-  .tl__item:nth-child(odd)::before {
-    left: auto;
-    right: calc(-3.4rem - 5px);
+  .tl__item:nth-child(even) .tl__shot {
+    order: 1;
   }
 
-  .tl__item:nth-child(even) {
-    margin-left: calc(50% + 3.4rem);
-  }
-
-  .tl__item:nth-child(even)::before {
-    left: calc(-3.4rem - 5px);
-  }
-
-  .tl__item:nth-child(odd) .tl__text {
-    margin-left: auto;
-  }
-
-  .tl__item:nth-child(odd) .tl__shot {
-    margin-left: auto;
+  .tl__shot {
+    width: min(100%, 340px);
   }
 }

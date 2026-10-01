@@ -14,6 +14,7 @@ import { mountTimeline } from "./components/timeline.js";
 import { mountLoveCards } from "./components/love-cards.js";
 import { mountSurprise } from "./components/surprise.js";
 import { observeReveals, watchScroll } from "./lib/scroll.js";
+import { splitWords } from "./lib/typography.js";
 
 /* The opening screen locks scrolling, so a browser that remembers the last
    scroll position would yank her down the page the moment it unlocks. */
@@ -39,6 +40,17 @@ mountLoveCards({ items: content.love });
 
 mountSurprise({ data: content.surprise, sign: content.final.sign });
 
+/* only once every heading has its final words in it */
+splitWords();
+
 watchScroll();
 
-mountIntro({ onOpen: observeReveals });
+mountIntro({
+  bleed: [
+    content.photos[0]?.image,
+    content.photos[2]?.image,
+    content.surprise.image,
+    content.photos.find((p) => p.feature)?.image,
+  ].filter(Boolean),
+  onOpen: observeReveals,
+});

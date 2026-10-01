@@ -1,4 +1,4 @@
-/* lightbox */
+/* ---------- lightbox ---------- */
 .lb[hidden] {
   display: none;
 }
@@ -19,11 +19,11 @@ body.lb-open {
 .lb__scrim {
   position: absolute;
   inset: 0;
-  background: rgba(6, 4, 5, 0.9);
-  backdrop-filter: blur(22px) saturate(0.7);
-  -webkit-backdrop-filter: blur(22px) saturate(0.7);
+  background: rgba(6, 4, 5, 0.92);
+  backdrop-filter: blur(26px) saturate(0.65);
+  -webkit-backdrop-filter: blur(26px) saturate(0.65);
   opacity: 0;
-  transition: opacity 0.55s ease;
+  transition: opacity 0.6s ease;
 }
 
 .lb.is-open .lb__scrim {
@@ -36,19 +36,20 @@ body.lb-open {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: clamp(1rem, 3vh, 1.6rem);
+  gap: clamp(1rem, 3vh, 1.7rem);
   width: 100%;
 }
 
+/* --ar comes from whichever tile was tapped, so the zoom never squashes */
 .lb__frame {
-  aspect-ratio: 3 / 4;
-  height: min(62dvh, calc((100vw - 2 * var(--pad)) * 4 / 3));
+  aspect-ratio: var(--ar, 3 / 4);
+  height: min(64dvh, calc((100vw - 2 * var(--pad)) * 4 / 3));
   max-width: 100%;
   position: relative;
   overflow: hidden;
   border-radius: 2px;
   background: var(--ink-2);
-  box-shadow: 0 60px 120px -50px #000, 0 0 90px -40px rgba(201, 168, 119, 0.3);
+  box-shadow: 0 60px 130px -55px #000, 0 0 110px -45px rgba(214, 178, 133, 0.32);
 }
 
 .lb__frame img {
@@ -56,6 +57,7 @@ body.lb-open {
   height: 100%;
   object-fit: contain;
   transform-origin: top left;
+  will-change: transform;
 }
 
 .lb__frame::after {
@@ -69,10 +71,10 @@ body.lb-open {
 
 .lb__cap {
   text-align: center;
-  max-width: 46ch;
+  max-width: 44ch;
   opacity: 0;
   transform: translateY(12px);
-  transition: opacity 0.7s ease 0.15s, transform 0.9s var(--ease) 0.15s;
+  transition: opacity 0.8s ease 0.18s, transform 1s var(--ease) 0.18s;
 }
 
 .lb.is-open .lb__cap {
@@ -81,26 +83,27 @@ body.lb-open {
 }
 
 .lb__cap h3 {
-  font-family: var(--serif);
-  font-weight: 400;
-  font-size: clamp(1.35rem, 4.5vw, 1.9rem);
-  line-height: 1.25;
-  margin-top: 0.1rem;
+  font-family: var(--display);
+  font-weight: 300;
+  font-size: clamp(1.45rem, 5vw, 2.1rem);
+  line-height: 1.2;
+  letter-spacing: -0.03em;
+  margin-top: 0.55rem;
 }
 
 #lbCaption {
-  margin-top: 0.6rem;
+  margin-top: 0.7rem;
   color: var(--muted);
-  font-size: 0.92rem;
+  font-size: 0.94rem;
   font-weight: 300;
-  line-height: 1.75;
+  line-height: 1.8;
 }
 
 .lb__count {
-  margin-top: 1.1rem;
-  font-size: 0.62rem;
-  letter-spacing: 0.3em;
-  color: rgba(246, 240, 232, 0.24);
+  margin-top: 1.3rem;
+  font-size: 0.6rem;
+  letter-spacing: 0.32em;
+  color: rgba(247, 242, 234, 0.22);
 }
 
 .lb__x,
@@ -115,15 +118,16 @@ body.lb-open {
   border: 1px solid var(--hair-soft);
   color: var(--muted);
   font-size: 0.95rem;
-  transition: color 0.4s, border-color 0.4s, background 0.4s, transform 0.4s var(--ease);
+  transition: color var(--t-fast) ease, border-color var(--t-fast) ease,
+    background var(--t-fast) ease, transform var(--t-fast) var(--ease);
 }
 
 .lb__x:hover,
 .lb__nav:hover {
   color: var(--blush);
   border-color: var(--hair);
-  background: rgba(74, 18, 29, 0.4);
-  transform: scale(1.06);
+  background: rgba(92, 23, 39, 0.45);
+  transform: scale(1.07);
 }
 
 .lb__x {
@@ -137,13 +141,13 @@ body.lb-open {
 }
 
 .lb__nav--prev {
-  left: clamp(0.5rem, 2.5vw, 1.6rem);
+  left: clamp(0.5rem, 2.5vw, 1.8rem);
 }
 .lb__nav--next {
-  right: clamp(0.5rem, 2.5vw, 1.6rem);
+  right: clamp(0.5rem, 2.5vw, 1.8rem);
 }
 
-@media (max-width: 700px) {
+@media (max-width: 760px) {
   .lb__nav {
     display: none;
   }

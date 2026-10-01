@@ -20,7 +20,8 @@ body {
   color: var(--cream);
   font-family: var(--sans);
   font-weight: 300;
-  line-height: 1.6;
+  font-size: var(--fs-body);
+  line-height: 1.65;
   min-height: 100dvh;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
@@ -52,7 +53,7 @@ ul {
 
 :focus-visible {
   outline: 1px solid var(--gold);
-  outline-offset: 4px;
+  outline-offset: 5px;
 }
 
 ::selection {
@@ -60,56 +61,134 @@ ul {
   color: var(--blush);
 }
 
+/* ---------- shared voice ---------- */
 
-/* shared type */
-.hand {
-  font-family: var(--hand);
-  font-size: 1.25rem;
+/* a date, written small and letterspaced rather than handwritten */
+.datestamp {
+  font-family: var(--sans);
+  font-size: 0.66rem;
+  font-weight: 400;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
   color: var(--gold);
-  letter-spacing: 0.01em;
+}
+
+/* his actual signature, in pen */
+.signature {
+  font-family: var(--script);
+  font-size: clamp(2.2rem, 7vw, 3.2rem);
+  line-height: 1;
+  color: var(--gold);
+  font-weight: 400;
 }
 
 .head {
   max-width: var(--max);
-  margin: 0 auto clamp(2.6rem, 7vw, 4.5rem);
+  margin: 0 auto clamp(1.4rem, 3vw, 2rem);
 }
 
 .head__kicker {
-  font-size: 0.66rem;
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  font-size: 0.62rem;
+  font-weight: 400;
   letter-spacing: 0.3em;
   text-transform: uppercase;
   color: var(--faint);
-  margin-bottom: 1.15rem;
+  margin-bottom: 1.5rem;
+}
+
+.head__kicker::before {
+  content: "";
+  flex: none;
+  width: clamp(1.8rem, 6vw, 3.4rem);
+  height: 1px;
+  background: linear-gradient(90deg, var(--gold-dim), transparent);
 }
 
 .head__title {
-  font-family: var(--serif);
+  font-family: var(--display);
+  font-optical-sizing: auto;
   font-weight: 300;
-  font-size: clamp(2.15rem, 7.5vw, 3.7rem);
-  line-height: 1.08;
-  letter-spacing: -0.015em;
-  max-width: 16ch;
+  font-size: var(--fs-h2);
+  line-height: 1.02;
+  letter-spacing: -0.03em;
+  max-width: 15ch;
 }
 
 .head__lead {
-  margin-top: 1.25rem;
-  max-width: 44ch;
   color: var(--muted);
-  font-size: clamp(0.9rem, 2.6vw, 1rem);
   font-weight: 300;
+  max-width: 40ch;
 }
 
 .section {
   position: relative;
   z-index: 2;
-  padding: clamp(5rem, 15vh, 9rem) var(--pad);
+  padding: clamp(5.5rem, 17vh, 11rem) var(--pad);
 }
 
 .section--tight {
-  padding-top: clamp(3rem, 8vh, 5rem);
+  padding-top: clamp(3rem, 9vh, 6rem);
 }
 
 .section > * {
   max-width: var(--max);
   margin-inline: auto;
+}
+
+.section__lead {
+  margin: 0 auto clamp(3rem, 8vw, 5.5rem);
+}
+
+/* ---------- word-mask reveal ----------
+   JS splits [data-split] text into .w > i so each word can rise
+   out of its own clip. The padding/margin pair keeps descenders
+   (y, g) from being cut off by the overflow. */
+[data-split] .w {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+  padding-bottom: 0.16em;
+  margin-bottom: -0.16em;
+}
+
+[data-split] .w > i {
+  display: inline-block;
+  font-style: inherit;
+  transform: translateY(115%);
+  transition: transform 1.1s var(--ease);
+  transition-delay: var(--wd, 0s);
+}
+
+[data-split].in .w > i {
+  transform: translateY(0);
+}
+
+/* ---------- scroll reveal ---------- */
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(26px);
+  transition: opacity 1.1s ease var(--rd, 0s), transform 1.3s var(--ease) var(--rd, 0s);
+}
+
+[data-reveal].in {
+  opacity: 1;
+  transform: none;
+}
+
+/* ---------- entrance fade (opening screen only) ---------- */
+[data-fade] {
+  opacity: 0;
+  transform: translateY(16px);
+  animation: fadeUp 1.4s var(--ease) forwards;
+  animation-delay: var(--d, 0s);
+}
+
+@keyframes fadeUp {
+  to {
+    opacity: 1;
+    transform: none;
+  }
 }

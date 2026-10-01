@@ -1,21 +1,26 @@
-/* 5. surprise */
+/* ---------- 5. the surprise ---------- */
 .section--surprise {
   text-align: center;
-  padding-top: clamp(6rem, 18vh, 10rem);
+  padding-top: clamp(6rem, 18vh, 11rem);
 }
 
 .section--surprise .head__kicker {
-  margin-bottom: 1.6rem;
+  justify-content: center;
+  margin-bottom: clamp(1.8rem, 5vh, 2.6rem);
+}
+
+.section--surprise .head__kicker::before {
+  display: none;
 }
 
 .surprise {
   position: relative;
-  max-width: 620px;
+  max-width: 660px;
   margin-inline: auto;
 }
 
 .surprise__stage {
-  transition: opacity 0.5s ease, transform 0.7s var(--ease);
+  transition: opacity 0.6s ease, transform 0.9s var(--ease);
 }
 
 .surprise__stage.gone {
@@ -25,25 +30,56 @@
 }
 
 .surprise__prompt {
-  font-family: var(--serif);
+  font-family: var(--display);
   font-style: italic;
   font-weight: 300;
-  font-size: clamp(1.5rem, 5.5vw, 2.3rem);
-  line-height: 1.35;
-  margin-bottom: clamp(2rem, 6vh, 2.8rem);
+  font-size: clamp(1.6rem, 6vw, 2.6rem);
+  line-height: 1.32;
+  letter-spacing: -0.025em;
+  margin-bottom: clamp(2.2rem, 6vh, 3rem);
 }
 
+/* a wrapped gift: a ribbon of light that keeps crossing the button */
 .btn--gift {
-  animation: pulse 3.4s ease-in-out infinite;
+  animation: pulse 3.8s ease-in-out infinite;
+}
+
+.btn__ribbon {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.btn__ribbon::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -60%;
+  width: 45%;
+  background: linear-gradient(100deg, transparent, rgba(249, 231, 234, 0.22), transparent);
+  animation: shimmer 3.8s var(--ease) infinite;
+}
+
+@keyframes shimmer {
+  0%,
+  55% {
+    left: -60%;
+  }
+  100% {
+    left: 130%;
+  }
 }
 
 @keyframes pulse {
   0%,
   100% {
-    box-shadow: 0 0 0 0 rgba(233, 183, 192, 0.28);
+    box-shadow: 0 0 0 0 rgba(240, 191, 198, 0.22);
   }
   50% {
-    box-shadow: 0 0 44px -6px rgba(233, 183, 192, 0.34);
+    box-shadow: 0 0 54px -8px rgba(240, 191, 198, 0.38);
   }
 }
 
@@ -72,11 +108,11 @@
 
 .reveal-card {
   display: grid;
-  gap: clamp(1.4rem, 4vw, 2.2rem);
+  gap: clamp(1.6rem, 4.5vw, 2.6rem);
   justify-items: center;
   opacity: 0;
-  transform: translateY(26px) scale(0.97);
-  transition: opacity 1.2s ease, transform 1.4s var(--ease);
+  transform: translateY(30px) scale(0.965);
+  transition: opacity 1.4s ease, transform 1.6s var(--ease);
 }
 
 .reveal-card.in {
@@ -85,13 +121,13 @@
 }
 
 .reveal-card__frame {
-  width: min(100%, 400px);
+  position: relative;
+  width: min(100%, 420px);
   aspect-ratio: 3 / 4;
   overflow: hidden;
   border-radius: 2px;
   background: var(--ink-2);
-  box-shadow: 0 50px 100px -50px #000, 0 0 90px -36px rgba(201, 168, 119, 0.35);
-  position: relative;
+  box-shadow: 0 60px 120px -55px #000, 0 0 120px -40px rgba(214, 178, 133, 0.38);
 }
 
 .reveal-card__frame::after {
@@ -110,27 +146,26 @@
 }
 
 .reveal-card figcaption {
-  max-width: 46ch;
+  max-width: 44ch;
 }
 
 .reveal-card__title {
-  font-family: var(--serif);
+  font-family: var(--display);
   font-weight: 300;
   font-style: italic;
-  font-size: clamp(1.5rem, 5.5vw, 2.2rem);
-  line-height: 1.3;
-  margin-top: 0.2rem;
+  font-size: clamp(1.6rem, 5.8vw, 2.5rem);
+  line-height: 1.28;
+  letter-spacing: -0.03em;
+  margin-top: 0.7rem;
 }
 
 .reveal-card__text {
-  margin-top: 1rem;
+  margin-top: 1.1rem;
   color: var(--muted);
-  font-size: 0.95rem;
   font-weight: 300;
-  line-height: 1.85;
+  line-height: 1.9;
 }
 
 .reveal-card__sign {
-  margin-top: 1.4rem;
-  font-size: 1.6rem;
+  margin-top: 1.6rem;
 }

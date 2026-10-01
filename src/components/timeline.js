@@ -1,7 +1,7 @@
-import { $, $$, asset, esc, heart } from "../lib/dom.js";
+import { $, $$, asset, esc, heart, pad2 } from "../lib/dom.js";
 
 /**
- * The spine of dates. Each entry may carry a photo; if that photo also
+ * The timeline, in order. Each entry may carry a photo; if that photo also
  * lives in the gallery, tapping it opens the viewer on the right picture.
  */
 export function mountTimeline({ items, photos, onOpen }) {
@@ -19,10 +19,13 @@ export function mountTimeline({ items, photos, onOpen }) {
           : "";
 
       return `
-      <li class="tl__item" data-reveal style="--rd:${((i % 2) * 0.1).toFixed(2)}s">
-        ${entry.date ? `<p class="tl__date">${esc(entry.date)}</p>` : ""}
-        <h3 class="tl__title">${heart(entry.title)}</h3>
-        <p class="tl__text">${heart(entry.text)}</p>
+      <li class="tl__item" data-reveal style="--rd:${((i % 2) * 0.08).toFixed(2)}s">
+        <span class="tl__num" aria-hidden="true">${pad2(i + 1)}</span>
+        <div class="tl__body">
+          ${entry.date ? `<p class="datestamp tl__date">${esc(entry.date)}</p>` : ""}
+          <h3 class="tl__title">${heart(entry.title)}</h3>
+          <p class="tl__text">${heart(entry.text)}</p>
+        </div>
         ${shot}
       </li>`;
     })

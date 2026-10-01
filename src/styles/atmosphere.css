@@ -1,12 +1,12 @@
-/* atmosphere */
+/* film grain — keeps the flat black from looking digital */
 .grain {
   position: fixed;
   inset: -50%;
   z-index: 200;
   pointer-events: none;
-  opacity: 0.05;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  animation: grain 8s steps(6) infinite;
+  opacity: 0.045;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  animation: grain 7s steps(6) infinite;
 }
 
 @keyframes grain {
@@ -28,14 +28,16 @@
   }
 }
 
+/* darkened edges, like a print */
 .vignette {
   position: fixed;
   inset: 0;
   z-index: 3;
   pointer-events: none;
-  background: radial-gradient(120% 90% at 50% 40%, transparent 45%, rgba(0, 0, 0, 0.55) 100%);
+  background: radial-gradient(125% 95% at 50% 42%, transparent 42%, rgba(0, 0, 0, 0.62) 100%);
 }
 
+/* a warm light that follows the pointer, desktop only */
 .cursorglow {
   display: none;
 }
@@ -48,14 +50,14 @@
     z-index: 1;
     pointer-events: none;
     background: radial-gradient(
-      420px circle at var(--mx, 50%) var(--my, 30%),
-      rgba(201, 168, 119, 0.07),
-      transparent 65%
+      520px circle at var(--mx, 50%) var(--my, 30%),
+      rgba(214, 178, 133, 0.075),
+      transparent 62%
     );
-    transition: opacity 0.6s;
   }
 }
 
+/* reading progress */
 .scrollline {
   position: fixed;
   top: 0;
@@ -71,5 +73,5 @@
   height: 100%;
   width: 0;
   background: linear-gradient(90deg, transparent, var(--wine), var(--rose), var(--gold));
-  transition: width 0.15s linear;
+  transition: width 0.12s linear;
 }

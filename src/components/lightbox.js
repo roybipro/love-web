@@ -44,6 +44,12 @@ export function createLightbox(photos) {
     origin = (fromEl && $(".tile__media", fromEl)) || (fromEl && $(".tl__shot", fromEl)) || fromEl || tileMedia(i);
 
     const from = origin?.getBoundingClientRect();
+
+    /* match the frame to the print she tapped, so the zoom never stretches */
+    if (from?.width && from?.height) {
+      frame.style.setProperty("--ar", (from.width / from.height).toFixed(4));
+    }
+
     const to = frame.getBoundingClientRect();
 
     if (!reduceMotion && from?.width && to.width) {

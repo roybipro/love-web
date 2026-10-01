@@ -3,14 +3,14 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-    <title>For You ❤️</title>
+    <title>For Ket ❤️</title>
     <meta name="description" content="A little scrapbook of us." />
-    <meta name="theme-color" content="#0a0708" />
+    <meta name="theme-color" content="#090607" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Inter:wght@300;400;500&family=Caveat:wght@400;500&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,300;1,9..144,400&family=Inter:wght@300;400;500&family=Mrs+Saint+Delafield&display=swap"
       rel="stylesheet"
     />
   </head>
@@ -23,13 +23,13 @@
 
     <!-- 1. OPENING SCREEN -->
     <section class="intro" id="intro">
+      <div class="intro__bleed" id="introBleed" aria-hidden="true"></div>
       <div class="intro__drift" id="introDrift" aria-hidden="true"></div>
       <div class="intro__inner">
-        <h1 class="intro__title" data-fade style="--d:.25s">
-          Hey, <span id="introName">you</span> <span class="beat">❤️</span>
-        </h1>
-        <p class="intro__line" data-fade style="--d:.6s" id="introLine"></p>
-        <button class="btn btn--open" id="openBtn" data-fade style="--d:.85s">
+        <h1 class="intro__title" id="introTitle" data-split>Hey, you <span class="beat">❤️</span></h1>
+        <span class="intro__rule" aria-hidden="true"></span>
+        <p class="intro__line" data-fade style="--d:.85s" id="introLine"></p>
+        <button class="btn btn--open" id="openBtn" data-fade style="--d:1.1s">
           <span id="openBtnLabel">Open it</span>
           <svg class="btn__arrow" width="22" height="10" viewBox="0 0 22 10" aria-hidden="true">
             <path d="M0 5h20M16 1l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.2" />
@@ -44,9 +44,9 @@
       <section class="section" id="photos">
         <header class="head" data-reveal>
           <p class="head__kicker" id="galKicker"></p>
-          <h2 class="head__title" id="galTitle"></h2>
-          <p class="head__lead" id="galLead"></p>
+          <h2 class="head__title" id="galTitle" data-split></h2>
         </header>
+        <p class="head__lead section__lead" id="galLead" data-reveal></p>
         <div class="gallery" id="gallery"></div>
       </section>
 
@@ -54,9 +54,9 @@
       <section class="section section--tight" id="timeline">
         <header class="head" data-reveal>
           <p class="head__kicker" id="tlKicker"></p>
-          <h2 class="head__title" id="tlTitle"></h2>
-          <p class="head__lead" id="tlLead"></p>
+          <h2 class="head__title" id="tlTitle" data-split></h2>
         </header>
+        <p class="head__lead section__lead" id="tlLead" data-reveal></p>
         <ol class="tl" id="timeline-list"></ol>
       </section>
 
@@ -64,9 +64,9 @@
       <section class="section" id="love">
         <header class="head" data-reveal>
           <p class="head__kicker" id="loveKicker"></p>
-          <h2 class="head__title" id="loveTitle"></h2>
-          <p class="head__lead" id="loveLead"></p>
+          <h2 class="head__title" id="loveTitle" data-split></h2>
         </header>
+        <p class="head__lead section__lead" id="loveLead" data-reveal></p>
         <div class="cards" id="cards"></div>
       </section>
 
@@ -75,8 +75,9 @@
         <div class="surprise" data-reveal>
           <p class="head__kicker" id="spKicker"></p>
           <div class="surprise__stage" id="surpriseStage">
-            <p class="surprise__prompt" id="spPrompt"></p>
+            <p class="surprise__prompt" id="spPrompt" data-split></p>
             <button class="btn btn--gift" id="surpriseBtn">
+              <span class="btn__ribbon" aria-hidden="true"></span>
               <span id="spBtnLabel">Open it</span>
               <span class="beat">❤️</span>
             </button>
@@ -84,10 +85,10 @@
           <figure class="reveal-card" id="surpriseCard" hidden>
             <div class="reveal-card__frame"><img id="spImg" alt="" /></div>
             <figcaption>
-              <p class="hand" id="spDate"></p>
+              <p class="datestamp" id="spDate"></p>
               <h3 class="reveal-card__title" id="spTitle"></h3>
               <p class="reveal-card__text" id="spText"></p>
-              <p class="hand reveal-card__sign" id="spSign"></p>
+              <p class="signature reveal-card__sign" id="spSign"></p>
             </figcaption>
           </figure>
         </div>
@@ -101,7 +102,7 @@
           <p class="final__line" data-reveal style="--i:1" id="finLine1"></p>
           <p class="final__line" data-reveal style="--i:2" id="finLine2"></p>
           <p class="final__love" data-reveal style="--i:3" id="finLine3"></p>
-          <p class="final__sign hand" data-reveal style="--i:4" id="finSign"></p>
+          <p class="signature final__sign" data-reveal style="--i:4" id="finSign"></p>
         </div>
       </footer>
     </main>
@@ -115,7 +116,7 @@
       <figure class="lb__fig">
         <div class="lb__frame"><img id="lbImg" alt="" /></div>
         <figcaption class="lb__cap">
-          <p class="hand" id="lbDate"></p>
+          <p class="datestamp" id="lbDate"></p>
           <h3 id="lbTitle"></h3>
           <p id="lbCaption"></p>
           <p class="lb__count" id="lbCount"></p>
