@@ -47,10 +47,10 @@ export const photos = [
       "You tucked it behind my ear and I wore it the rest of the day. I wasn't giving it back.",
   },
   {
-    image: "/photos/12-sunset-laugh.jpg",
+    image: "/photos/03-feet-in-the-river.jpg",
     date: "",
-    title: "Golden hour",
-    caption: "The light did something perfect and you were laughing before I even said anything.",
+    title: "Nothing happened",
+    caption: "Two pairs of feet, cold water, no plan. Best afternoon of my year.",
   },
   {
     image: "/photos/04-boat-in-lily-pads.jpg",
@@ -61,10 +61,11 @@ export const photos = [
     feature: true,
   },
   {
-    image: "/photos/03-feet-in-the-river.jpg",
+    image: "/photos/12-sunset-laugh.jpg",
     date: "",
-    title: "Nothing happened",
-    caption: "Two pairs of feet, cold water, no plan. Best afternoon of my year.",
+    title: "Golden hour",
+    caption: "The light did something perfect and you were laughing before I even said anything.",
+    feature: true,
   },
   {
     image: "/photos/11-looking-down.jpg",
@@ -103,11 +104,11 @@ export const photos = [
     caption: "You leaned in before I did. For once I didn't have to be the brave one.",
   },
   {
-    image: "/photos/10-dressed-up.jpg",
+    image: "/photos/10-durga-puja.jpg",
     date: "",
-    title: "Dressed up",
+    title: "Durga Puja",
     caption:
-      "Green and gold, and you holding that little cherry purse like you knew exactly how good you looked. You did.",
+      "You in green and gold with that little cherry purse, on the one day of the year everyone dresses up. I couldn't take my eyes off you.",
   },
   {
     image: "/photos/08-under-the-umbrella.jpg",
@@ -202,6 +203,14 @@ export const surprise = {
   date: "",
   title: "If I could relive one day with you, I'd choose this one.",
   text: "Not the boat, not the river, not the food. This exact second — you, laughing at something I said, head thrown back, not caring who was looking.",
+};
+
+/*  Background music.
+    Drop an mp3 into  public/audio/  and point `file` at it.
+    Set file to "" to remove the player entirely.                     */
+export const music = {
+  file: "/audio/our-song.mp3",
+  label: "Our song",
 };
 
 export const final = {

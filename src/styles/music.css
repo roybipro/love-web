@@ -1,0 +1,84 @@
+/* ---------- background music ---------- */
+
+.music {
+  position: fixed;
+  left: clamp(0.9rem, 3vw, 1.8rem);
+  bottom: clamp(0.9rem, 3vw, 1.8rem);
+  z-index: 140;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.55rem 0.95rem 0.55rem 0.7rem;
+  border-radius: 999px;
+  border: 1px solid var(--hair-soft);
+  background: rgba(20, 16, 15, 0.72);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  color: var(--faint);
+  font-size: 0.6rem;
+  font-weight: 400;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  opacity: 0;
+  transform: translateY(10px);
+  pointer-events: none;
+  transition: opacity 0.9s ease 1.6s, transform 0.9s var(--ease) 1.6s,
+    color var(--t-fast) ease, border-color var(--t-fast) ease;
+}
+
+/* only appears once the page is open */
+body.opened .music {
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+}
+
+.music:hover {
+  color: var(--blush);
+  border-color: var(--hair);
+}
+
+.music[hidden] {
+  display: none;
+}
+
+/* three bars that dance while the song runs */
+.music__eq {
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+  width: 11px;
+  height: 12px;
+  flex: none;
+}
+
+.music__eq i {
+  display: block;
+  width: 2px;
+  height: 3px;
+  border-radius: 1px;
+  background: currentColor;
+  transform-origin: bottom;
+}
+
+.music.is-on .music__eq i {
+  animation: eq 0.9s ease-in-out infinite;
+}
+
+.music.is-on .music__eq i:nth-child(2) {
+  animation-delay: 0.22s;
+}
+
+.music.is-on .music__eq i:nth-child(3) {
+  animation-delay: 0.44s;
+}
+
+@keyframes eq {
+  0%,
+  100% {
+    height: 3px;
+  }
+  50% {
+    height: 12px;
+  }
+}

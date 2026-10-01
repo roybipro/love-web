@@ -13,6 +13,7 @@ import { createLightbox } from "./components/lightbox.js";
 import { mountTimeline } from "./components/timeline.js";
 import { mountLoveCards } from "./components/love-cards.js";
 import { mountSurprise } from "./components/surprise.js";
+import { mountMusic } from "./components/music.js";
 import { observeReveals, watchScroll } from "./lib/scroll.js";
 import { splitWords } from "./lib/typography.js";
 
@@ -39,6 +40,12 @@ mountTimeline({
 mountLoveCards({ items: content.love });
 
 mountSurprise({ data: content.surprise, sign: content.final.sign });
+
+mountMusic({
+  file: content.music.file,
+  label: content.music.label,
+  startOn: "#openBtn",
+});
 
 /* only once every heading has its final words in it */
 splitWords();
