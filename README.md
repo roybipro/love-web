@@ -123,9 +123,27 @@ anywhere else.
 `npm run build` gives you a `dist/` folder of plain files. Upload it to any
 static host (Netlify, Vercel, Cloudflare Pages, GitHub Pages).
 
-If you put it on **GitHub Pages at `roybipro.github.io/repo-name/`**, open
-`vite.config.js` and change `base: "/"` to `base: "/repo-name/"` first,
-otherwise the photos won't load.
+The build uses relative paths, so it works at the root of a domain *and* in a
+subfolder like `roybipro.github.io/love-web/` with no config changes. Don't
+edit `base` in `vite.config.js` unless a host genuinely complains.
+
+### Updating the GitHub Pages copy
+
+The live Pages site is built from an orphan `gh-pages` branch that holds only
+the contents of `dist/`. To refresh it after changing anything:
+
+```bash
+npm run build
+rm -rf .deploy-tmp && mkdir .deploy-tmp && cp -R dist/. .deploy-tmp/
+cd .deploy-tmp
+git init && git add -A
+git commit -m "Update the site"
+git branch -M gh-pages
+git push -f git@github.com:roybipro/love-web.git gh-pages
+```
+
+Note that `gh-pages` is force-pushed every time — it is disposable output,
+never a place to edit source. Your real work lives on `main`.
 
 ---
 

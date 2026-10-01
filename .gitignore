@@ -5,3 +5,4 @@ dist
 
 # Qoder Sites local descriptor (machine/account specific)
 *.qoder.site
+.deploy-tmp
