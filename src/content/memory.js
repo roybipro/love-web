@@ -23,19 +23,20 @@ export const intro = {
 };
 
 export const galleryHeading = {
-  kicker: "01 — our photos",
+  kicker: "our photos",
   title: "The days I keep going back to",
   lead: "Tap any photo to see it bigger.",
   tapHint: "Tap to open",
 };
 
-/*  The gallery. Add as many as you like.
+/*  The gallery. Add as many as you like — the grid and the swipe
+    through the viewer both grow on their own.
     `feature: true` makes one photo sit larger and centred.         */
 export const photos = [
   {
     image: "/photos/02-winter-sky.jpg",
     date: "",
-    title: "Our first date",
+    title: "The winter selfie",
     caption: "I didn't know this day would become one of my favourite memories.",
   },
   {
@@ -44,6 +45,12 @@ export const photos = [
     title: "The flower",
     caption:
       "You tucked it behind my ear and I wore it the rest of the day. I wasn't giving it back.",
+  },
+  {
+    image: "/photos/12-sunset-laugh.jpg",
+    date: "",
+    title: "Golden hour",
+    caption: "The light did something perfect and you were laughing before I even said anything.",
   },
   {
     image: "/photos/04-boat-in-lily-pads.jpg",
@@ -60,10 +67,22 @@ export const photos = [
     caption: "Two pairs of feet, cold water, no plan. Best afternoon of my year.",
   },
   {
+    image: "/photos/11-looking-down.jpg",
+    date: "",
+    title: "You, looking down",
+    caption: "I took this without asking and you never noticed. My favourite photo of you that isn't a selfie.",
+  },
+  {
     image: "/photos/05-the-hug.jpg",
     date: "",
     title: "Your hair over both our faces",
     caption: "You laughed into my shoulder and I decided I was keeping this day.",
+  },
+  {
+    image: "/photos/13-into-your-neck.jpg",
+    date: "",
+    title: "Laughing too hard",
+    caption: "You laughed so hard you had to hide your face. I kept the one where I can still see it.",
   },
   {
     image: "/photos/06-hand-on-head.jpg",
@@ -72,10 +91,23 @@ export const photos = [
     caption: "It just went there. It always goes there.",
   },
   {
+    image: "/photos/15-under-the-trees.jpg",
+    date: "",
+    title: "Under the trees",
+    caption: "Wind in the branches and your head on my shoulder. We stayed longer than we meant to.",
+  },
+  {
     image: "/photos/07-cheek-to-cheek.jpg",
     date: "",
     title: "Cheek to cheek",
     caption: "You leaned in before I did. For once I didn't have to be the brave one.",
+  },
+  {
+    image: "/photos/10-dressed-up.jpg",
+    date: "",
+    title: "Dressed up",
+    caption:
+      "Green and gold, and you holding that little cherry purse like you knew exactly how good you looked. You did.",
   },
   {
     image: "/photos/08-under-the-umbrella.jpg",
@@ -83,10 +115,16 @@ export const photos = [
     title: "The one where we both looked up",
     caption: "Of a hundred photos that day, this is the only one where we both stayed still.",
   },
+  {
+    image: "/photos/14-on-your-shoulder.jpg",
+    date: "",
+    title: "Just resting",
+    caption: "Nothing happening. You, on my shoulder, done with the day. I'd take this over any posed photo.",
+  },
 ];
 
 export const timelineHeading = {
-  kicker: "02 — the short version",
+  kicker: "the short version",
   title: "How it went",
   lead: "Not every day. Just the ones I'd want to live through again.",
 };
@@ -96,13 +134,13 @@ export const timelineHeading = {
 export const timeline = [
   {
     date: "",
-    title: "The first date",
+    title: "The winter selfie",
     text: "I checked my phone eleven times before you replied.",
     image: "/photos/02-winter-sky.jpg",
   },
   {
     date: "",
-    title: "The cold morning",
+    title: "The flower",
     text: "You put a flower behind my ear in the middle of a busy road.",
     image: "/photos/01-flower-behind-ear.jpg",
   },
@@ -116,12 +154,12 @@ export const timeline = [
     date: "",
     title: "Still you",
     text: "Same person, same laugh, still my favourite part of the day.",
-    image: "",
+    image: "/photos/14-on-your-shoulder.jpg",
   },
 ];
 
 export const loveHeading = {
-  kicker: "03 — honestly",
+  kicker: "honestly",
   title: "Things I love about you",
   lead: "Tap a card. There's something behind each one.",
 };
@@ -157,7 +195,7 @@ export const love = [
 
 /*  The one surprise. Point `image` at any photo to make it yours. */
 export const surprise = {
-  kicker: "04 — one more thing",
+  kicker: "one more thing",
   prompt: "I have one little surprise for you...",
   button: "Open it",
   image: "/photos/09-you-laughing.jpg",
@@ -167,7 +205,7 @@ export const surprise = {
 };
 
 export const final = {
-  kicker: "05 — the end, for now",
+  kicker: "the end, for now",
   line1: "And that's just a few of our memories...",
   line2: "I can't wait to make many more with you.",
   line3: "I love you ❤️",
