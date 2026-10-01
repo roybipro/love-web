@@ -71,6 +71,7 @@ Add `feature: true` to any photo to make it sit larger and centred.
 | The surprise photo + message  | `surprise` in `memory.js`               |
 | Opening words, final words    | `intro` / `final` in `memory.js`        |
 | Put her actual name on it     | `herName` at the top of `memory.js`     |
+| Change or remove the song     | `music` in `memory.js` + `public/audio/` |
 | Colours                       | `src/styles/tokens.css`                 |
 | Fonts                         | the `<link>` in `index.html` + `tokens.css` |
 | Spacing and text sizes        | `src/styles/tokens.css`                 |
@@ -82,6 +83,8 @@ Add `feature: true` to any photo to make it sit larger and centred.
 ```
 public/
   photos/              drop images here, they're served at /photos/...
+  audio/
+    our-song.mp3       the background music, served at /audio/our-song.mp3
 src/
   content/
     memory.js          ← all of your words and photos (edit this)
