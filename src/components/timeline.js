@@ -20,8 +20,8 @@ export function mountTimeline({ items, photos, onOpen }) {
 
       return `
       <li class="tl__item" data-reveal style="--rd:${((i % 2) * 0.08).toFixed(2)}s">
-        <span class="tl__num" aria-hidden="true">${pad2(i + 1)}</span>
         <div class="tl__body">
+          <span class="tl__num">${pad2(i + 1)}</span>
           ${entry.date ? `<p class="datestamp tl__date">${esc(entry.date)}</p>` : ""}
           <h3 class="tl__title">${heart(entry.title)}</h3>
           <p class="tl__text">${heart(entry.text)}</p>

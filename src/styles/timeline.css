@@ -60,19 +60,14 @@
   box-shadow: 0 0 0 5px rgba(184, 80, 106, 0.12);
 }
 
-/* a numeral sitting behind the words, barely there */
+/* a small numbered label, matching the photo grid */
 .tl__num {
-  position: absolute;
-  left: -0.32em;
-  top: -0.5em;
-  z-index: 0;
-  font-family: var(--display);
-  font-size: clamp(4.8rem, 18vw, 11rem);
-  line-height: 1;
-  letter-spacing: -0.05em;
-  color: var(--blush-soft);
-  pointer-events: none;
-  user-select: none;
+  display: block;
+  margin-bottom: 0.9rem;
+  font-size: 0.6rem;
+  font-weight: 400;
+  letter-spacing: 0.28em;
+  color: var(--faint);
 }
 
 .tl__body {
@@ -124,18 +119,12 @@
 
 @media (min-width: 880px) {
   .tl__item {
-    grid-template-columns: 1.1fr 0.9fr;
+    grid-template-columns: 1fr 0.82fr;
+    gap: 0 clamp(2.5rem, 5vw, 5rem);
   }
 
-  .tl__item:nth-child(even) .tl__body {
-    order: 2;
-  }
-
-  .tl__item:nth-child(even) .tl__shot {
-    order: 1;
-  }
-
+  /* the print fills its column — no empty half of the page */
   .tl__shot {
-    width: min(100%, 330px);
+    width: 100%;
   }
 }

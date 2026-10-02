@@ -81,21 +81,19 @@
   gap: 1rem;
 }
 
+/* a small numbered label above the title, not a watermark behind it */
 .card__idx {
-  position: absolute;
-  top: -0.6em;
-  left: -0.12em;
-  z-index: -1;
-  font-family: var(--display);
-  font-size: clamp(3.6rem, 11vw, 5rem);
-  line-height: 1;
-  letter-spacing: -0.05em;
-  color: var(--blush-soft);
+  display: block;
+  margin-bottom: 1.15rem;
+  font-size: 0.6rem;
+  font-weight: 400;
+  letter-spacing: 0.28em;
+  color: var(--faint);
   transition: color var(--t-mid) ease;
 }
 
 .card.open .card__idx {
-  color: rgba(184, 80, 106, 0.16);
+  color: var(--rose);
 }
 
 .card__title {
@@ -105,7 +103,6 @@
   line-height: 1.1;
   letter-spacing: -0.025em;
   flex: 1;
-  padding-top: 0.18em;
   color: var(--ink);
 }
 
@@ -114,7 +111,7 @@
   flex: none;
   width: 28px;
   height: 28px;
-  margin-top: 0.5em;
+  margin-top: 0.15em;
 }
 
 .card__toggle::before,
