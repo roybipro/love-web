@@ -144,8 +144,8 @@ export const photos = [
     date: "",
     place: "",
     title: "Nothing happened",
-    caption: "Two pairs of feet, cold water, no plan. Best afternoon of my year.",
-    note: "your toes were freezing",
+    caption: "Two pairs of feet, the river, no plan. Best morning of my year.",
+    note: "summer, and nowhere to be",
   },
   {
     image: "/photos/04-boat-in-lily-pads.jpg",
