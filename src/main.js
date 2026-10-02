@@ -32,6 +32,7 @@ const lightbox = createLightbox(content.photos);
 mountGallery({
   photos: content.photos,
   heading: content.galleryHeading,
+  quotes: content.pullQuotes,
   onOpen: lightbox.open,
 });
 

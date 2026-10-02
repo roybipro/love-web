@@ -27,11 +27,22 @@ export const galleryHeading = {
   title: "The days I keep going back to",
   lead: "Tap any photo to see it bigger.",
   tapHint: "Tap to open",
+  /* the masthead line above the grid */
+  issue: "a scrapbook",
+  note: "for Ket",
 };
 
-/*  The gallery. Add as many as you like — the grid and the swipe
-    through the viewer both grow on their own.
-    `feature: true` makes one photo sit larger and centred.         */
+/*  Big lines of type dropped into the grid between the photos,
+    the way a magazine breaks up a photo essay. One appears every
+    four photos, cycling through these. Add or remove freely.      */
+export const pullQuotes = [
+  "Red dupatta, lily pads everywhere, and you laughing at absolutely everything.",
+  "I have a hundred photos of you. These are the ones I go back to.",
+  "Nothing important happened on any of these days. That was the point.",
+];
+
+/*  The gallery. Add as many as you like — the editorial grid, the
+    numbering and the swipe-through viewer all adjust on their own.  */
 export const photos = [
   {
     image: "/photos/02-winter-sky.jpg",
@@ -58,14 +69,12 @@ export const photos = [
     title: "The boat day",
     caption:
       "The boatman stopped rowing. Neither of us wanted to be the one to say we should go back.",
-    feature: true,
   },
   {
     image: "/photos/12-sunset-laugh.jpg",
     date: "",
     title: "Golden hour",
     caption: "The light did something perfect and you were laughing before I even said anything.",
-    feature: true,
   },
   {
     image: "/photos/11-looking-down.jpg",

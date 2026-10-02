@@ -48,7 +48,10 @@ There are comments in the file showing exactly what each part does.
 That's it — the grid grows on its own, and the new photo joins the swipe
 through the viewer.
 
-Add `feature: true` to any photo to make it sit larger and centred.
+The photos lay themselves out on a twelve-column editorial grid — each one
+numbered, alternating wide and narrow so the rows never look like a table —
+with a pull quote dropped in every four prints. Edit those lines in the
+`pullQuotes` list in `memory.js`; add or remove as many as you like.
 `date` is optional everywhere: leave it `""` and no date is shown. Put
 `"12 January 2025"` in whenever you want one to appear.
 
