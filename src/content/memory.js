@@ -213,6 +213,26 @@ export const music = {
   label: "Our song",
 };
 
+/*  The scratch card. She rubs the silver away with a finger to reveal
+    whatever is underneath. Works on a phone and with a mouse.         */
+export const scratch = {
+  kicker: "you have to work for this one",
+  prompt: "There's one last thing. Scratch it off.",
+  hint: "Scratch here",
+  image: "/photos/13-into-your-neck.jpg",
+  date: "",
+  title: "You found the last one.",
+  text: "This is the face I think about when we're apart. If you had to keep exactly one photo of us, keep this one. I already did.",
+  skip: "Can't scratch it? Tap here",
+};
+
+/*  A secret. Tap the heart in "Hey, Ket ❤️" this many times on the
+    opening screen and a note appears. Nobody finds this by accident.  */
+export const secret = {
+  taps: 5,
+  message: "You found the thing I hid just for you. ❤️",
+};
+
 export const final = {
   kicker: "the end, for now",
   line1: "And that's just a few of our memories...",

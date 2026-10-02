@@ -69,6 +69,8 @@ Add `feature: true` to any photo to make it sit larger and centred.
 | Timeline entries              | `timeline` in `memory.js`               |
 | "Things I love" cards         | `love` in `memory.js`                   |
 | The surprise photo + message  | `surprise` in `memory.js`               |
+| The scratch card prize        | `scratch` in `memory.js`                |
+| The hidden heart note         | `secret` in `memory.js`                 |
 | Opening words, final words    | `intro` / `final` in `memory.js`        |
 | Put her actual name on it     | `herName` at the top of `memory.js`     |
 | Change or remove the song     | `music` in `memory.js` + `public/audio/` |
@@ -95,6 +97,9 @@ src/
     timeline.js        the dates
     love-cards.js      the expanding cards
     surprise.js        the gift reveal
+    scratch.js         the scratch-off card (the game)
+    secret.js          the hidden note behind the heart
+    music.js           the background song and its toggle
     copy.js            puts memory.js into the page
   lib/
     dom.js             small helpers (selecting elements, escaping text)
@@ -146,6 +151,15 @@ Note that `gh-pages` is force-pushed every time — it is disposable output,
 never a place to edit source. Your real work lives on `main`.
 
 ---
+
+## Two things she has to find herself
+
+- **The scratch card** — near the end, a silver card she rubs off with a
+  finger to reveal a photo. If she can't or doesn't want to, there's a quiet
+  "tap here" underneath that opens it.
+- **The hidden note** — tap the ❤️ in "Hey, Ket ❤️" five times on the opening
+  screen and a secret line fades in. Nobody finds this by accident. Change the
+  wording, or the number of taps, in `secret` in `memory.js`.
 
 ## One honest note
 

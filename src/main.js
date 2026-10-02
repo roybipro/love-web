@@ -13,9 +13,13 @@ import { createLightbox } from "./components/lightbox.js";
 import { mountTimeline } from "./components/timeline.js";
 import { mountLoveCards } from "./components/love-cards.js";
 import { mountSurprise } from "./components/surprise.js";
+import { mountScratch } from "./components/scratch.js";
+import { mountSecret } from "./components/secret.js";
 import { mountMusic } from "./components/music.js";
 import { observeReveals, watchScroll } from "./lib/scroll.js";
 import { splitWords } from "./lib/typography.js";
+import { seedHearts } from "./lib/motion.js";
+import { $ } from "./lib/dom.js";
 
 /* The opening screen locks scrolling, so a browser that remembers the last
    scroll position would yank her down the page the moment it unlocks. */
@@ -40,6 +44,13 @@ mountTimeline({
 mountLoveCards({ items: content.love });
 
 mountSurprise({ data: content.surprise, sign: content.final.sign });
+
+mountScratch({
+  data: content.scratch,
+  onReveal: () => seedHearts($("#finalDrift"), 16),
+});
+
+mountSecret(content.secret);
 
 mountMusic({
   file: content.music.file,

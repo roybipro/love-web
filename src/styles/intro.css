@@ -126,6 +126,30 @@
   margin-top: clamp(2.4rem, 7vh, 3.4rem);
 }
 
+/* the hidden note — only reachable by tapping the heart */
+.intro__secret {
+  margin-top: clamp(1.6rem, 5vh, 2.4rem);
+  font-family: var(--display);
+  font-style: italic;
+  font-weight: 300;
+  font-size: clamp(1.05rem, 4vw, 1.4rem);
+  color: var(--rose);
+  opacity: 0;
+  transform: translateY(10px) scale(0.98);
+  filter: blur(4px);
+  transition: opacity 1.2s ease, transform 1.4s var(--ease), filter 1.2s ease;
+}
+
+.intro__secret.in {
+  opacity: 1;
+  transform: none;
+  filter: blur(0);
+}
+
+.intro__secret[hidden] {
+  display: none;
+}
+
 /* the curtain lifts */
 body.opened .intro {
   opacity: 0;
