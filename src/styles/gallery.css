@@ -1,211 +1,176 @@
-/* ---------- 2. the photo essay ---------- */
-.gallery {
+/* =============================================================
+   Little moments — a wall of polaroids pinned to the paper.
+   ============================================================= */
+.wall {
   display: grid;
   grid-template-columns: 1fr;
-  align-items: start;
-  gap: clamp(3rem, 8vw, 5rem) clamp(1.4rem, 3vw, 2.6rem);
+  gap: clamp(2.6rem, 7vw, 4rem) clamp(1.4rem, 3.5vw, 2.4rem);
   max-width: var(--max);
   margin-inline: auto;
+  justify-items: center;
 }
 
-/* the folio line that sits above the grid */
-.mag__masthead {
+@media (min-width: 560px) {
+  .wall {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1000px) {
+  .wall {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 1340px) {
+  .wall {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.wall__item {
+  position: relative;
+  display: block;
+  width: min(100%, 300px);
+  background: none;
+  text-align: left;
+}
+
+/* every print lands at its own angle */
+.wall__item:nth-of-type(6n + 1) {
+  --tilt: -2.4deg;
+  margin-top: 0;
+}
+.wall__item:nth-of-type(6n + 2) {
+  --tilt: 1.8deg;
+  margin-top: 2.2rem;
+}
+.wall__item:nth-of-type(6n + 3) {
+  --tilt: -1.2deg;
+  margin-top: 0.8rem;
+}
+.wall__item:nth-of-type(6n + 4) {
+  --tilt: 2.6deg;
+  margin-top: 1.6rem;
+}
+.wall__item:nth-of-type(6n + 5) {
+  --tilt: -2deg;
+  margin-top: 0;
+}
+.wall__item:nth-of-type(6n + 6) {
+  --tilt: 1.3deg;
+  margin-top: 2.6rem;
+}
+
+/* a strip of tape on every third print */
+.wall__item:nth-of-type(3n) .tape {
+  display: block;
+}
+
+.wall__item .tape {
+  display: none;
+  width: 66px;
+  height: 22px;
+  top: -10px;
+  left: 50%;
+  margin-left: -33px;
+}
+
+/* the number, written small in pen on the foot */
+.wall__no {
+  position: absolute;
+  z-index: 5;
+  top: 16px;
+  right: 18px;
+  font-family: var(--hand);
+  font-size: 1rem;
+  color: var(--faint);
+  pointer-events: none;
+}
+
+/* a hidden line that only shows once she opens it */
+.wall__peek {
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  bottom: 52px;
+  z-index: 4;
+  padding: 0.6rem 0.8rem;
+  background: rgba(255, 253, 248, 0.94);
+  backdrop-filter: blur(4px);
+  box-shadow: var(--sh-1);
+  border-left: 2px solid var(--rose);
+  font-family: var(--hand);
+  font-size: 1.05rem;
+  line-height: 1.3;
+  color: var(--ink-2);
+  opacity: 0;
+  transform: translateY(8px) rotate(-0.6deg);
+  transition: opacity var(--t-mid) ease, transform var(--t-mid) var(--ease);
+  pointer-events: none;
+}
+
+@media (hover: hover) and (min-width: 900px) {
+  .wall__item:hover .wall__peek,
+  .wall__item:focus-visible .wall__peek {
+    opacity: 1;
+    transform: translateY(0) rotate(-0.6deg);
+  }
+}
+
+/* on a phone there is no hover, so the note sits under the print instead */
+@media (hover: none), (max-width: 899px) {
+  .wall__peek {
+    position: static;
+    opacity: 1;
+    transform: none;
+    margin-top: 0.9rem;
+    pointer-events: auto;
+  }
+}
+
+/* ---------- the folio line above the wall ---------- */
+.folio {
   display: flex;
   align-items: center;
   gap: 1rem;
-  grid-column: 1 / -1;
-  padding-bottom: 1.1rem;
+  max-width: var(--max);
+  margin: 0 auto clamp(2.6rem, 6vw, 4rem);
+  padding-bottom: 1rem;
   border-bottom: 1px solid var(--line);
-  font-size: 0.6rem;
+  font-size: 0.58rem;
   letter-spacing: 0.26em;
   text-transform: uppercase;
   color: var(--faint);
 }
 
-.mag__rule {
+.folio__rule {
   flex: 1;
   height: 1px;
   background: var(--line);
 }
 
-.mag__note {
+.folio__note {
   color: var(--rose);
 }
 
-.mag__count {
-  flex: none;
-  color: var(--faint);
-}
-
-/* two columns on a tablet */
-@media (min-width: 620px) {
-  .gallery {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-/* twelve columns on a desktop, split unevenly on purpose */
-@media (min-width: 1000px) {
-  .gallery {
-    grid-template-columns: repeat(12, 1fr);
-    gap: clamp(4.5rem, 7vw, 7rem) clamp(1.8rem, 2.8vw, 2.8rem);
-  }
-  .tile--a {
-    grid-column: span 7;
-  }
-  .tile--b {
-    grid-column: span 5;
-  }
-}
-
-/* ---------- one print ---------- */
-.tile {
-  position: relative;
-  display: block;
-  width: 100%;
-  text-align: left;
-  background: none;
-}
-
-.tile__num {
-  display: block;
-  margin-bottom: 0.85rem;
-  font-size: 0.6rem;
-  font-weight: 400;
-  letter-spacing: 0.28em;
-  color: var(--faint);
-}
-
-.tile__media {
-  position: relative;
-  display: block;
-  aspect-ratio: 3 / 4;
-  overflow: hidden;
-  background: var(--paper-2);
-}
-
-.tile__media img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center 30%;
-  filter: saturate(0.9) contrast(1.02);
-  transform: translate3d(var(--px, 0px), var(--py, 0px), 0) scale(1.03);
-  transition: transform 1.5s var(--ease), filter 0.9s ease;
-  will-change: transform;
-}
-
-.tile:hover .tile__media img,
-.tile:focus-visible .tile__media img {
-  transform: translate3d(var(--px, 0px), var(--py, 0px), 0) scale(1.09);
-  filter: saturate(1) contrast(1.03);
-}
-
-.tile__plus {
-  position: absolute;
-  top: 0.8rem;
-  right: 0.8rem;
-  z-index: 2;
-  width: 32px;
-  height: 32px;
-  display: grid;
-  place-items: center;
-  border-radius: 50%;
-  background: rgba(255, 253, 251, 0.92);
-  color: var(--ink);
-  font-size: 1rem;
-  font-weight: 200;
-  line-height: 1;
-  opacity: 0;
-  transform: scale(0.7) rotate(-40deg);
-  transition: opacity var(--t-fast) ease, transform var(--t-mid) var(--ease);
-  pointer-events: none;
-}
-
-.tile:hover .tile__plus,
-.tile:focus-visible .tile__plus {
-  opacity: 1;
-  transform: scale(1) rotate(0deg);
-}
-
-/* ---------- the words under it, set like article copy ---------- */
-.tile__cap {
-  display: block;
-  margin-top: 1.3rem;
-  padding-top: 1.1rem;
-  border-top: 1px solid var(--line);
-}
-
-.tile__date {
-  display: block;
-  margin-bottom: 0.6rem;
-}
-
-.tile__title {
-  display: block;
-  font-family: var(--display);
-  font-size: clamp(1.6rem, 4.4vw, 2.4rem);
-  line-height: 1.08;
-  letter-spacing: -0.03em;
-  color: var(--ink);
-}
-
-.tile__note {
-  display: block;
-  margin-top: 0.7rem;
-  max-width: 46ch;
-  color: var(--muted);
-  font-size: 0.92rem;
-  font-weight: 300;
-  line-height: 1.85;
-}
-
-.tile__hint {
-  display: block;
-  margin-top: 0.9rem;
-  font-size: 0.56rem;
-  letter-spacing: 0.24em;
-  text-transform: uppercase;
-  color: var(--faint);
-  opacity: 0;
-  transform: translateY(5px);
-  transition: opacity var(--t-fast) ease, transform var(--t-mid) var(--ease),
-    color var(--t-fast) ease;
-}
-
-.tile:hover .tile__hint,
-.tile:focus-visible .tile__hint {
-  opacity: 1;
-  transform: none;
-  color: var(--rose);
-}
-
-@media (hover: none) {
-  .tile__hint {
-    display: none;
-  }
-}
-
-/* ---------- the pull quote ---------- */
-.mag__quote {
+/* ---------- a pull quote dropped between the prints ---------- */
+.wall__quote {
   grid-column: 1 / -1;
-  padding: clamp(1rem, 3vw, 2rem) 0;
+  width: 100%;
+  max-width: 60ch;
+  margin: clamp(1rem, 4vw, 3rem) auto;
+  padding: clamp(1.6rem, 4vw, 2.4rem) 0;
   border-top: 1px solid var(--line);
   border-bottom: 1px solid var(--line);
+  text-align: center;
 }
 
-.mag__quote blockquote {
+.wall__quote blockquote {
   font-family: var(--display);
   font-style: italic;
-  font-size: clamp(1.8rem, 6vw, 3.4rem);
-  line-height: 1.2;
+  font-size: clamp(1.5rem, 5vw, 2.6rem);
+  line-height: 1.28;
   letter-spacing: -0.03em;
-  color: var(--ink);
-  max-width: 24ch;
-}
-
-@media (min-width: 1000px) {
-  .mag__quote blockquote {
-    padding-left: clamp(3rem, 8vw, 8rem);
-  }
+  color: var(--burgundy);
 }

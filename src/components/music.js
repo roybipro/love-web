@@ -1,75 +1,129 @@
 import { $, asset } from "../lib/dom.js";
+import { reduceMotion } from "../lib/motion.js";
+import { play, setSound, soundIsOn } from "../lib/sound.js";
 
-const VOLUME = 0.5;
+const fmt = (s) => {
+  if (!Number.isFinite(s)) return "0:00";
+  const m = Math.floor(s / 60);
+  return `${m}:${String(Math.floor(s % 60)).padStart(2, "0")}`;
+};
 
 /**
- * Background music from a file in public/audio/.
+ * Background music, and the little player that carries it.
  *
- * Browsers refuse to start audio without a real tap, so playback is armed by
- * the "Open it" button — the one gesture she always makes first. The control
- * stays on screen so she can quiet it down.
- *
- * If the file isn't there yet the button hides itself, so the site never
- * shows a control that does nothing.
+ * Nothing starts by itself — browsers refuse that, and honestly a
+ * song should not begin before she is ready for it. The disc opens a
+ * compact player with seek, volume and a visualiser, and the switch
+ * at the bottom turns the interface clicks on or off.
  */
-export function mountMusic({ file, startOn, label = "Our song" }) {
-  const button = $("#musicBtn");
-  const text = $("#musicLabel");
-  if (!button) return;
+export function mountMusic({ data, startOn }) {
+  const player = $("#player");
+  if (!player) return;
 
-  if (!file) return giveUp();
+  if (!data.file) return void player.remove();
 
-  const track = new Audio(asset(file));
+  const track = new Audio(asset(data.file));
   track.loop = true;
-  track.preload = "auto";
-  track.volume = 0;
+  track.preload = "metadata";
+
+  const disc = $("#playerToggle");
+  const seek = $("#playerSeek");
+  const vol = $("#playerVol");
+  const playBtn = $("#playerPlay");
+  const sfx = $("#playerSfx");
 
   let playing = false;
+  let volume = 0.55;
 
-  function giveUp() {
-    button.hidden = true;
-  }
+  $("#playerTitle").textContent = data.title || "Our song";
+  $("#playerArtist").textContent = data.artist || "";
+  track.volume = volume;
 
-  function paint() {
-    button.classList.toggle("is-on", playing);
-    button.setAttribute("aria-pressed", String(playing));
-    if (text) text.textContent = playing ? label : "Sound off";
-  }
+  const setPlaying = (on) => {
+    playing = on;
+    player.classList.toggle("is-playing", on);
+    playBtn.textContent = on ? "❚❚" : "▶";
+    playBtn.setAttribute("aria-label", on ? "Pause the music" : "Play the music");
+  };
 
-  track.addEventListener("error", giveUp);
+  const paint = () => {
+    const dur = track.duration || 0;
+    seek.style.setProperty("--p", dur ? (track.currentTime / dur).toFixed(4) : "0");
+    $("#playerTime").textContent = `${fmt(track.currentTime)} / ${fmt(dur)}`;
+  };
 
-  /** ease the song in rather than slamming it on */
-  function fadeTo(target, ms = 2400) {
-    const start = track.volume;
-    const t0 = performance.now();
-    const step = (now) => {
-      const p = Math.min(1, (now - t0) / ms);
-      track.volume = Math.max(0, Math.min(1, start + (target - start) * p));
-      if (p < 1) requestAnimationFrame(step);
-    };
-    requestAnimationFrame(step);
-  }
+  /* ---------- open and close the panel ---------- */
+  disc.addEventListener("click", () => {
+    player.classList.toggle("is-open");
+    play("click");
+  });
 
-  async function play() {
+  /* ---------- play / pause ---------- */
+  const toggle = async () => {
+    if (playing) {
+      track.pause();
+      setPlaying(false);
+      return;
+    }
     try {
       await track.play();
-      playing = true;
-      fadeTo(VOLUME);
+      setPlaying(true);
     } catch {
-      playing = false; // autoplay refused — the button still works
+      setPlaying(false); // refused; the button stays ready for her tap
     }
-    paint();
+  };
+
+  playBtn.addEventListener("click", (e) => {
+    e.stopPropagation();
+    toggle();
+  });
+
+  /* ---------- dragging the seek and volume bars ---------- */
+  function draggable(el, onRatio) {
+    let dragging = false;
+    const ratio = (e) => {
+      const r = el.getBoundingClientRect();
+      return Math.min(1, Math.max(0, (e.clientX - r.left) / Math.max(1, r.width)));
+    };
+    el.addEventListener("pointerdown", (e) => {
+      dragging = true;
+      el.setPointerCapture?.(e.pointerId);
+      onRatio(ratio(e));
+      e.preventDefault();
+    });
+    el.addEventListener("pointermove", (e) => dragging && onRatio(ratio(e)));
+    const stop = () => (dragging = false);
+    el.addEventListener("pointerup", stop);
+    el.addEventListener("pointercancel", stop);
   }
 
-  function pause() {
-    track.pause();
-    playing = false;
+  draggable(seek, (r) => {
+    if (Number.isFinite(track.duration)) track.currentTime = r * track.duration;
     paint();
-  }
+  });
 
-  button.addEventListener("click", () => (playing ? pause() : play()));
+  draggable(vol, (r) => {
+    volume = r;
+    track.volume = r;
+    vol.style.setProperty("--v", r.toFixed(3));
+  });
 
-  document.querySelector(startOn)?.addEventListener("click", play, { once: true });
+  vol.style.setProperty("--v", String(volume));
+  track.addEventListener("timeupdate", paint);
+  track.addEventListener("loadedmetadata", paint);
 
-  paint();
+  /* ---------- the interface-sound switch ---------- */
+  sfx.setAttribute("aria-pressed", String(soundIsOn()));
+  sfx.addEventListener("click", (e) => {
+    e.stopPropagation();
+    const next = !soundIsOn();
+    setSound(next);
+    sfx.setAttribute("aria-pressed", String(next));
+    if (next) play("pop");
+  });
+
+  /* the cover tap is a real gesture, so the song may start there */
+  document
+    .querySelector(startOn)
+    ?.addEventListener("click", () => setTimeout(toggle, reduceMotion ? 0 : 900), { once: true });
 }

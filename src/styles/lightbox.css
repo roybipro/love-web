@@ -1,4 +1,6 @@
-/* ---------- lightbox ---------- */
+/* =============================================================
+   The photo viewer.
+   ============================================================= */
 .lb[hidden] {
   display: none;
 }
@@ -16,15 +18,14 @@ body.lb-open {
   overflow: hidden;
 }
 
-/* frosted paper rather than a black room */
 .lb__scrim {
   position: absolute;
   inset: 0;
-  background: rgba(250, 246, 240, 0.93);
-  backdrop-filter: blur(22px) saturate(1.05);
-  -webkit-backdrop-filter: blur(22px) saturate(1.05);
+  background: rgba(244, 236, 224, 0.93);
+  backdrop-filter: blur(24px) saturate(1.1);
+  -webkit-backdrop-filter: blur(24px) saturate(1.1);
   opacity: 0;
-  transition: opacity 0.55s ease;
+  transition: opacity 0.6s ease;
 }
 
 .lb.is-open .lb__scrim {
@@ -41,33 +42,47 @@ body.lb-open {
   width: 100%;
 }
 
+/* the print, held by tape */
+.lb__mat {
+  position: relative;
+  padding: 12px 12px 12px;
+  background: var(--card);
+  box-shadow: var(--sh-lift);
+  border-radius: 2px;
+}
+
+.lb__mat .tape {
+  width: 72px;
+  height: 24px;
+  top: -11px;
+  left: 50%;
+  margin-left: -36px;
+}
+
 .lb__frame {
   aspect-ratio: var(--ar, 3 / 4);
-  height: min(62dvh, calc((100vw - 2 * var(--pad)) * 4 / 3));
+  height: min(58dvh, calc((100vw - 2 * var(--pad)) * 4 / 3));
   max-width: 100%;
   position: relative;
   overflow: hidden;
-  background: var(--card);
-  padding: 9px 9px 9px;
-  border-radius: 2px;
-  box-shadow: var(--sh-lg);
+  background: var(--paper-2);
 }
 
 .lb__frame img {
   width: 100%;
   height: 100%;
   object-fit: contain;
-  background: var(--paper-2);
   transform-origin: top left;
   will-change: transform;
 }
 
+/* ---------- caption ---------- */
 .lb__cap {
   text-align: center;
-  max-width: 42ch;
+  max-width: 40ch;
   opacity: 0;
   transform: translateY(12px);
-  transition: opacity 0.7s ease 0.16s, transform 0.9s var(--ease) 0.16s;
+  transition: opacity 0.8s ease 0.18s, transform 1s var(--ease) 0.18s;
 }
 
 .lb.is-open .lb__cap {
@@ -78,10 +93,10 @@ body.lb-open {
 .lb__cap h3 {
   font-family: var(--display);
   font-size: clamp(1.5rem, 5vw, 2.2rem);
+  font-weight: 400;
   line-height: 1.18;
-  letter-spacing: -0.025em;
+  letter-spacing: -0.03em;
   margin-top: 0.5rem;
-  color: var(--ink);
 }
 
 #lbCaption {
@@ -89,16 +104,29 @@ body.lb-open {
   color: var(--muted);
   font-size: 0.95rem;
   font-weight: 300;
-  line-height: 1.8;
+  line-height: 1.85;
+}
+
+/* the handwritten aside, only in the viewer */
+#lbNote {
+  margin-top: 0.9rem;
+  font-family: var(--hand);
+  font-size: clamp(1.15rem, 4vw, 1.5rem);
+  color: var(--burgundy);
+}
+
+#lbNote[hidden] {
+  display: none;
 }
 
 .lb__count {
-  margin-top: 1.2rem;
-  font-size: 0.6rem;
-  letter-spacing: 0.32em;
+  margin-top: 1.1rem;
+  font-size: 0.58rem;
+  letter-spacing: 0.3em;
   color: var(--faint);
 }
 
+/* ---------- controls ---------- */
 .lb__x,
 .lb__nav {
   position: absolute;
@@ -108,20 +136,20 @@ body.lb-open {
   width: 46px;
   height: 46px;
   border-radius: 50%;
-  background: var(--card);
+  background: rgba(255, 253, 248, 0.9);
   border: 1px solid var(--line);
   color: var(--ink-2);
   font-size: 0.95rem;
-  box-shadow: var(--sh-sm);
+  box-shadow: var(--sh-2);
   transition: color var(--t-fast) ease, border-color var(--t-fast) ease,
-    box-shadow var(--t-fast) ease, transform var(--t-fast) var(--ease);
+    box-shadow var(--t-fast) ease, transform var(--t-fast) var(--spring);
 }
 
 .lb__x:hover,
 .lb__nav:hover {
-  color: var(--wine);
+  color: var(--burgundy);
   border-color: var(--blush);
-  box-shadow: var(--sh-md);
+  box-shadow: var(--sh-3);
   transform: scale(1.07);
 }
 
@@ -142,8 +170,22 @@ body.lb-open {
   right: clamp(0.5rem, 2.5vw, 1.8rem);
 }
 
+/* on a phone, swipe instead of arrows */
 @media (max-width: 760px) {
   .lb__nav {
+    display: none;
+  }
+
+  .lb__hint {
+    font-size: 0.55rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--faint);
+  }
+}
+
+@media (min-width: 761px) {
+  .lb__hint {
     display: none;
   }
 }

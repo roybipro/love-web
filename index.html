@@ -3,156 +3,230 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-    <title>For Ket ❤️</title>
-    <meta name="description" content="A little scrapbook of us." />
-    <meta name="theme-color" content="#faf6f0" />
+    <title>To Ket — our story</title>
+    <meta name="description" content="A little place for all the moments that became our story." />
+    <meta name="theme-color" content="#f4ece0" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500&family=Mrs+Saint+Delafield&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500&family=Caveat:wght@400;500&display=swap"
       rel="stylesheet"
     />
   </head>
   <body class="is-locked">
-    <!-- atmosphere -->
-    <div class="grain" aria-hidden="true"></div>
+    <!-- the rough paper edge used by torn sheets -->
+    <svg class="svg-defs" aria-hidden="true" focusable="false">
+      <filter id="deckle" x="-6%" y="-60%" width="112%" height="220%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.022 0.1" numOctaves="4" seed="7" result="n" />
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="7" xChannelSelector="R" yChannelSelector="G" />
+      </filter>
+    </svg>
+
+    <!-- layered background -->
+    <div class="bg" aria-hidden="true">
+      <div class="bg__paper"></div>
+      <div class="bg__tooth"></div>
+      <div class="bg__dust" id="bgDust"></div>
+      <div class="bg__grain"></div>
+    </div>
     <div class="cursorglow" aria-hidden="true"></div>
     <div class="scrollline" aria-hidden="true"><i id="scrollline"></i></div>
 
-    <!-- 1. OPENING SCREEN -->
-    <section class="intro" id="intro">
-      <div class="intro__scatter" id="introScatter" aria-hidden="true"></div>
-      <div class="intro__drift" id="introDrift" aria-hidden="true"></div>
-      <div class="intro__inner">
-        <h1 class="intro__title" id="introTitle" data-split>Hey, you <span class="beat">❤️</span></h1>
-        <span class="intro__rule" aria-hidden="true"></span>
-        <p class="intro__line" data-fade style="--d:.85s" id="introLine"></p>
-        <p class="intro__secret" id="introSecret" hidden></p>
-        <button class="btn btn--open" id="openBtn" data-fade style="--d:1.1s">
-          <span id="openBtnLabel">Open it</span>
-          <svg class="btn__arrow" width="22" height="10" viewBox="0 0 22 10" aria-hidden="true">
-            <path d="M0 5h20M16 1l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.2" />
+    <!-- LOADING -->
+    <div class="loader" id="loader">
+      <span class="loader__heart" aria-hidden="true">
+        <svg viewBox="0 0 32 29"><path d="M16 29S1 18.6 1 9.9A8 8 0 0 1 16 5.6 8 8 0 0 1 31 9.9C31 18.6 16 29 16 29Z"/></svg>
+      </span>
+      <p class="loader__text">Our story is loading…</p>
+      <span class="loader__bar"><i id="loaderBar"></i></span>
+    </div>
+
+    <!-- THE COVER -->
+    <section class="cover" id="cover">
+      <div class="cover__deco" id="coverDeco" aria-hidden="true"></div>
+
+      <div class="cover__page">
+        <p class="cover__kicker" id="coverKicker"></p>
+        <h1 class="cover__title" id="coverTitle" data-split>To you ❤️</h1>
+        <p class="cover__sub" data-fade style="--d:.75s" id="coverSub"></p>
+        <p class="cover__secret" id="coverSecret" hidden></p>
+        <button class="btn btn--cover magnet" id="openBtn" data-fade style="--d:1s">
+          <span id="openBtnLabel">Open Our Story</span>
+          <svg class="btn__arrow" width="26" height="10" viewBox="0 0 26 10" aria-hidden="true">
+            <path d="M0 5h24M20 1l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1" />
           </svg>
         </button>
       </div>
     </section>
 
-    <!-- THE SITE -->
+    <!-- NAVIGATION -->
+    <div class="nav" id="nav"></div>
+    <button class="navpill" id="navpill" aria-label="Go to the next memory">
+      <span class="navpill__no" id="pillNo">01 / 08</span>
+      <span class="navpill__name" id="pillName">Home</span>
+      <svg class="navpill__arrow" width="16" height="8" viewBox="0 0 16 8" aria-hidden="true">
+        <path d="M0 4h13M10 1l3 3-3 3" fill="none" stroke="currentColor" stroke-width="1" />
+      </svg>
+    </button>
+
+    <!-- THE BOOK -->
     <main class="site" id="site">
-      <!-- 2. PHOTOS -->
-      <section class="section" id="photos">
-        <header class="head" data-reveal>
-          <p class="head__kicker" id="galKicker"></p>
-          <h2 class="head__title" id="galTitle" data-split></h2>
-        </header>
-        <p class="head__lead section__lead" id="galLead" data-reveal></p>
-        <div class="gallery" id="gallery"></div>
-      </section>
-
-      <!-- 3. TIMELINE -->
-      <section class="section section--tight" id="timeline">
-        <header class="head" data-reveal>
-          <p class="head__kicker" id="tlKicker"></p>
-          <h2 class="head__title" id="tlTitle" data-split></h2>
-        </header>
-        <p class="head__lead section__lead" id="tlLead" data-reveal></p>
-        <ol class="tl" id="timeline-list"></ol>
-      </section>
-
-      <!-- 4. THINGS I LOVE -->
-      <section class="section" id="love">
-        <header class="head" data-reveal>
-          <p class="head__kicker" id="loveKicker"></p>
-          <h2 class="head__title" id="loveTitle" data-split></h2>
-        </header>
-        <p class="head__lead section__lead" id="loveLead" data-reveal></p>
-        <div class="cards" id="cards"></div>
-      </section>
-
-      <!-- 5. SURPRISE -->
-      <section class="section section--surprise" id="surprise">
-        <div class="surprise" data-reveal>
-          <p class="head__kicker" id="spKicker"></p>
-          <div class="surprise__stage" id="surpriseStage">
-            <p class="surprise__prompt" id="spPrompt" data-split></p>
-            <button class="btn btn--gift" id="surpriseBtn">
-              <span class="btn__ribbon" aria-hidden="true"></span>
-              <span id="spBtnLabel">Open it</span>
-              <span class="beat">❤️</span>
-            </button>
+      <!-- 01 HOME -->
+      <section class="chapter" id="home">
+        <div class="chapter__inner">
+          <div class="titlepage" data-reveal>
+            <span class="sticker float" style="--tilt:-8deg" aria-hidden="true">♥</span>
+            <p class="titlepage__kicker">the book</p>
+            <h2 class="titlepage__title" data-split>Our story, so far</h2>
+            <p class="titlepage__note hand">
+              Eight pages. All of them about you, whether you like that or not.
+            </p>
+            <hr class="rule" />
+            <p class="titlepage__scroll">Keep going down — or use the memories on the left.</p>
           </div>
-          <figure class="reveal-card" id="surpriseCard" hidden>
-            <div class="reveal-card__frame"><img id="spImg" alt="" /></div>
-            <figcaption>
-              <p class="datestamp" id="spDate"></p>
-              <h3 class="reveal-card__title" id="spTitle"></h3>
-              <p class="reveal-card__text" id="spText"></p>
-              <p class="signature reveal-card__sign" id="spSign"></p>
-            </figcaption>
-          </figure>
         </div>
       </section>
 
-      <!-- 6. SCRATCH CARD — the game -->
-      <section class="section section--scratch" id="scratch">
-        <div class="scratch" data-reveal>
-          <p class="head__kicker" id="scKicker"></p>
-          <p class="scratch__prompt" id="scPrompt" data-split></p>
+      <!-- 02 HOW WE MET -->
+      <section class="chapter" id="how-we-met">
+        <div class="chapter__inner" id="howWeMet"></div>
+      </section>
 
-          <div class="scratch__card" id="scratchCard">
-            <div class="scratch__prize">
-              <div class="scratch__frame"><img id="scImg" alt="" /></div>
-              <div>
-                <p class="datestamp" id="scDate"></p>
-                <h3 id="scTitle"></h3>
-                <p id="scText"></p>
-              </div>
+      <!-- 03 OUR FIRST MEMORY -->
+      <section class="chapter" id="first-memory">
+        <div class="chapter__inner" id="firstMemory"></div>
+      </section>
+
+      <!-- 04 LITTLE MOMENTS -->
+      <section class="chapter" id="little-moments">
+        <div class="chapter__inner">
+          <header class="head" data-reveal>
+            <span class="head__no" aria-hidden="true">04</span>
+            <p class="head__label" id="momentsLabel"></p>
+            <h2 class="head__title" id="momentsTitle" data-split></h2>
+            <p class="head__lead" id="momentsLead"></p>
+          </header>
+          <div class="wall" id="wall"></div>
+        </div>
+      </section>
+
+      <!-- 05 FAVOURITE MEMORIES -->
+      <section class="chapter" id="favourites">
+        <div class="chapter__inner">
+          <header class="head" data-reveal>
+            <span class="head__no" aria-hidden="true">05</span>
+            <p class="head__label" id="favLabel"></p>
+            <h2 class="head__title" id="favTitle" data-split></h2>
+            <p class="head__lead" id="favLead"></p>
+          </header>
+          <div class="favourites" id="favWall"></div>
+
+          <div class="surprise" data-reveal>
+            <div class="surprise__stage" id="surpriseStage">
+              <p class="surprise__prompt" id="spPrompt"></p>
+              <button class="btn btn--gift magnet" id="surpriseBtn">
+                <span class="btn__ribbon" aria-hidden="true"></span>
+                <span id="spBtnLabel">Open it</span>
+                <span class="beat">❤️</span>
+              </button>
             </div>
-            <canvas class="scratch__surface" id="scCanvas" aria-hidden="true"></canvas>
+            <figure class="reveal-card" id="surpriseCard" hidden>
+              <div class="reveal-card__frame"><img id="spImg" alt="" /></div>
+              <figcaption>
+                <p class="datestamp" id="spDate"></p>
+                <p class="stamp" id="spPlace"></p>
+                <h3 class="reveal-card__title" id="spTitle"></h3>
+                <p class="reveal-card__text" id="spText"></p>
+                <p class="signature reveal-card__sign" id="spSign"></p>
+              </figcaption>
+            </figure>
           </div>
-
-          <p class="scratch__progress" id="scProgress" aria-hidden="true"></p>
-          <button class="scratch__skip" id="scSkip">Can't scratch it? Tap here</button>
-          <span id="scHint" hidden></span>
         </div>
       </section>
 
-      <!-- 7. FINAL MESSAGE -->
-      <footer class="final" id="final">
-        <div class="final__drift" id="finalDrift" aria-hidden="true"></div>
-        <div class="final__inner">
-          <p class="head__kicker" data-reveal id="finKicker"></p>
-          <p class="final__line" data-reveal style="--i:1" id="finLine1"></p>
-          <p class="final__line" data-reveal style="--i:2" id="finLine2"></p>
-          <p class="final__love" data-reveal style="--i:3" id="finLine3"></p>
-          <p class="signature final__sign" data-reveal style="--i:4" id="finSign"></p>
+      <!-- 06 THINGS I LOVE -->
+      <section class="chapter" id="love">
+        <div class="chapter__inner">
+          <header class="head" data-reveal>
+            <span class="head__no" aria-hidden="true">06</span>
+            <p class="head__label" id="loveLabel"></p>
+            <h2 class="head__title" id="loveTitle" data-split></h2>
+            <p class="head__lead" id="loveLead"></p>
+          </header>
+          <div class="cards" id="cards"></div>
         </div>
-      </footer>
+      </section>
+
+      <!-- 07 OUR TIMELINE -->
+      <section class="chapter" id="timeline">
+        <div class="chapter__inner">
+          <header class="head" data-reveal>
+            <span class="head__no" aria-hidden="true">07</span>
+            <p class="head__label" id="tlLabel"></p>
+            <h2 class="head__title" id="tlTitle" data-split></h2>
+            <p class="head__lead" id="tlLead"></p>
+          </header>
+          <ol class="tl" id="timeline-list"></ol>
+        </div>
+      </section>
+
+      <!-- 08 A LETTER -->
+      <section class="chapter" id="letter">
+        <div class="chapter__inner">
+          <div id="letterPage"></div>
+          <div class="letter__ps" id="scratchSlot" data-reveal></div>
+          <p class="colophon">Made by hand, for one person.</p>
+        </div>
+      </section>
     </main>
 
-    <!-- LIGHTBOX -->
+    <!-- THE PHOTO VIEWER -->
     <div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Photo viewer" hidden>
       <div class="lb__scrim" data-lb-close></div>
       <button class="lb__x" id="lbX" aria-label="Close">✕</button>
       <button class="lb__nav lb__nav--prev" id="lbPrev" aria-label="Previous photo">←</button>
       <button class="lb__nav lb__nav--next" id="lbNext" aria-label="Next photo">→</button>
       <figure class="lb__fig">
-        <div class="lb__frame"><img id="lbImg" alt="" /></div>
+        <div class="lb__mat">
+          <span class="tape" aria-hidden="true"></span>
+          <div class="lb__frame"><img id="lbImg" alt="" /></div>
+        </div>
         <figcaption class="lb__cap">
           <p class="datestamp" id="lbDate"></p>
+          <p class="stamp" id="lbPlace"></p>
           <h3 id="lbTitle"></h3>
           <p id="lbCaption"></p>
+          <p class="hand" id="lbNote"></p>
           <p class="lb__count" id="lbCount"></p>
+          <p class="lb__hint">swipe for the next one</p>
         </figcaption>
       </figure>
     </div>
 
-    <!-- background music -->
-    <button class="music" id="musicBtn" aria-pressed="false" aria-label="Toggle the music">
-      <span class="music__eq" aria-hidden="true"><i></i><i></i><i></i></span>
-      <span id="musicLabel">Sound off</span>
-    </button>
+    <!-- THE MUSIC PLAYER -->
+    <div class="player" id="player">
+      <div class="player__panel" id="playerPanel">
+        <div class="player__head">
+          <span class="player__label" id="playerTitle">Our song</span>
+          <span class="player__time" id="playerTime">0:00 / 0:00</span>
+        </div>
+        <div class="player__seek" id="playerSeek" role="slider" aria-label="Seek" tabindex="0"><i></i></div>
+        <div class="player__row">
+          <button class="player__play" id="playerPlay" aria-label="Play the music">▶</button>
+          <div class="player__vol" id="playerVol" role="slider" aria-label="Volume" tabindex="0"><i></i></div>
+          <span class="player__viz" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>
+        </div>
+        <p class="player__artist" id="playerArtist"></p>
+        <div class="player__sfx">
+          <span>Interface sounds</span>
+          <button class="player__sfxbtn" id="playerSfx" aria-pressed="false" aria-label="Turn interface sounds on or off"></button>
+        </div>
+      </div>
+      <button class="player__toggle" id="playerToggle" aria-label="Open the music player">
+        <span class="player__disc" aria-hidden="true"></span>
+      </button>
+    </div>
 
     <script type="module" src="/src/main.js"></script>
   </body>

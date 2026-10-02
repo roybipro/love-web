@@ -1,29 +1,25 @@
-import { $, rnd } from "./dom.js";
+import { rnd } from "./dom.js";
 
 /** Honour the OS "reduce motion" setting everywhere at once. */
 export const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 /**
- * Scatter slow, blurred hearts across a container.
- * Negative animation delays mean the air is already full when she arrives.
+ * Slow dust catching the light, drifting up the background layer.
+ * Negative delays mean the air is already full when she arrives.
  */
-export function seedHearts(host, count) {
+export function seedDust(host, count = 26) {
   if (!host || reduceMotion || host.childElementCount) return;
 
   const frag = document.createDocumentFragment();
   for (let i = 0; i < count; i++) {
-    const heart = document.createElement("span");
-    heart.className = "fh";
-    heart.textContent = "♥";
-    heart.style.left = `${rnd(2, 98).toFixed(1)}%`;
-    heart.style.setProperty("--s", `${rnd(9, 24).toFixed(0)}px`);
-    heart.style.setProperty("--x", `${rnd(-80, 80).toFixed(0)}px`);
-    heart.style.setProperty("--t", `${rnd(15, 32).toFixed(0)}s`);
-    heart.style.setProperty("--dl", `${(-rnd(0, 32)).toFixed(0)}s`);
-    heart.style.setProperty("--o", rnd(0.1, 0.36).toFixed(2));
-    heart.style.setProperty("--r", `${rnd(-60, 60).toFixed(0)}deg`);
-    heart.style.setProperty("--b", Math.random() < 0.4 ? `${rnd(1, 3).toFixed(1)}px` : "0px");
-    frag.appendChild(heart);
+    const mote = document.createElement("i");
+    mote.style.left = `${rnd(1, 99).toFixed(1)}%`;
+    mote.style.setProperty("--s", `${rnd(2, 6).toFixed(1)}px`);
+    mote.style.setProperty("--x", `${rnd(-70, 70).toFixed(0)}px`);
+    mote.style.setProperty("--t", `${rnd(20, 44).toFixed(0)}s`);
+    mote.style.setProperty("--dl", `${(-rnd(0, 44)).toFixed(0)}s`);
+    mote.style.setProperty("--o", rnd(0.18, 0.55).toFixed(2));
+    frag.appendChild(mote);
   }
   host.appendChild(frag);
 }
@@ -60,4 +56,41 @@ export function burst(host, count = 16, scale = 1) {
   }
 
   setTimeout(() => wrap.remove(), 1600);
+}
+
+/**
+ * Confetti, but paper: small squares that flutter away when the
+ * cover turns. Uses transform and opacity only, so it stays cheap.
+ */
+export function throwPaper(originX, originY, count = 22) {
+  if (reduceMotion) return;
+
+  for (let i = 0; i < count; i++) {
+    const flake = document.createElement("i");
+    flake.className = "flake";
+    const size = rnd(6, 15);
+    flake.style.setProperty("--s", `${size.toFixed(0)}px`);
+    flake.style.left = `${originX}px`;
+    flake.style.top = `${originY}px`;
+    flake.style.background = ["#eae0d1", "#f0dbdf", "#fffdf8", "#ded2c0"][i % 4];
+    document.body.appendChild(flake);
+
+    const angle = rnd(-Math.PI * 0.9, -Math.PI * 0.1);
+    const distance = rnd(120, 420);
+
+    flake
+      .animate(
+        [
+          { transform: "translate(-50%,-50%) rotate(0deg)", opacity: 1 },
+          {
+            transform: `translate(${Math.cos(angle) * distance}px, ${
+              Math.sin(angle) * distance + rnd(180, 340)
+            }px) rotate(${rnd(-420, 420)}deg)`,
+            opacity: 0,
+          },
+        ],
+        { duration: rnd(1100, 2000), easing: "cubic-bezier(.2,.6,.3,1)" },
+      )
+      .onfinish = () => flake.remove();
+  }
 }

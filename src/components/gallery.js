@@ -1,93 +1,99 @@
 import { $, $$, asset, esc, heart, pad2 } from "../lib/dom.js";
-import { reduceMotion } from "../lib/motion.js";
-
-/* Which column span each photo gets, cycling so every row fills twelve.
-   7 then 5, then 5 then 7 — deliberately uneven, like a magazine spread. */
-const SPANS = ["a", "b", "b", "a"];
+import { burst, reduceMotion } from "../lib/motion.js";
+import { play } from "../lib/sound.js";
 
 /**
- * The photo essay. A twelve-column editorial grid with the captions set as
- * article text and a pull quote dropped in every four prints.
- * Add objects to memory.js and it keeps laying itself out.
+ * Little moments — the wall of polaroids.
+ * Add another object to memory.js and the wall, the numbering and the
+ * swipe-through viewer all grow on their own.
  */
 export function mountGallery({ photos, heading, quotes = [], onOpen }) {
-  const grid = $("#gallery");
+  const wall = $("#wall");
+  if (!wall) return;
 
   const blocks = [];
+
   photos.forEach((photo, i) => {
-    blocks.push(tileMarkup(photo, i, heading.tapHint || "Tap to open"));
-    if ((i + 1) % 4 === 0 && quotes[(i + 1) / 4 - 1]) {
-      blocks.push(quoteMarkup(quotes[(i + 1) / 4 - 1], i));
-    }
+    blocks.push(printMarkup(photo, i, heading.tapHint));
+    const quote = quotes[Math.floor(i / 4)];
+    if ((i + 1) % 4 === 0 && quote) blocks.push(quoteMarkup(quote));
   });
 
-  grid.innerHTML = mastheadMarkup(heading, photos.length) + blocks.join("");
+  wall.innerHTML = `
+    <p class="folio" data-reveal>
+      <span>${esc(heading.issue || "the prints")}</span>
+      <span class="folio__rule" aria-hidden="true"></span>
+      <span class="folio__note">${esc(heading.note || "")}</span>
+      <span>${pad2(photos.length)} prints</span>
+    </p>
+    ${blocks.join("")}`;
 
-  $$(".tile", grid).forEach((tile) => {
-    tile.addEventListener("click", () => onOpen(Number(tile.dataset.index), tile));
-    addParallax(tile);
+  $$(".wall__item", wall).forEach((item) => {
+    const index = Number(item.dataset.index);
+    item.addEventListener("click", () => {
+      play("photo");
+      onOpen(index, item);
+    });
+    /* double-tap a print and the note I wrote beside it appears */
+    item.addEventListener("dblclick", () => {
+      item.classList.add("peeking");
+      burst($(".polaroid", item), 10, 0.6);
+      play("found");
+    });
+    addParallax(item);
   });
 }
 
-function mastheadMarkup(heading, total) {
+function printMarkup(photo, i, hint) {
   return `
-    <div class="mag__masthead" data-reveal>
-      <span class="mag__issue">${esc(heading.issue || "a scrapbook")}</span>
-      <span class="mag__rule" aria-hidden="true"></span>
-      <span class="mag__note">${esc(heading.note || "")}</span>
-      <span class="mag__count">${pad2(total)} prints</span>
-    </div>`;
-}
-
-function tileMarkup(photo, i, hint) {
-  return `
-    <button class="tile tile--${SPANS[i % SPANS.length]}" data-reveal data-index="${i}"
-            style="--rd:${((i % 4) * 0.07).toFixed(2)}s" aria-label="Open photo: ${esc(photo.title)}">
-      <span class="tile__num">${pad2(i + 1)}</span>
-      <span class="tile__media">
-        <img src="${asset(photo.image)}" alt="${esc(photo.title)}"
-             loading="${i < 2 ? "eager" : "lazy"}" decoding="async" />
-        <span class="tile__plus" aria-hidden="true">+</span>
+    <button class="wall__item" data-reveal data-index="${i}"
+            style="--rd:${((i % 4) * 0.07).toFixed(2)}s${photo.ar ? `;--ar:${photo.ar}` : ""}"
+            aria-label="Open photo: ${esc(photo.title)}">
+      <span class="polaroid">
+        <span class="tape" aria-hidden="true"></span>
+        <span class="polaroid__frame">
+          <img src="${asset(photo.image)}" alt="${esc(photo.title)}"
+               loading="${i < 2 ? "eager" : "lazy"}" decoding="async" />
+        </span>
+        <span class="polaroid__foot">
+          <span>${esc(photo.title)}</span>
+          <em>${pad2(i + 1)}</em>
+        </span>
       </span>
-      <span class="tile__cap">
-        ${photo.date ? `<span class="datestamp tile__date">${esc(photo.date)}</span>` : ""}
-        <span class="tile__title">${heart(photo.title)}</span>
-        <span class="tile__note">${heart(photo.caption)}</span>
-        <span class="tile__hint">${esc(hint)}</span>
-      </span>
+      ${photo.note ? `<span class="wall__peek">${esc(photo.note)}</span>` : ""}
     </button>`;
 }
 
-function quoteMarkup(text, i) {
+function quoteMarkup(text) {
   return `
-    <figure class="mag__quote" data-reveal>
+    <figure class="wall__quote" data-reveal>
       <blockquote>${heart(text)}</blockquote>
     </figure>`;
 }
 
-/** The photograph drifts a few pixels toward the pointer, like it has depth. */
-function addParallax(tile) {
+/** The print drifts a few pixels toward the pointer, so it feels lit. */
+function addParallax(item) {
   if (reduceMotion || !window.matchMedia("(pointer: fine)").matches) return;
 
-  const media = $(".tile__media", tile);
-  let frame = 0;
+  const frame = $(".polaroid__frame", item);
+  if (!frame) return;
+  let queued = 0;
 
-  media.addEventListener("pointermove", (e) => {
-    if (frame) return;
-    frame = requestAnimationFrame(() => {
-      frame = 0;
-      const r = media.getBoundingClientRect();
+  frame.addEventListener("pointermove", (e) => {
+    if (queued) return;
+    queued = requestAnimationFrame(() => {
+      queued = 0;
+      const r = frame.getBoundingClientRect();
       const x = (e.clientX - r.left) / r.width - 0.5;
       const y = (e.clientY - r.top) / r.height - 0.5;
-      media.style.setProperty("--px", `${(-x * 12).toFixed(1)}px`);
-      media.style.setProperty("--py", `${(-y * 12).toFixed(1)}px`);
+      frame.style.setProperty("--px", `${(-x * 10).toFixed(1)}px`);
+      frame.style.setProperty("--py", `${(-y * 10).toFixed(1)}px`);
     });
   });
 
   const reset = () => {
-    media.style.setProperty("--px", "0px");
-    media.style.setProperty("--py", "0px");
+    frame.style.setProperty("--px", "0px");
+    frame.style.setProperty("--py", "0px");
   };
-  media.addEventListener("pointerleave", reset);
-  tile.addEventListener("focusout", reset);
+  frame.addEventListener("pointerleave", reset);
 }

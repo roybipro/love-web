@@ -1,0 +1,136 @@
+/* =============================================================
+   The layered background: paper, tooth, light, and slow dust.
+   ============================================================= */
+
+.bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  /* the texture layers are deliberately oversized so their drift never
+     shows an edge — this keeps them from widening the page */
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* 1 — the paper itself, with a soft light falling across it */
+.bg__paper {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(120% 80% at 12% -10%, rgba(255, 253, 248, 0.95), transparent 55%),
+    radial-gradient(90% 70% at 92% 8%, rgba(240, 219, 223, 0.5), transparent 60%),
+    radial-gradient(100% 70% at 50% 108%, rgba(222, 210, 192, 0.6), transparent 62%),
+    var(--paper);
+}
+
+/* 2 — fibre tooth, so the surface is tactile rather than flat */
+.bg__tooth {
+  position: absolute;
+  inset: -50%;
+  opacity: 0.5;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23f)' opacity='.1'/%3E%3C/svg%3E");
+  animation: tooth 9s steps(5) infinite;
+}
+
+@keyframes tooth {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+  25% {
+    transform: translate(-2%, 3%);
+  }
+  50% {
+    transform: translate(2%, -1%);
+  }
+  75% {
+    transform: translate(-1%, -3%);
+  }
+}
+
+/* 3 — a fine grain sitting over everything, like film */
+.bg__grain {
+  position: absolute;
+  inset: -50%;
+  opacity: 0.28;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.1' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)' opacity='.16'/%3E%3C/svg%3E");
+  animation: tooth 6s steps(4) infinite reverse;
+}
+
+/* 4 — slow dust catching the light */
+.bg__dust {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.bg__dust i {
+  position: absolute;
+  bottom: -6%;
+  width: var(--s, 4px);
+  height: var(--s, 4px);
+  border-radius: 50%;
+  background: rgba(176, 141, 87, 0.5);
+  opacity: 0;
+  will-change: transform, opacity;
+  animation: dust var(--t, 26s) linear infinite;
+  animation-delay: var(--dl, 0s);
+}
+
+@keyframes dust {
+  0% {
+    transform: translate3d(0, 0, 0);
+    opacity: 0;
+  }
+  12% {
+    opacity: var(--o, 0.5);
+  }
+  88% {
+    opacity: 0;
+  }
+  100% {
+    transform: translate3d(var(--x, 30px), -112vh, 0);
+    opacity: 0;
+  }
+}
+
+/* a warmth that follows the pointer, desktop only */
+.cursorglow {
+  display: none;
+}
+
+@media (pointer: fine) {
+  .cursorglow {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background: radial-gradient(
+      520px circle at var(--mx, 50%) var(--my, 30%),
+      rgba(217, 168, 176, 0.22),
+      transparent 60%
+    );
+  }
+}
+
+/* reading progress, kept as a thin gold thread */
+.scrollline {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  z-index: 150;
+  pointer-events: none;
+}
+
+.scrollline i {
+  display: block;
+  height: 100%;
+  width: 0;
+  background: linear-gradient(90deg, var(--blush), var(--rose), var(--gold));
+  transition: width 0.12s linear;
+}

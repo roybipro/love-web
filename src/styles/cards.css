@@ -1,76 +1,102 @@
-/* ---------- 4. things i love ---------- */
+/* =============================================================
+   Little things — small paper notes that drift and open.
+   ============================================================= */
 .cards {
   display: grid;
   grid-template-columns: 1fr;
-  gap: clamp(1rem, 2.4vw, 1.6rem);
+  gap: clamp(1.1rem, 3vw, 1.8rem);
   max-width: var(--max);
   margin-inline: auto;
 }
 
-@media (min-width: 660px) {
+@media (min-width: 620px) {
   .cards {
     grid-template-columns: repeat(2, 1fr);
   }
 }
 
-@media (min-width: 1080px) {
+@media (min-width: 1020px) {
   .cards {
     grid-template-columns: repeat(3, 1fr);
+    gap: clamp(1.6rem, 3vw, 2.6rem);
   }
 }
 
-/* a note cut from slightly brighter paper */
+/* a folded slip of paper with a pin in it */
 .card {
   position: relative;
   display: block;
   width: 100%;
   text-align: left;
-  padding: clamp(1.7rem, 4vw, 2.4rem) clamp(1.4rem, 3.5vw, 1.9rem) clamp(1.5rem, 3.5vw, 1.9rem);
-  border-radius: 3px;
-  background: var(--card);
-  border: 1px solid var(--line-soft);
-  box-shadow: var(--sh-sm);
+  padding: clamp(1.9rem, 4.5vw, 2.6rem) clamp(1.3rem, 3.5vw, 1.7rem) clamp(1.4rem, 3.5vw, 1.8rem);
+  background: linear-gradient(168deg, var(--card) 0%, #fdf8f0 100%);
+  border-radius: 2px 6px 3px 5px;
+  box-shadow: var(--sh-2);
   overflow: hidden;
   isolation: isolate;
-  transition: border-color var(--t-mid) ease, transform var(--t-mid) var(--ease),
-    box-shadow var(--t-mid) ease;
+  transform: rotate(var(--tilt, 0deg));
+  transition: transform var(--t-mid) var(--spring), box-shadow var(--t-mid) ease;
 }
 
-.card:nth-of-type(3n + 1) {
-  transform: rotate(-0.4deg);
+.card:nth-of-type(4n + 1) {
+  --tilt: -0.9deg;
 }
-.card:nth-of-type(3n + 2) {
-  transform: rotate(0.3deg);
+.card:nth-of-type(4n + 2) {
+  --tilt: 0.7deg;
 }
-.card:nth-of-type(3n + 3) {
-  transform: rotate(-0.2deg);
+.card:nth-of-type(4n + 3) {
+  --tilt: -0.4deg;
+}
+.card:nth-of-type(4n + 4) {
+  --tilt: 1.1deg;
 }
 
-/* a blush wash rises from the top when it opens */
+/* the pin */
+.card::after {
+  content: "";
+  position: absolute;
+  z-index: 3;
+  top: 11px;
+  left: 50%;
+  width: 11px;
+  height: 11px;
+  margin-left: -5.5px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 32%, #fff8, transparent 42%), var(--rose);
+  box-shadow: 0 2px 4px rgba(60, 42, 32, 0.3), inset 0 -1px 2px rgba(0, 0, 0, 0.18);
+}
+
+/* the blush wash that rises when it opens */
 .card::before {
   content: "";
   position: absolute;
   inset: 0;
   z-index: -1;
-  background: linear-gradient(180deg, var(--blush-soft), rgba(246, 223, 227, 0) 72%);
+  background: linear-gradient(180deg, var(--blush-soft), rgba(240, 219, 223, 0) 70%);
   opacity: 0;
   transition: opacity var(--t-slow) ease;
 }
 
 .card:hover {
-  transform: rotate(0deg) translateY(-5px);
-  box-shadow: var(--sh-md);
-  border-color: var(--line);
+  transform: rotate(0deg) translateY(-7px);
+  box-shadow: var(--sh-3);
 }
 
 .card.open {
   transform: rotate(0deg);
-  border-color: var(--blush);
-  box-shadow: var(--sh-md);
+  box-shadow: var(--sh-lift);
 }
 
 .card.open::before {
   opacity: 1;
+}
+
+.card__idx {
+  display: block;
+  margin-bottom: 1.3rem;
+  font-family: var(--hand);
+  font-size: 1.05rem;
+  color: var(--faint);
 }
 
 .card__top {
@@ -81,37 +107,21 @@
   gap: 1rem;
 }
 
-/* a small numbered label above the title, not a watermark behind it */
-.card__idx {
-  display: block;
-  margin-bottom: 1.15rem;
-  font-size: 0.6rem;
-  font-weight: 400;
-  letter-spacing: 0.28em;
-  color: var(--faint);
-  transition: color var(--t-mid) ease;
-}
-
-.card.open .card__idx {
-  color: var(--rose);
-}
-
 .card__title {
-  position: relative;
   font-family: var(--display);
-  font-size: clamp(1.45rem, 4.2vw, 1.95rem);
-  line-height: 1.1;
-  letter-spacing: -0.025em;
+  font-size: clamp(1.45rem, 4.2vw, 1.9rem);
+  font-weight: 400;
+  line-height: 1.12;
+  letter-spacing: -0.03em;
   flex: 1;
-  color: var(--ink);
 }
 
 .card__toggle {
   position: relative;
   flex: none;
-  width: 28px;
-  height: 28px;
-  margin-top: 0.15em;
+  width: 26px;
+  height: 26px;
+  margin-top: 0.2em;
 }
 
 .card__toggle::before,
@@ -120,7 +130,7 @@
   position: absolute;
   left: 50%;
   top: 50%;
-  width: 13px;
+  width: 12px;
   height: 1px;
   background: var(--rose);
   transition: transform var(--t-mid) var(--ease), opacity var(--t-fast) ease;
@@ -155,18 +165,39 @@
 
 .card__text {
   display: block;
-  padding-top: 1.2rem;
+  padding-top: 1.15rem;
   color: var(--muted);
-  font-size: 0.96rem;
+  font-size: 0.94rem;
   font-weight: 300;
   line-height: 1.9;
-  max-width: 40ch;
+  max-width: 38ch;
   opacity: 0;
   transform: translateY(9px);
-  transition: opacity 0.65s ease 0.12s, transform 0.85s var(--ease) 0.12s;
+  transition: opacity 0.65s ease 0.14s, transform 0.85s var(--ease) 0.14s;
 }
 
 .card.open .card__text {
   opacity: 1;
   transform: none;
+}
+
+/* the gentle drift, only once the note is on screen */
+.card.in {
+  animation: drift var(--ft, 8s) ease-in-out infinite alternate;
+  animation-delay: var(--fdl, 0s);
+}
+
+@keyframes drift {
+  from {
+    translate: 0 0;
+  }
+  to {
+    translate: 0 -7px;
+  }
+}
+
+/* a hover lift should not fight the drift, so the lift wins */
+.card.in:hover,
+.card.in.open {
+  animation-play-state: paused;
 }

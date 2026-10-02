@@ -1,0 +1,214 @@
+/* =============================================================
+   Story spreads — the chapters that hold a single memory.
+   ============================================================= */
+
+.spread {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(2.4rem, 6vw, 4.5rem);
+  align-items: center;
+}
+
+@media (min-width: 900px) {
+  .spread {
+    grid-template-columns: 0.9fr 1.1fr;
+  }
+  .spread--flip .spread__text {
+    order: -1;
+  }
+}
+
+.spread__photo {
+  position: relative;
+  width: min(100%, 380px);
+  margin-inline: auto;
+}
+
+/* a little note pinned beside the photo, kept inside the page edge */
+.spread__note {
+  position: absolute;
+  z-index: 5;
+  right: 0;
+  bottom: -7%;
+  max-width: min(230px, 78%);
+  text-align: center;
+}
+
+.spread__text {
+  position: relative;
+}
+
+.spread__text h3 {
+  font-family: var(--display);
+  font-size: var(--fs-h3);
+  font-weight: 400;
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+  margin-bottom: 1.1rem;
+}
+
+.spread__text p {
+  color: var(--muted);
+  max-width: 46ch;
+}
+
+.spread__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem 1.1rem;
+  margin-bottom: 1.4rem;
+}
+
+/* the real story, set as article text on a torn sheet */
+.story {
+  padding: clamp(1.8rem, 5vw, 2.6rem) clamp(1.4rem, 4vw, 2.2rem);
+  background: var(--card);
+  box-shadow: var(--sh-3);
+}
+
+.story p {
+  color: var(--ink-2);
+  line-height: 1.9;
+  max-width: 44ch;
+}
+
+.story p + p {
+  margin-top: 1.1rem;
+}
+
+.story p:last-child {
+  font-family: var(--display);
+  font-size: clamp(1.3rem, 4.5vw, 1.8rem);
+  line-height: 1.4;
+  color: var(--burgundy);
+  margin-top: 1.5rem;
+}
+
+/* a big quotation mark stands in where a photo would be */
+.bigquote {
+  display: grid;
+  place-items: center;
+  height: min(52vw, 320px);
+  font-family: var(--display);
+  font-size: clamp(9rem, 26vw, 16rem);
+  line-height: 1;
+  color: var(--blush-soft);
+  user-select: none;
+}
+
+/* ---------- favourite memories ---------- */
+.favourites {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(2.2rem, 6vw, 3.5rem);
+  align-items: start;
+}
+
+@media (min-width: 700px) {
+  .favourites {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .favourites > :nth-child(1) {
+    margin-top: 2.5rem;
+  }
+  .favourites > :nth-child(3) {
+    margin-top: 1.2rem;
+  }
+}
+
+/* ---------- the letter ---------- */
+.letter {
+  position: relative;
+  max-width: 720px;
+  margin-inline: auto;
+}
+
+.letter__page {
+  position: relative;
+  padding: clamp(2.4rem, 8vw, 4.5rem) clamp(1.6rem, 6vw, 3.4rem) clamp(3.4rem, 9vw, 4.5rem);
+  background:
+    linear-gradient(180deg, rgba(255, 253, 248, 0.9), rgba(250, 244, 234, 0.9)),
+    var(--card);
+  box-shadow: var(--sh-lift);
+  border-radius: 3px 9px 4px 7px;
+}
+
+/* faint ruled lines so it reads as written, not typeset */
+.letter__page::before {
+  content: "";
+  position: absolute;
+  inset: clamp(2.4rem, 8vw, 4.5rem) clamp(1.6rem, 6vw, 3.4rem) 3rem;
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0 37px,
+    rgba(43, 33, 28, 0.055) 37px 38px
+  );
+  pointer-events: none;
+}
+
+.letter__greeting {
+  position: relative;
+  font-family: var(--hand);
+  font-size: clamp(1.8rem, 6vw, 2.6rem);
+  color: var(--burgundy);
+  margin-bottom: 1.4rem;
+}
+
+.letter__body {
+  position: relative;
+}
+
+.letter__line {
+  font-family: var(--display);
+  font-size: clamp(1.4rem, 5vw, 2.1rem);
+  line-height: 1.55;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+
+.letter__line + .letter__line {
+  margin-top: 0.6rem;
+}
+
+.letter__love {
+  margin-top: clamp(2.4rem, 7vh, 3.6rem);
+  font-family: var(--display);
+  font-size: clamp(2.4rem, 10vw, 4.4rem);
+  line-height: 1.05;
+  letter-spacing: -0.04em;
+}
+
+.letter__sign {
+  display: block;
+  margin-top: clamp(1.6rem, 5vh, 2.4rem);
+  text-align: right;
+  transform: rotate(-3deg);
+}
+
+/* two small hearts doodled in the corner */
+.letter__doodles {
+  position: absolute;
+  right: clamp(1.4rem, 5vw, 2.6rem);
+  top: clamp(1.6rem, 5vw, 2.6rem);
+  display: flex;
+  gap: 0.4rem;
+  font-size: 0.9rem;
+  color: var(--rose);
+  opacity: 0.55;
+}
+
+/* the scratch card, kept as the postscript of the letter */
+.letter__ps {
+  margin-top: clamp(3.5rem, 9vh, 5.5rem);
+  padding-top: clamp(2.4rem, 6vh, 3.4rem);
+  border-top: 1px solid var(--line);
+  text-align: center;
+}
+
+.letter__ps-label {
+  font-family: var(--hand);
+  font-size: clamp(1.4rem, 5vw, 1.9rem);
+  color: var(--burgundy);
+  margin-bottom: 1.6rem;
+}

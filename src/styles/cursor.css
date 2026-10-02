@@ -1,0 +1,73 @@
+/* =============================================================
+   Cursor — a dot, a lazy ring, and the occasional heart.
+   Desktop only; never on touch.
+   ============================================================= */
+@media (pointer: fine) {
+  .cursor-dot,
+  .cursor-ring {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 250;
+    pointer-events: none;
+    border-radius: 50%;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    will-change: transform;
+  }
+
+  body.cursor-on .cursor-dot,
+  body.cursor-on .cursor-ring {
+    opacity: 1;
+  }
+
+  .cursor-dot {
+    width: 5px;
+    height: 5px;
+    margin: -2.5px 0 0 -2.5px;
+    background: var(--burgundy);
+  }
+
+  .cursor-ring {
+    width: 30px;
+    height: 30px;
+    margin: -15px 0 0 -15px;
+    border: 1px solid rgba(176, 87, 107, 0.45);
+    transition: opacity 0.4s ease, width var(--t-mid) var(--spring),
+      height var(--t-mid) var(--spring), margin var(--t-mid) var(--spring),
+      background var(--t-mid) ease, border-color var(--t-mid) ease;
+  }
+
+  /* it swells over anything she could press */
+  body.cursor-hot .cursor-ring {
+    width: 52px;
+    height: 52px;
+    margin: -26px 0 0 -26px;
+    background: rgba(217, 168, 176, 0.18);
+    border-color: transparent;
+  }
+
+  .ctrail {
+    position: fixed;
+    z-index: 249;
+    pointer-events: none;
+    color: var(--rose);
+    font-size: 12px;
+    opacity: 0;
+    will-change: transform, opacity;
+  }
+}
+
+/* phones and tablets get nothing at all */
+@media (pointer: coarse) {
+  .cursor-dot,
+  .cursor-ring,
+  .ctrail {
+    display: none !important;
+  }
+}
+
+/* magnetic buttons lean toward the pointer */
+.magnet {
+  transition: transform 0.45s var(--ease);
+}

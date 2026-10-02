@@ -1,36 +1,54 @@
 import { $, $$, asset, heart, pad2 } from "../lib/dom.js";
 import { reduceMotion } from "../lib/motion.js";
+import { play } from "../lib/sound.js";
 
 const ZOOM = "transform .62s cubic-bezier(.2,.8,.2,1), opacity .35s ease";
 
 /**
- * The photo viewer. Opens by zooming out of whichever tile was tapped
- * (a FLIP animation), closes by zooming back into it if it's still on screen.
+ * The photo viewer. It opens by growing out of whichever print she
+ * tapped — a FLIP animation, so the frame she was looking at becomes
+ * the big one rather than a new window appearing.
  */
 export function createLightbox(photos) {
   const lb = $("#lb");
-  const frame = $(".lb__frame", lb);
-  const img = $("#lbImg", lb);
-  const caption = $(".lb__cap", lb);
+  const mat = $(".lb__mat");
+  const frame = $(".lb__frame");
+  const img = $("#lbImg");
+  const caption = $(".lb__cap");
 
   let index = 0;
   let origin = null;
   let restoreFocus = null;
 
-  const tileMedia = (i) => {
-    const tile = $$(".tile")[i];
-    return tile ? $(".tile__media", tile) : null;
+  /** the box to zoom out of, whatever kind of print she tapped */
+  const originBox = (el) =>
+    $(".polaroid__frame", el) || $(".tl__shot", el) || $(".reveal-card__frame", el) || el;
+
+  const tileFrame = (i) => {
+    const item = $$(".wall__item")[i];
+    return item ? $(".polaroid__frame", item) : null;
   };
 
   function paint(i) {
     const photo = photos[i];
     img.src = asset(photo.image);
     img.alt = photo.title;
+
     const date = $("#lbDate");
     date.textContent = photo.date || "";
     date.hidden = !photo.date;
+
+    const place = $("#lbPlace");
+    place.textContent = photo.place || "";
+    place.hidden = !photo.place;
+
     $("#lbTitle").innerHTML = heart(photo.title);
     $("#lbCaption").innerHTML = heart(photo.caption);
+
+    const note = $("#lbNote");
+    note.textContent = photo.note || "";
+    note.hidden = !photo.note;
+
     $("#lbCount").textContent = `${pad2(i + 1)} / ${pad2(photos.length)}`;
   }
 
@@ -41,21 +59,19 @@ export function createLightbox(photos) {
     lb.hidden = false;
     document.body.classList.add("lb-open");
 
-    origin = (fromEl && $(".tile__media", fromEl)) || (fromEl && $(".tl__shot", fromEl)) || fromEl || tileMedia(i);
+    origin = (fromEl && originBox(fromEl)) || fromEl || tileFrame(i);
 
     const from = origin?.getBoundingClientRect();
-
-    /* match the frame to the print she tapped, so the zoom never stretches */
     if (from?.width && from?.height) {
+      /* match the mount to the print she tapped so the zoom never stretches */
       frame.style.setProperty("--ar", (from.width / from.height).toFixed(4));
     }
-
     const to = frame.getBoundingClientRect();
 
     if (!reduceMotion && from?.width && to.width) {
       img.style.transition = "none";
       img.style.transform = `translate(${from.left - to.left}px, ${from.top - to.top}px) scale(${from.width / to.width}, ${from.height / to.height})`;
-      img.style.opacity = "0.35";
+      img.style.opacity = "0.4";
       requestAnimationFrame(() => {
         lb.classList.add("is-open");
         img.style.transition = ZOOM;
@@ -96,13 +112,14 @@ export function createLightbox(photos) {
     origin = null;
   }
 
-  /** Step to the previous/next photo without leaving the viewer. */
+  /** Step to the previous/next print without leaving the viewer. */
   function go(direction) {
     index = (index + direction + photos.length) % photos.length;
+    play("click");
 
     if (reduceMotion) {
       paint(index);
-      origin = tileMedia(index) || origin;
+      origin = tileFrame(index) || origin;
       return;
     }
 
@@ -113,7 +130,7 @@ export function createLightbox(photos) {
 
     setTimeout(() => {
       paint(index);
-      origin = tileMedia(index) || origin;
+      origin = tileFrame(index) || origin;
       img.style.transition = "opacity .4s ease, transform .55s cubic-bezier(.2,.8,.2,1)";
       img.style.opacity = "1";
       img.style.transform = "translate(0,0)";
@@ -134,12 +151,13 @@ export function createLightbox(photos) {
     if (e.key === "ArrowRight") go(1);
   });
 
-  let touchStartX = 0;
-  lb.addEventListener("touchstart", (e) => (touchStartX = e.changedTouches[0].clientX), { passive: true });
+  /* swipe, because arrows are off on phones */
+  let startX = 0;
+  lb.addEventListener("touchstart", (e) => (startX = e.changedTouches[0].clientX), { passive: true });
   lb.addEventListener(
     "touchend",
     (e) => {
-      const dx = e.changedTouches[0].clientX - touchStartX;
+      const dx = e.changedTouches[0].clientX - startX;
       if (Math.abs(dx) > 48) go(dx < 0 ? 1 : -1);
     },
     { passive: true },

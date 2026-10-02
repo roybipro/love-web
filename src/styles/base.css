@@ -21,7 +21,7 @@ body {
   font-family: var(--sans);
   font-weight: 300;
   font-size: var(--fs-body);
-  line-height: 1.7;
+  line-height: 1.75;
   min-height: 100dvh;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
@@ -52,7 +52,7 @@ ul {
 }
 
 :focus-visible {
-  outline: 1px solid var(--rose);
+  outline: 2px solid var(--rose);
   outline-offset: 5px;
 }
 
@@ -61,89 +61,224 @@ ul {
   color: var(--wine);
 }
 
-/* ---------- shared voice ---------- */
+/* =============================================================
+   Type
+   ============================================================= */
+.display {
+  font-family: var(--display);
+  font-weight: 400;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+}
 
-/* a date, small and letterspaced */
+.hand {
+  font-family: var(--hand);
+  color: var(--burgundy);
+}
+
 .datestamp {
   font-family: var(--sans);
-  font-size: 0.64rem;
+  font-size: 0.62rem;
   font-weight: 400;
-  letter-spacing: 0.26em;
+  letter-spacing: 0.28em;
   text-transform: uppercase;
   color: var(--faint);
 }
 
-/* his signature, in pen */
 .signature {
-  font-family: var(--script);
+  font-family: var(--hand);
   font-size: clamp(2.4rem, 7vw, 3.4rem);
   line-height: 1;
   color: var(--wine);
-  font-weight: 400;
 }
 
-.head {
-  max-width: var(--max);
-  margin: 0 auto clamp(1.6rem, 3vw, 2.2rem);
-}
-
-.head__kicker {
-  display: flex;
-  align-items: center;
-  gap: 0.9rem;
-  font-size: 0.62rem;
-  font-weight: 400;
-  letter-spacing: 0.3em;
-  text-transform: uppercase;
-  color: var(--faint);
-  margin-bottom: 1.6rem;
-}
-
-.head__kicker::before {
-  content: "";
-  flex: none;
-  width: clamp(1.8rem, 6vw, 3.2rem);
-  height: 1px;
-  background: var(--blush);
-}
-
-.head__title {
-  font-family: var(--display);
-  font-weight: 400;
-  font-size: var(--fs-h2);
-  line-height: 1;
-  letter-spacing: -0.025em;
-  max-width: 14ch;
-}
-
-.head__lead {
-  color: var(--muted);
-  font-weight: 300;
-  max-width: 38ch;
-}
-
-.section {
+/* =============================================================
+   Page shell
+   ============================================================= */
+.site {
   position: relative;
   z-index: 2;
-  padding: clamp(6rem, 18vh, 12rem) var(--pad);
 }
 
-.section--tight {
-  padding-top: clamp(3rem, 9vh, 6rem);
+.chapter {
+  position: relative;
+  z-index: 2;
+  padding: clamp(6rem, 17vh, 12rem) var(--pad);
+  scroll-margin-top: 0;
 }
 
-.section > * {
+.chapter__inner {
+  position: relative;
   max-width: var(--max);
   margin-inline: auto;
 }
 
-.section__lead {
-  margin: 0 auto clamp(3.4rem, 9vw, 6rem);
+/* the chapter heading block */
+.head {
+  position: relative;
+  margin-bottom: clamp(3rem, 8vw, 5.5rem);
 }
 
-/* ---------- word-mask reveal ----------
-   JS splits [data-split] text into .w > i so each word rises out of
-   its own clip. The padding/margin pair protects descenders. */
+.head__label {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  margin-bottom: 1.3rem;
+  font-size: 0.6rem;
+  font-weight: 400;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--faint);
+}
+
+.head__label::before {
+  content: "";
+  flex: none;
+  width: clamp(1.6rem, 6vw, 3rem);
+  height: 1px;
+  background: var(--blush);
+}
+
+/* the memory number, set large and pale in the margin */
+.head__no {
+  position: absolute;
+  top: -0.42em;
+  left: -0.06em;
+  z-index: -1;
+  font-family: var(--display);
+  font-size: clamp(6rem, 22vw, 15rem);
+  line-height: 1;
+  color: var(--paper-2);
+  user-select: none;
+  pointer-events: none;
+}
+
+@media (min-width: 900px) {
+  .head__no {
+    left: auto;
+    right: -0.04em;
+  }
+}
+
+.head__title {
+  font-family: var(--display);
+  font-size: var(--fs-h2);
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: -0.035em;
+  max-width: 15ch;
+}
+
+.head__title em {
+  font-style: italic;
+  color: var(--burgundy);
+}
+
+.head__lead {
+  margin-top: 1.3rem;
+  max-width: 42ch;
+  color: var(--muted);
+}
+
+/* =============================================================
+   Buttons
+   ============================================================= */
+.btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.9rem;
+  padding: 1.05rem 2.2rem;
+  border-radius: 999px;
+  font-size: 0.68rem;
+  font-weight: 400;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--ivory);
+  background: var(--ink);
+  overflow: hidden;
+  isolation: isolate;
+  transition: transform var(--t-mid) var(--spring), box-shadow var(--t-mid) ease,
+    color var(--t-fast) ease;
+  box-shadow: var(--sh-2);
+}
+
+.btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(100deg, var(--burgundy), var(--rose));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.6s var(--ease);
+}
+
+.btn:hover::before {
+  transform: scaleX(1);
+}
+
+.btn:hover {
+  box-shadow: var(--sh-3);
+}
+
+.btn:active {
+  transform: scale(0.98);
+}
+
+.btn__arrow {
+  transition: transform var(--t-mid) var(--ease);
+}
+
+.btn:hover .btn__arrow {
+  transform: translateX(6px);
+}
+
+/* a bare word with a rule that redraws itself on hover */
+.btn--line {
+  padding: 0.3rem 0;
+  background: none;
+  box-shadow: none;
+  color: var(--ink);
+  overflow: visible;
+}
+
+.btn--line::before {
+  inset: auto 0 -3px 0;
+  height: 1px;
+  background: var(--line);
+  transform: none;
+  transition: opacity var(--t-fast) ease;
+}
+
+.btn--line:hover::before {
+  opacity: 0;
+}
+
+.btn--line::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 -3px 0;
+  height: 1px;
+  background: var(--rose);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.5s var(--ease);
+}
+
+.btn--line:hover::after {
+  transform: scaleX(1);
+}
+
+.btn--line:hover {
+  box-shadow: none;
+}
+
+/* =============================================================
+   Reveals
+   ============================================================= */
+
+/* word-mask: JS splits [data-split] into .w > i so each word rises */
 [data-split] .w {
   display: inline-block;
   overflow: hidden;
@@ -164,10 +299,10 @@ ul {
   transform: translateY(0);
 }
 
-/* ---------- scroll reveal ---------- */
+/* generic rise-in */
 [data-reveal] {
   opacity: 0;
-  transform: translateY(24px);
+  transform: translateY(26px);
   transition: opacity 1s ease var(--rd, 0s), transform 1.2s var(--ease) var(--rd, 0s);
 }
 
@@ -176,7 +311,17 @@ ul {
   transform: none;
 }
 
-/* ---------- entrance fade (opening screen only) ---------- */
+/* a wipe that uncovers left to right, for images */
+[data-wipe] {
+  clip-path: inset(0 100% 0 0);
+  transition: clip-path 1.4s var(--ease) var(--rd, 0s);
+}
+
+[data-wipe].in {
+  clip-path: inset(0 0 0 0);
+}
+
+/* entrance fade, used on the cover */
 [data-fade] {
   opacity: 0;
   transform: translateY(14px);
@@ -189,4 +334,113 @@ ul {
     opacity: 1;
     transform: none;
   }
+}
+
+/* the beating heart, reused anywhere */
+.beat {
+  display: inline-block;
+  animation: beat 2.8s var(--ease) infinite;
+}
+
+@keyframes beat {
+  0%,
+  42%,
+  100% {
+    transform: scale(1);
+  }
+  10% {
+    transform: scale(1.2);
+  }
+  20% {
+    transform: scale(0.97);
+  }
+  30% {
+    transform: scale(1.12);
+  }
+}
+
+/* slow floating, for decorative pieces */
+.float {
+  animation: bob var(--t, 7s) ease-in-out infinite alternate;
+  animation-delay: var(--dl, 0s);
+}
+
+@keyframes bob {
+  from {
+    transform: translateY(0) rotate(var(--tilt, 0deg));
+  }
+  to {
+    transform: translateY(-12px) rotate(calc(var(--tilt, 0deg) + 1.5deg));
+  }
+}
+
+/* =============================================================
+   Odds and ends
+   ============================================================= */
+
+/* holds the SVG filter definitions out of the layout */
+.svg-defs {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}
+
+/* the opening page of the book itself */
+.titlepage {
+  position: relative;
+  max-width: 660px;
+  margin-inline: auto;
+  text-align: center;
+  padding: clamp(2rem, 6vw, 4rem) 0;
+}
+
+.titlepage .sticker {
+  position: absolute;
+  top: -1rem;
+  right: 4%;
+}
+
+.titlepage__kicker {
+  font-size: 0.6rem;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--faint);
+  margin-bottom: 1.4rem;
+}
+
+.titlepage__title {
+  font-family: var(--display);
+  font-size: clamp(2.6rem, 10vw, 5rem);
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: -0.04em;
+}
+
+.titlepage__note {
+  margin: 1.6rem auto 0;
+  max-width: 34ch;
+  transform: rotate(-1.2deg);
+}
+
+.titlepage .rule {
+  margin: clamp(2rem, 5vh, 3rem) auto;
+  max-width: 200px;
+}
+
+.titlepage__scroll {
+  font-size: 0.6rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--faint);
+}
+
+/* the small print at the very end */
+.colophon {
+  margin-top: clamp(4rem, 10vh, 7rem);
+  text-align: center;
+  font-size: 0.58rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--faint);
 }

@@ -1,7 +1,10 @@
-# For You ❤️
+# Our Story
 
-A small scrapbook website — one page, no login, no database, nothing to maintain.
-Built for one person.
+A handcrafted digital scrapbook — one page, no login, no database, nothing to
+maintain. Built for one person.
+
+Eight memories, read top to bottom: the cover, how we met, our first memory,
+little moments, favourite memories, things I love, our timeline, and a letter.
 
 ---
 
@@ -10,12 +13,7 @@ Built for one person.
 ```bash
 npm install     # once
 npm run dev     # then open the web address it prints
-```
-
-To make a real folder of files you can upload anywhere:
-
-```bash
-npm run build   # output lands in dist/
+npm run build   # a plain dist/ folder you can upload anywhere
 ```
 
 ---
@@ -24,10 +22,10 @@ npm run build   # output lands in dist/
 
 **`src/content/memory.js`**
 
-Every word and every photo on the site comes from that one file. Change the
-text, change a date, add a card. Save, and the browser updates itself.
+Every word and every photo comes from that one file. Change the text, add a
+print, swap the cover photo. Save and the browser updates itself.
 
-There are comments in the file showing exactly what each part does.
+The comments in the file explain each block.
 
 ---
 
@@ -40,46 +38,56 @@ There are comments in the file showing exactly what each part does.
 {
   image: "/photos/date-1.jpg",
   date: "",
+  place: "",
   title: "Our First Date",
   caption: "One of my favourite days with you ❤️",
+  note: "the little line written beside it",
 }
 ```
 
-That's it — the grid grows on its own, and the new photo joins the swipe
-through the viewer.
+The wall grows on its own, the numbering fixes itself, and the new print joins
+the swipe-through viewer.
 
-The photos lay themselves out on a twelve-column editorial grid — each one
-numbered, alternating wide and narrow so the rows never look like a table —
-with a pull quote dropped in every four prints. Edit those lines in the
-`pullQuotes` list in `memory.js`; add or remove as many as you like.
-`date` is optional everywhere: leave it `""` and no date is shown. Put
-`"12 January 2025"` in whenever you want one to appear.
+**Optional fields — leave them `""` and they disappear without leaving a gap:**
+
+| Field   | What it does                                              |
+| ------- | --------------------------------------------------------- |
+| `date`  | e.g. `"12 January 2025"`. Nothing is invented for you.     |
+| `place` | a small stamped label, e.g. `"Sylhet"`                     |
+| `note`  | the handwritten aside — hover the print, or double-tap it  |
+| `ar`    | the shape of the print, e.g. `"4 / 3"` for a landscape     |
+
+Without `ar`, a print is cropped to a portrait square like the rest of the
+wall. Give a landscape photo `ar: "4 / 3"` and it shows itself whole.
 
 **Tips**
 
-- Portrait (taller than wide) photos look best — the layout is built around them.
-- Filenames with spaces are fine, but no spaces is easier to type.
-- The current photos are already resized for the web. New ones aren't, so very
-  large phone photos can be slow. Anything under ~500 KB is ideal.
+- The existing photos are already resized for the web. New ones aren't, so big
+  phone photos will be slow. Under ~500 KB is ideal.
+- Filenames with spaces work, they're just annoying to type.
 
 ---
 
 ## Changing a section
 
-| What you want to change       | Where                                   |
-| ----------------------------- | --------------------------------------- |
-| Photos, dates, captions       | `photos` in `memory.js`                 |
-| Timeline entries              | `timeline` in `memory.js`               |
-| "Things I love" cards         | `love` in `memory.js`                   |
-| The surprise photo + message  | `surprise` in `memory.js`               |
-| The scratch card prize        | `scratch` in `memory.js`                |
-| The hidden heart note         | `secret` in `memory.js`                 |
-| Opening words, final words    | `intro` / `final` in `memory.js`        |
-| Put her actual name on it     | `herName` at the top of `memory.js`     |
-| Change or remove the song     | `music` in `memory.js` + `public/audio/` |
-| Colours                       | `src/styles/tokens.css`                 |
-| Fonts                         | the `<link>` in `index.html` + `tokens.css` |
-| Spacing and text sizes        | `src/styles/tokens.css`                 |
+| What you want to change      | Where                                    |
+| ---------------------------- | ---------------------------------------- |
+| Her name                     | `herName` at the top of `memory.js`      |
+| The cover photo and words    | `cover` in `memory.js`                   |
+| The chapter list / order     | `memories` in `memory.js`                |
+| How we met                   | `howWeMet`                               |
+| Our first memory             | `firstMemory`                            |
+| The polaroid wall            | `photos` and `galleryHeading`            |
+| The big lines between prints | `pullQuotes`                             |
+| Favourite memories           | `favouritesHeading.picks` (match titles) |
+| The surprise                 | `surprise`                               |
+| "Things I love" notes        | `love`                                   |
+| Timeline entries             | `timeline`                               |
+| The letter                   | `letter`                                 |
+| The scratch card prize       | `scratch`                                |
+| The hidden heart note        | `secret`                                 |
+| The song and its label       | `music` + `public/audio/our-song.mp3`    |
+| Colours, fonts, spacing      | `src/styles/tokens.css`                  |
 
 ---
 
@@ -87,58 +95,81 @@ with a pull quote dropped in every four prints. Edit those lines in the
 
 ```
 public/
-  photos/              drop images here, they're served at /photos/...
+  photos/              images, served at /photos/...
   audio/
-    our-song.mp3       the background music, served at /audio/our-song.mp3
+    our-song.mp3       the background song
 src/
   content/
     memory.js          ← all of your words and photos (edit this)
-  components/          one file per section of the page
-    intro.js           opening screen and the button
-    gallery.js         the photo grid
+  components/          one file per thing on the page
+    loader.js          "our story is loading"
+    cover.js           the book cover and the page turn
+    nav.js             the memory rail and the progress pill
+    story.js           how we met · first memory · favourites
+    gallery.js         the polaroid wall
     lightbox.js        the zoom-in photo viewer
-    timeline.js        the dates
-    love-cards.js      the expanding cards
-    surprise.js        the gift reveal
-    scratch.js         the scratch-off card (the game)
-    secret.js          the hidden note behind the heart
-    music.js           the background song and its toggle
-    copy.js            puts memory.js into the page
+    love-cards.js      the pinned notes that open
+    timeline.js        our little timeline
+    surprise.js        the wrapped gift reveal
+    scratch.js         the scratch-off postscript
+    letter.js          the last page
+    music.js           the player: seek, volume, visualiser
+    secret.js          the hidden heart
+    copy.js            puts memory.js into the static headings
+    cursor.js          the dot, the ring, magnetic buttons
   lib/
-    dom.js             small helpers (selecting elements, escaping text)
-    motion.js          floating hearts, bursts, reduced-motion switch
-    scroll.js          scroll reveals, progress line, timeline drawing
+    dom.js             selecting elements, escaping text, paths
+    motion.js          reduced-motion switch, dust, bursts, paper
+    scroll.js          reveals, progress line, timeline thread
+    sound.js           the optional interface clicks
+    typography.js      splits headings into rising words
   styles/
     index.css          imports everything below, in order
-    tokens.css         colours, fonts, spacing
-    base.css           resets and shared text
-    atmosphere.css     grain, vignette, cursor glow, progress line
-    buttons.css  reveal.css  intro.css  gallery.css  lightbox.css
-    timeline.css  cards.css  surprise.css  final.css
-    reduced-motion.css
+    tokens.css         colours, fonts, spacing, shadows, easing
+    background.css     paper, tooth, grain, dust, glow, progress
+    primitives.css     paper · tape · polaroid · note · sticker · stamp
+    base.css           reset, type, buttons, reveals
+    loader.css  cover.css  nav.css  story.css  gallery.css
+    lightbox.css  timeline.css  cards.css  surprise.css
+    scratch.css  music.css  cursor.css  reduced-motion.css
 index.html             the structure of the page
-vite.config.js         only matters when you deploy
+vite.config.js         relative base — one build works anywhere
 ```
 
-The rule: **content lives in `memory.js`, behaviour lives in `components/`,
-looks live in `styles/`.** Nothing hardcodes a photo path or a sentence
-anywhere else.
+The rule: **content lives in `memory.js`, behaviour in `components/`, looks in
+`styles/`.** No photo path or sentence is hardcoded anywhere else.
+
+---
+
+## Things she has to find herself
+
+- **Double-tap a print** on the wall and the handwritten note beside it pops
+  out with a small burst.
+- **Tap the ❤️ on the cover five times** and a hidden line fades in. Change the
+  wording or the count in `secret` in `memory.js`.
+- **The scratch card** is the letter's postscript — she rubs the silver off
+  with a finger. There's a quiet "tap here" underneath if she'd rather not.
+
+## The music player
+
+The little disc bottom-left opens a compact player with play/pause, a seek bar,
+volume and a visualiser. The song starts on its own when she presses "Open Our
+Story" — that press is the only permission the browser needs.
+
+At the bottom of the player is **Interface sounds**, off by default. Turning it
+on adds very quiet paper clicks to buttons and photos. It remembers her choice.
 
 ---
 
 ## Publishing
 
-`npm run build` gives you a `dist/` folder of plain files. Upload it to any
-static host (Netlify, Vercel, Cloudflare Pages, GitHub Pages).
-
-The build uses relative paths, so it works at the root of a domain *and* in a
-subfolder like `roybipro.github.io/love-web/` with no config changes. Don't
-edit `base` in `vite.config.js` unless a host genuinely complains.
+`npm run build` gives you a `dist/` folder of plain files for any static host.
+The build uses relative paths, so it works at a domain root *and* in a
+subfolder like `roybipro.github.io/love-web/` with no config changes.
 
 ### Updating the GitHub Pages copy
 
-The live Pages site is built from an orphan `gh-pages` branch that holds only
-the contents of `dist/`. To refresh it after changing anything:
+The live Pages site comes from an orphan `gh-pages` branch holding only `dist/`:
 
 ```bash
 npm run build
@@ -150,23 +181,15 @@ git branch -M gh-pages
 git push -f git@github.com:roybipro/love-web.git gh-pages
 ```
 
-Note that `gh-pages` is force-pushed every time — it is disposable output,
-never a place to edit source. Your real work lives on `main`.
+`gh-pages` is force-pushed every time — it is disposable output, never a place
+to edit. Your real work lives on `main`.
 
 ---
 
-## Two things she has to find herself
-
-- **The scratch card** — near the end, a silver card she rubs off with a
-  finger to reveal a photo. If she can't or doesn't want to, there's a quiet
-  "tap here" underneath that opens it.
-- **The hidden note** — tap the ❤️ in "Hey, Ket ❤️" five times on the opening
-  screen and a secret line fades in. Nobody finds this by accident. Change the
-  wording, or the number of taps, in `secret` in `memory.js`.
-
 ## One honest note
 
-No dates are shown anywhere, because I wasn't going to invent yours. The
-captions, the six "things I love" messages and the surprise line are my best
-guess at your voice — read them once and rewrite any line that isn't something
-you'd actually say. That's the change that makes it yours.
+No dates appear anywhere, because I wasn't going to invent yours — put the real
+ones into the `date` fields whenever you like. The captions, the six "things I
+love" notes and the letter are my best guess at your voice. Read them once and
+rewrite any line that isn't something you'd actually say. That's the change
+that makes it yours.

@@ -1,0 +1,251 @@
+/* =============================================================
+   The cover — a closed book that turns open.
+   ============================================================= */
+.cover {
+  position: fixed;
+  inset: 0;
+  z-index: 120;
+  display: grid;
+  place-items: center;
+  padding: var(--pad);
+  perspective: 1800px;
+  perspective-origin: 0% 50%;
+  background: var(--paper);
+}
+
+/* the lid of the book, which is also the whole layout */
+.cover__page {
+  position: relative;
+  z-index: 3;
+  width: min(100%, 760px);
+  padding: clamp(2.6rem, 8vw, 5rem) clamp(1.6rem, 6vw, 4rem);
+  text-align: center;
+  background:
+    radial-gradient(90% 70% at 50% 0%, rgba(240, 219, 223, 0.5), transparent 60%),
+    var(--card);
+  border-radius: 4px 10px 5px 8px;
+  box-shadow: var(--sh-lift);
+  transform-origin: left center;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  transition: transform 1.5s var(--slow), opacity 1.1s ease 0.25s, filter 1.1s ease 0.25s;
+}
+
+/* the stitched spine down the left edge */
+.cover__page::before {
+  content: "";
+  position: absolute;
+  top: 12px;
+  bottom: 12px;
+  left: 14px;
+  width: 1px;
+  background: repeating-linear-gradient(
+    to bottom,
+    var(--gold-soft) 0 7px,
+    transparent 7px 14px
+  );
+}
+
+/* she has already turned the page */
+.cover.is-open .cover__page {
+  transform: rotateY(-104deg) translateX(-6%) scale(0.98);
+  opacity: 0;
+  filter: blur(3px);
+  pointer-events: none;
+}
+
+.cover__kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  font-size: 0.58rem;
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+  color: var(--faint);
+  margin-bottom: clamp(1.8rem, 5vh, 2.8rem);
+}
+
+.cover__kicker::before,
+.cover__kicker::after {
+  content: "";
+  width: 22px;
+  height: 1px;
+  background: var(--blush);
+}
+
+.cover__title {
+  font-family: var(--display);
+  font-size: var(--fs-hero);
+  font-weight: 400;
+  line-height: 0.92;
+  letter-spacing: -0.045em;
+  color: var(--ink);
+}
+
+.cover__title em {
+  font-style: italic;
+  color: var(--burgundy);
+}
+
+.cover__sub {
+  margin: clamp(1.4rem, 4vh, 2.1rem) auto 0;
+  max-width: 30ch;
+  font-family: var(--display);
+  font-style: italic;
+  font-size: clamp(1.15rem, 4.4vw, 1.7rem);
+  line-height: 1.5;
+  color: var(--muted);
+}
+
+.btn--cover {
+  margin-top: clamp(2.4rem, 7vh, 3.4rem);
+}
+
+/* the hidden note lives under the button */
+.cover__secret {
+  margin-top: clamp(1.4rem, 4vh, 2rem);
+  font-family: var(--hand);
+  font-size: clamp(1.3rem, 4.5vw, 1.8rem);
+  color: var(--rose);
+  opacity: 0;
+  transform: translateY(10px) rotate(-1deg);
+  filter: blur(4px);
+  transition: opacity 1.1s ease, transform 1.3s var(--ease), filter 1.1s ease;
+}
+
+.cover__secret.in {
+  opacity: 1;
+  transform: translateY(0) rotate(-1deg);
+  filter: blur(0);
+}
+
+.cover__secret[hidden] {
+  display: none;
+}
+
+/* ---------- things pinned around the cover ---------- */
+.cover__deco {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.cover__deco > * {
+  position: absolute;
+  opacity: 0;
+  animation: settleIn 1.4s var(--ease) forwards;
+}
+
+@keyframes settleIn {
+  from {
+    opacity: 0;
+    translate: 0 20px;
+    scale: 0.94;
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+    scale: 1;
+  }
+}
+
+.cover__snap {
+  width: clamp(88px, 13vw, 150px);
+  padding: 8px 8px 26px;
+  background: var(--card);
+  box-shadow: var(--sh-3);
+  border-radius: 2px;
+}
+
+.cover__snap img {
+  width: 100%;
+  aspect-ratio: 1 / 1.05;
+  object-fit: cover;
+  object-position: center 30%;
+}
+
+.cover__snap .tape {
+  width: 54px;
+  height: 20px;
+  top: -9px;
+  left: 50%;
+  margin-left: -27px;
+}
+
+/* placed by hand, and quietly removed when there is no room */
+.d1 {
+  left: 5%;
+  top: 12%;
+  rotate: -9deg;
+  animation-delay: 0.5s;
+}
+.d2 {
+  right: 6%;
+  top: 16%;
+  rotate: 7deg;
+  animation-delay: 0.7s;
+}
+.d3 {
+  left: 9%;
+  bottom: 11%;
+  rotate: 6deg;
+  animation-delay: 0.9s;
+}
+.d4 {
+  right: 8%;
+  bottom: 14%;
+  rotate: -7deg;
+  animation-delay: 1.1s;
+}
+.d5 {
+  right: 13%;
+  top: 44%;
+  animation-delay: 1.3s;
+}
+.d6 {
+  left: 14%;
+  top: 46%;
+  animation-delay: 1.45s;
+}
+
+@media (max-width: 900px) {
+  .d5,
+  .d6 {
+    display: none;
+  }
+  .d1,
+  .d2 {
+    width: clamp(70px, 22vw, 104px);
+  }
+}
+
+@media (max-width: 620px) {
+  .d3,
+  .d4 {
+    display: none;
+  }
+  .cover__page {
+    padding: 2.6rem 1.4rem;
+  }
+}
+
+/* paper bits thrown by the page turn */
+.flake {
+  position: fixed;
+  z-index: 130;
+  width: var(--s, 10px);
+  height: var(--s, 10px);
+  background: var(--paper-2);
+  box-shadow: var(--sh-1);
+  pointer-events: none;
+  will-change: transform, opacity;
+}
+
+/* the whole cover steps back as the book opens */
+.cover.is-open {
+  transition: opacity 0.7s ease 0.75s, visibility 0s linear 1.45s;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}

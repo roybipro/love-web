@@ -7,175 +7,272 @@
 
     To add a photo:
       1. drop the file into  public/photos/
-      2. copy one of the { } blocks below
+      2. copy one of the { } blocks in `photos`
       3. change "image" to "/photos/your-new-file.jpg"
 
-    `date` is optional everywhere. Leave it as "" and no date is
-    shown anywhere — the layout closes up on its own. Put a real
-    date in (like "12 January 2025") whenever you want one to appear.
+    Three fields are optional everywhere. Leave them "" and they
+    vanish from the page without leaving a gap:
+      date   — e.g. "12 January 2025"
+      place  — e.g. "Sylhet"
+      note   — a line of pen beside the photo
+
+    Anything marked EDIT ME is a placeholder I could not fill in
+    without inventing something about your life. Those are yours.
 */
 
-export const herName = "Ket"; // opening screen becomes "Hey, Ket ❤️"
+export const herName = "Ket";
 
-export const intro = {
-  line: "I made a little something for you.",
-  button: "Open it",
+/*  The cover of the book.                                              */
+export const cover = {
+  kicker: "a scrapbook",
+  titleTo: "To", // becomes "To Ket ❤️"
+  subtitle: "A little place for all the moments that became our story.",
+  button: "Open Our Story",
+  /* four prints pinned around the cover — pick the ones you love most */
+  deco: [
+    "/photos/04-boat-in-lily-pads.jpg",
+    "/photos/12-sunset-laugh.jpg",
+    "/photos/10-durga-puja.jpg",
+    "/photos/03-feet-in-the-river.jpg",
+  ],
 };
 
+/*  The navigation, in the order she reads it.
+    `id` must match the section it points at — don't change those
+    unless you know what you're doing. `label` is what she sees.      */
+export const memories = [
+  { id: "home", label: "Home" },
+  { id: "how-we-met", label: "How We Met" },
+  { id: "first-memory", label: "Our First Memory" },
+  { id: "little-moments", label: "Little Moments" },
+  { id: "favourites", label: "Favourite Memories" },
+  { id: "love", label: "Things I Love" },
+  { id: "timeline", label: "Our Timeline" },
+  { id: "letter", label: "A Letter" },
+];
+
+/*  ============================================================
+    MEMORY 02 — HOW WE MET
+    ============================================================                          */
+export const howWeMet = {
+  label: "Memory 02",
+  title: "How we met",
+  lead: "It started at the English private, with you asking me a question.",
+  /* one paragraph per string — keep them short, they set as article text */
+  paragraphs: [
+    "It was the English private. You asked me, in person, out of nowhere, what my name was — and that was the whole beginning.",
+    "After that we just texted. On button phones, one letter at a time, as friends, with no plan behind any of it.",
+    "Then somehow we got into the same college. Same classes, same sir, same timing. Everything matching by accident.",
+    "And before the HSC exams, when we should both have been studying, I told you I liked you.",
+    "Now we're together.",
+  ],
+  note: "and it still feels lucky",
+  image: "",
+};
+
+/*  ============================================================
+    MEMORY 03 — OUR FIRST MEMORY
+    ============================================================
+    `ar` is the shape of the print. Leave it out and the photo is
+    cropped to a square-ish portrait like the rest of the wall;
+    "4 / 3" lets a landscape photo show itself whole.                 */
+export const firstMemory = {
+  label: "Memory 03",
+  title: "The first photo of us",
+  date: "",
+  place: "",
+  ar: "4 / 3",
+  text: "Blue and gold on one side, green on the other, standing at a railing at night. The first one where we were actually us — not a selfie, not a blur, just the two of us standing there.",
+  note: "we kept this one",
+  image: "/photos/16-first-photo.jpg",
+};
+
+/*  ============================================================
+    MEMORY 04 — LITTLE MOMENTS  (the polaroid wall)
+    ============================================================                          */
 export const galleryHeading = {
-  kicker: "our photos",
-  title: "The days I keep going back to",
-  lead: "Tap any photo to see it bigger.",
+  label: "Memory 04",
+  title: "Little moments",
+  lead: "The days I keep going back to. Tap any print to see it bigger — double-tap it for something I wrote beside it.",
   tapHint: "Tap to open",
-  /* the masthead line above the grid */
-  issue: "a scrapbook",
+  issue: "the prints",
   note: "for Ket",
 };
 
-/*  Big lines of type dropped into the grid between the photos,
-    the way a magazine breaks up a photo essay. One appears every
-    four photos, cycling through these. Add or remove freely.      */
+/*  Big lines of type dropped into the wall, the way a magazine
+    breaks up a photo essay. One appears every four photos.           */
 export const pullQuotes = [
   "Red dupatta, lily pads everywhere, and you laughing at absolutely everything.",
   "I have a hundred photos of you. These are the ones I go back to.",
   "Nothing important happened on any of these days. That was the point.",
 ];
 
-/*  The gallery. Add as many as you like — the editorial grid, the
-    numbering and the swipe-through viewer all adjust on their own.  */
+/*  The wall. Add as many as you like — the layout, the numbering
+    and the swipe-through viewer all adjust on their own.
+    `note` is the hidden line of pen; it shows on hover on a laptop
+    and sits under the print on a phone.                              */
 export const photos = [
+  {
+    image: "/photos/16-first-photo.jpg",
+    date: "",
+    place: "",
+    ar: "4 / 3",
+    title: "The first photo of us",
+    caption:
+      "Blue and gold, green and white, standing at a railing at night. The first one where we were actually us.",
+    note: "we kept this one",
+  },
   {
     image: "/photos/02-winter-sky.jpg",
     date: "",
+    place: "",
     title: "The winter selfie",
     caption: "I didn't know this day would become one of my favourite memories.",
+    note: "cold hands, warm day",
   },
   {
     image: "/photos/01-flower-behind-ear.jpg",
     date: "",
+    place: "",
     title: "The flower",
     caption:
       "You tucked it behind my ear and I wore it the rest of the day. I wasn't giving it back.",
+    note: "I kept it in a book somewhere",
   },
   {
     image: "/photos/03-feet-in-the-river.jpg",
     date: "",
+    place: "",
     title: "Nothing happened",
     caption: "Two pairs of feet, cold water, no plan. Best afternoon of my year.",
+    note: "your toes were freezing",
   },
   {
     image: "/photos/04-boat-in-lily-pads.jpg",
     date: "",
+    place: "",
     title: "The boat day",
     caption:
       "The boatman stopped rowing. Neither of us wanted to be the one to say we should go back.",
+    note: "the red one ❤️",
   },
   {
     image: "/photos/12-sunset-laugh.jpg",
     date: "",
+    place: "",
     title: "Golden hour",
     caption: "The light did something perfect and you were laughing before I even said anything.",
+    note: "best light of the whole year",
   },
   {
     image: "/photos/11-looking-down.jpg",
     date: "",
+    place: "",
     title: "You, looking down",
-    caption: "I took this without asking and you never noticed. My favourite photo of you that isn't a selfie.",
+    caption:
+      "I took this without asking and you never noticed. My favourite photo of you that isn't a selfie.",
+    note: "you never saw me take this",
   },
   {
     image: "/photos/05-the-hug.jpg",
     date: "",
+    place: "",
     title: "Your hair over both our faces",
     caption: "You laughed into my shoulder and I decided I was keeping this day.",
+    note: "I can still hear it",
   },
   {
     image: "/photos/13-into-your-neck.jpg",
     date: "",
+    place: "",
     title: "Laughing too hard",
     caption: "You laughed so hard you had to hide your face. I kept the one where I can still see it.",
+    note: "that butterfly stayed on my hoodie for weeks",
   },
   {
     image: "/photos/06-hand-on-head.jpg",
     date: "",
+    place: "",
     title: "My hand, your head",
     caption: "It just went there. It always goes there.",
+    note: "instinct",
   },
   {
     image: "/photos/15-under-the-trees.jpg",
     date: "",
+    place: "",
     title: "Under the trees",
     caption: "Wind in the branches and your head on my shoulder. We stayed longer than we meant to.",
+    note: "you fell asleep almost",
   },
   {
     image: "/photos/07-cheek-to-cheek.jpg",
     date: "",
+    place: "",
     title: "Cheek to cheek",
     caption: "You leaned in before I did. For once I didn't have to be the brave one.",
+    note: "still surprised you did that",
   },
   {
     image: "/photos/10-durga-puja.jpg",
     date: "",
+    place: "",
     title: "Durga Puja",
     caption:
       "You in green and gold with that little cherry purse, on the one day of the year everyone dresses up. I couldn't take my eyes off you.",
+    note: "the purse made the outfit",
   },
   {
     image: "/photos/08-under-the-umbrella.jpg",
     date: "",
+    place: "",
     title: "The one where we both looked up",
     caption: "Of a hundred photos that day, this is the only one where we both stayed still.",
+    note: "a miracle, honestly",
   },
   {
     image: "/photos/14-on-your-shoulder.jpg",
     date: "",
+    place: "",
     title: "Just resting",
     caption: "Nothing happening. You, on my shoulder, done with the day. I'd take this over any posed photo.",
+    note: "my shoulder, but you can keep it",
   },
 ];
 
-export const timelineHeading = {
-  kicker: "the short version",
-  title: "How it went",
-  lead: "Not every day. Just the ones I'd want to live through again.",
+/*  ============================================================
+    MEMORY 05 — FAVOURITE MEMORIES
+    ============================================================
+    Three prints pulled out of the wall, plus the surprise.           */
+export const favouritesHeading = {
+  label: "Memory 05",
+  title: "Favourite memories",
+  lead: "If the whole book burned and I could carry three prints out, it would be these.",
+  /* which photos, by their title above */
+  picks: ["The boat day", "Golden hour", "Durga Puja"],
 };
 
-/*  The timeline, in order. One photo + one sentence each.
-    `image: ""` is allowed — that makes a text-only entry.          */
-export const timeline = [
-  {
-    date: "",
-    title: "The winter selfie",
-    text: "I checked my phone eleven times before you replied.",
-    image: "/photos/02-winter-sky.jpg",
-  },
-  {
-    date: "",
-    title: "The flower",
-    text: "You put a flower behind my ear in the middle of a busy road.",
-    image: "/photos/01-flower-behind-ear.jpg",
-  },
-  {
-    date: "",
-    title: "The boat day",
-    text: "Red dupatta, lily pads everywhere, and you laughing at absolutely everything.",
-    image: "/photos/04-boat-in-lily-pads.jpg",
-  },
-  {
-    date: "",
-    title: "Still you",
-    text: "Same person, same laugh, still my favourite part of the day.",
-    image: "/photos/14-on-your-shoulder.jpg",
-  },
-];
+/*  The one surprise at the end of that section.                     */
+export const surprise = {
+  prompt: "And one more, that I kept for last...",
+  button: "Open it",
+  image: "/photos/09-you-laughing.jpg",
+  date: "",
+  place: "",
+  title: "If I could relive one day with you, I'd choose this one.",
+  text: "Not the boat, not the river, not the food. This exact second — you, laughing at something I said, head thrown back, not caring who was looking.",
+};
 
+/*  ============================================================
+    MEMORY 06 — THINGS I LOVE ABOUT YOU
+    ============================================================                          */
 export const loveHeading = {
+  label: "Memory 06",
   kicker: "honestly",
-  title: "Things I love about you",
-  lead: "Tap a card. There's something behind each one.",
+  title: "Little things I love about you",
+  lead: "Tap a note. There's something behind each one.",
 };
 
-/*  The cards. Title shows, message hides until she taps it.
-    Add or remove as many as you want.                              */
 export const love = [
   {
     title: "Your Smile",
@@ -203,49 +300,118 @@ export const love = [
   },
 ];
 
-/*  The one surprise. Point `image` at any photo to make it yours. */
-export const surprise = {
-  kicker: "one more thing",
-  prompt: "I have one little surprise for you...",
-  button: "Open it",
-  image: "/photos/09-you-laughing.jpg",
-  date: "",
-  title: "If I could relive one day with you, I'd choose this one.",
-  text: "Not the boat, not the river, not the food. This exact second — you, laughing at something I said, head thrown back, not caring who was looking.",
+/*  ============================================================
+    MEMORY 07 — OUR LITTLE TIMELINE
+    ============================================================
+    One photo + one sentence each. `date` is left empty on purpose —
+    I am not going to invent when things happened. Put your real
+    dates in and they appear automatically.                           */
+export const timelineHeading = {
+  label: "Memory 07",
+  title: "Our little timeline",
+  lead: "Not every day. Just the ones I'd want to live through again.",
 };
 
-/*  Background music.
-    Drop an mp3 into  public/audio/  and point `file` at it.
-    Set file to "" to remove the player entirely.                     */
-export const music = {
-  file: "/audio/our-song.mp3",
-  label: "Our song",
+export const timeline = [
+  {
+    date: "",
+    title: "The English private",
+    text: "You asked me, in person, what my name was. That was the whole beginning.",
+    image: "",
+  },
+  {
+    date: "",
+    title: "Button phones",
+    text: "We texted as friends, one letter at a time, with no plan behind any of it.",
+    image: "",
+  },
+  {
+    date: "",
+    title: "The same college",
+    text: "Same classes, same sir, same timing. Everything matching by accident.",
+    image: "",
+  },
+  {
+    date: "",
+    title: "Before the HSC",
+    text: "When we should have been studying, I told you I liked you.",
+    image: "",
+  },
+  {
+    date: "",
+    title: "The first photo",
+    text: "Blue and gold, green and white, a railing at night.",
+    image: "/photos/16-first-photo.jpg",
+  },
+  {
+    date: "",
+    title: "The flower",
+    text: "You put a flower behind my ear in the middle of a busy road.",
+    image: "/photos/01-flower-behind-ear.jpg",
+  },
+  {
+    date: "",
+    title: "The boat day",
+    text: "Red dupatta, lily pads everywhere, and you laughing at absolutely everything.",
+    image: "/photos/04-boat-in-lily-pads.jpg",
+  },
+  {
+    date: "",
+    title: "Still writing it",
+    text: "Same person, same laugh, still my favourite part of the day.",
+    image: "/photos/14-on-your-shoulder.jpg",
+  },
+];
+
+/*  ============================================================
+    MEMORY 08 — A LETTER FOR YOU
+    ============================================================
+    The last page. The letter is the closing message from the old
+    version, set by hand on paper.                                    */
+export const letter = {
+  label: "Memory 08",
+  title: "A little letter for you",
+  greeting: "Dear Ket,",
+  lines: [
+    "And that's just a few of our memories...",
+    "I can't wait to make many more with you.",
+  ],
+  love: "I love you ❤️",
+  sign: "— Bipro",
 };
 
-/*  The scratch card. She rubs the silver away with a finger to reveal
-    whatever is underneath. Works on a phone and with a mouse.         */
+/*  The scratch card, kept as the letter's postscript.               */
 export const scratch = {
-  kicker: "you have to work for this one",
-  prompt: "There's one last thing. Scratch it off.",
+  ps: "P.S. — there's one last thing. Scratch it off.",
   hint: "Scratch here",
   image: "/photos/13-into-your-neck.jpg",
-  date: "",
   title: "You found the last one.",
   text: "This is the face I think about when we're apart. If you had to keep exactly one photo of us, keep this one. I already did.",
   skip: "Can't scratch it? Tap here",
 };
 
-/*  A secret. Tap the heart in "Hey, Ket ❤️" this many times on the
-    opening screen and a note appears. Nobody finds this by accident.  */
+/*  ============================================================
+    Extras
+    ============================================================                          */
+
+/*  Background music. Drop an mp3 into public/audio/ and point
+    `file` at it. Set file to "" to remove the player entirely.
+    `title` and `artist` are what the player shows.                   */
+export const music = {
+  file: "/audio/our-song.mp3",
+  title: "Iraaday",
+  artist: "Abdul Hannan & Rovalio",
+};
+
+/*  A secret. Tap the heart on the cover this many times and a note
+    appears. Nobody finds this by accident.                           */
 export const secret = {
   taps: 5,
   message: "You found the thing I hid just for you. ❤️",
 };
 
-export const final = {
-  kicker: "the end, for now",
-  line1: "And that's just a few of our memories...",
-  line2: "I can't wait to make many more with you.",
-  line3: "I love you ❤️",
-  sign: "— Bipro",
+/*  Subtle clicks when a page opens or a button is pressed.
+    Off unless she turns it on in the music player.                   */
+export const sound = {
+  enabledByDefault: false,
 };

@@ -1,0 +1,76 @@
+/* =============================================================
+   Loading — brief, quiet, then out of the way.
+   ============================================================= */
+.loader {
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  display: grid;
+  place-items: center;
+  gap: 1.6rem;
+  align-content: center;
+  justify-items: center;
+  background: var(--paper);
+  text-align: center;
+  transition: opacity 0.8s ease, visibility 0s linear 0.8s;
+}
+
+.loader.is-done {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.loader__heart {
+  width: 34px;
+  height: 30px;
+  color: var(--rose);
+  animation: heartPop 1.5s var(--ease) infinite;
+}
+
+.loader__heart svg {
+  width: 100%;
+  height: 100%;
+  fill: currentColor;
+}
+
+@keyframes heartPop {
+  0%,
+  100% {
+    transform: scale(0.86);
+    opacity: 0.55;
+  }
+  35% {
+    transform: scale(1.12);
+    opacity: 1;
+  }
+  60% {
+    transform: scale(0.96);
+  }
+}
+
+.loader__text {
+  font-family: var(--display);
+  font-style: italic;
+  font-size: clamp(1.1rem, 4vw, 1.5rem);
+  color: var(--muted);
+  letter-spacing: -0.01em;
+}
+
+/* a thread of gold that fills while it waits */
+.loader__bar {
+  position: relative;
+  width: min(200px, 52vw);
+  height: 1px;
+  background: var(--line);
+  overflow: hidden;
+}
+
+.loader__bar i {
+  position: absolute;
+  inset: 0;
+  transform-origin: left;
+  transform: scaleX(var(--p, 0));
+  background: linear-gradient(90deg, var(--blush), var(--gold));
+  transition: transform 0.5s var(--ease);
+}

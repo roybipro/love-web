@@ -1,10 +1,10 @@
-import { $, $$, clamp } from "./dom.js";
+import { clamp } from "./dom.js";
 
 let observer;
 
 /**
- * Fade sections in as she scrolls. Started only after the opening screen
- * lifts, so nothing is already "spent" behind the curtain.
+ * Fade sections in as she scrolls. Started only after the cover turns,
+ * so nothing is already spent behind it.
  */
 export function observeReveals() {
   if (observer) return;
@@ -16,41 +16,27 @@ export function observeReveals() {
         observer.unobserve(entry.target);
       }
     },
-    { rootMargin: "0px 0px -12% 0px", threshold: 0.08 },
+    { rootMargin: "0px 0px -10% 0px", threshold: 0.08 },
   );
-  $$("[data-reveal], [data-split]").forEach((el) => observer.observe(el));
+  document.querySelectorAll("[data-reveal], [data-wipe], [data-split]").forEach((el) => observer.observe(el));
 }
 
-/** The hairline at the top that fills as the page is read. */
+/** The hairline at the top that fills as the book is read. */
 function paintProgress() {
   const doc = document.documentElement;
-  const bar = $("#scrollline");
+  const bar = document.getElementById("scrollline");
   if (!bar) return;
   const ratio = doc.scrollTop / Math.max(1, doc.scrollHeight - window.innerHeight);
   bar.style.width = `${clamp(ratio, 0, 1) * 100}%`;
 }
 
-/** The timeline's spine draws itself down as it passes the middle of the screen. */
-function paintTimeline() {
-  const list = $("#timeline-list");
+/** The timeline's thread draws itself as it passes the middle of the screen. */
+function paintThread() {
+  const list = document.getElementById("timeline-list");
   if (!list || !list.childElementCount) return;
   const rect = list.getBoundingClientRect();
   const ratio = (window.innerHeight * 0.62 - rect.top) / Math.max(1, rect.height);
   list.style.setProperty("--draw", clamp(ratio, 0, 1).toFixed(3));
-}
-
-/** A desktop-only warmth that follows the pointer. */
-function trackCursor() {
-  if (!window.matchMedia("(pointer: fine)").matches) return;
-  window.addEventListener(
-    "pointermove",
-    (e) => {
-      const root = document.documentElement.style;
-      root.setProperty("--mx", `${e.clientX}px`);
-      root.setProperty("--my", `${e.clientY}px`);
-    },
-    { passive: true },
-  );
 }
 
 /** Wire up every scroll-linked effect with one rAF-throttled listener. */
@@ -58,7 +44,7 @@ export function watchScroll() {
   let queued = false;
   const run = () => {
     paintProgress();
-    paintTimeline();
+    paintThread();
     queued = false;
   };
 
@@ -71,8 +57,13 @@ export function watchScroll() {
     },
     { passive: true },
   );
-
   window.addEventListener("resize", () => requestAnimationFrame(run), { passive: true });
   run();
-  trackCursor();
+}
+
+/** Smooth scroll to a chapter, respecting reduced motion. */
+export function scrollToSection(id) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.scrollIntoView({ behavior: "smooth", block: "start" });
 }

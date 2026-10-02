@@ -1,4 +1,7 @@
-/* ---------- motion preferences ---------- */
+/* =============================================================
+   Accessibility: honour prefers-reduced-motion everywhere.
+   Nothing may depend on motion to become visible.
+   ============================================================= */
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -10,29 +13,41 @@
     animation-duration: 0.001ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
   }
 
+  /* every reveal must end up visible, not stuck at opacity 0 */
   [data-reveal],
   [data-fade] {
     opacity: 1 !important;
     transform: none !important;
   }
 
-  /* word masks still need to end up visible */
   [data-split] .w > i {
     transform: none !important;
   }
 
-  .intro__rule {
-    transform: scaleX(1) !important;
+  [data-wipe] {
+    clip-path: none !important;
   }
 
-  /* the scattered prints fade in but stop drifting */
-  .intro__scatter img {
+  .cover__page {
+    transform: none !important;
+  }
+
+  .cover__deco > * {
     opacity: 1 !important;
   }
 
-  .fh {
-    display: none;
+  .card.in {
+    animation: none !important;
+  }
+
+  .bg__dust,
+  .fh,
+  .ctrail,
+  .cursor-dot,
+  .cursor-ring {
+    display: none !important;
   }
 }

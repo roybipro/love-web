@@ -1,26 +1,15 @@
-/* ---------- 5. the surprise ---------- */
-.section--surprise {
-  text-align: center;
-  padding-top: clamp(6rem, 18vh, 11rem);
-}
-
-.section--surprise .head__kicker {
-  justify-content: center;
-  margin-bottom: clamp(1.8rem, 5vh, 2.6rem);
-}
-
-.section--surprise .head__kicker::before {
-  display: none;
-}
-
+/* =============================================================
+   Favourite memories — the surprise reveal.
+   ============================================================= */
 .surprise {
   position: relative;
-  max-width: 640px;
-  margin-inline: auto;
+  max-width: 620px;
+  margin: clamp(3rem, 8vw, 5rem) auto 0;
+  text-align: center;
 }
 
 .surprise__stage {
-  transition: opacity 0.55s ease, transform 0.8s var(--ease);
+  transition: opacity 0.6s ease, transform 0.9s var(--ease);
 }
 
 .surprise__stage.gone {
@@ -32,16 +21,15 @@
 .surprise__prompt {
   font-family: var(--display);
   font-style: italic;
-  font-size: clamp(1.7rem, 6.2vw, 2.8rem);
-  line-height: 1.28;
-  letter-spacing: -0.025em;
-  color: var(--ink);
-  margin-bottom: clamp(2.2rem, 6vh, 3rem);
+  font-size: clamp(1.5rem, 5.5vw, 2.4rem);
+  line-height: 1.3;
+  letter-spacing: -0.03em;
+  margin-bottom: clamp(1.8rem, 5vh, 2.6rem);
 }
 
 /* a wrapped gift: a pale ribbon keeps crossing the button */
 .btn--gift {
-  animation: pulse 3.6s ease-in-out infinite;
+  animation: pulse 3.8s ease-in-out infinite;
 }
 
 .btn__ribbon {
@@ -59,8 +47,8 @@
   bottom: 0;
   left: -60%;
   width: 45%;
-  background: linear-gradient(100deg, transparent, rgba(255, 253, 251, 0.45), transparent);
-  animation: shimmer 3.6s var(--ease) infinite;
+  background: linear-gradient(100deg, transparent, rgba(255, 253, 248, 0.4), transparent);
+  animation: shimmer 3.8s var(--ease) infinite;
 }
 
 @keyframes shimmer {
@@ -76,39 +64,21 @@
 @keyframes pulse {
   0%,
   100% {
-    box-shadow: 0 0 0 0 rgba(184, 80, 106, 0.2);
+    box-shadow: 0 0 0 0 rgba(176, 87, 107, 0.18);
   }
   50% {
-    box-shadow: 0 16px 44px -14px rgba(184, 80, 106, 0.4);
+    box-shadow: var(--sh-3);
   }
 }
 
-.burst {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  width: 0;
-  height: 0;
-  pointer-events: none;
-  z-index: 5;
-}
-
-.burst span {
-  position: absolute;
-  left: 0;
-  top: 0;
-  color: var(--rose);
-  font-size: 14px;
-  will-change: transform, opacity;
-}
-
+/* the revealed print, pinned like the others */
 .reveal-card[hidden] {
   display: none;
 }
 
 .reveal-card {
   display: grid;
-  gap: clamp(1.6rem, 4.5vw, 2.6rem);
+  gap: clamp(1.4rem, 4vw, 2.2rem);
   justify-items: center;
   opacity: 0;
   transform: translateY(26px) scale(0.975);
@@ -122,43 +92,61 @@
 
 .reveal-card__frame {
   position: relative;
-  width: min(100%, 400px);
-  aspect-ratio: 3 / 4;
-  overflow: hidden;
+  width: min(100%, 330px);
+  padding: 11px 11px 11px;
   background: var(--card);
-  padding: 10px;
+  box-shadow: var(--sh-lift);
   border-radius: 2px;
-  box-shadow: var(--sh-lg);
 }
 
 .reveal-card__frame img {
   width: 100%;
-  height: 100%;
+  aspect-ratio: 3 / 4;
   object-fit: cover;
   object-position: center 26%;
 }
 
 .reveal-card figcaption {
-  max-width: 42ch;
+  max-width: 40ch;
 }
 
 .reveal-card__title {
   font-family: var(--display);
   font-style: italic;
-  font-size: clamp(1.7rem, 6vw, 2.7rem);
-  line-height: 1.24;
-  letter-spacing: -0.025em;
-  color: var(--ink);
-  margin-top: 0.6rem;
+  font-size: clamp(1.5rem, 5.5vw, 2.3rem);
+  line-height: 1.25;
+  letter-spacing: -0.03em;
+  margin-top: 0.5rem;
 }
 
 .reveal-card__text {
-  margin-top: 1.1rem;
+  margin-top: 1rem;
   color: var(--muted);
   font-weight: 300;
   line-height: 1.9;
 }
 
 .reveal-card__sign {
-  margin-top: 1.6rem;
+  display: block;
+  margin-top: 1.4rem;
+}
+
+/* ---------- heart burst, used by several interactions ---------- */
+.burst {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+  z-index: 6;
+}
+
+.burst span {
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: var(--rose);
+  font-size: 14px;
+  will-change: transform, opacity;
 }

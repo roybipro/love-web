@@ -1,14 +1,16 @@
-/* ---------- 3. the timeline ---------- */
+/* =============================================================
+   Our Little Timeline — a gold thread with milestones pinned to it.
+   ============================================================= */
 .tl {
   position: relative;
   display: grid;
-  gap: clamp(3.6rem, 9vw, 6.5rem);
-  max-width: 1040px;
+  gap: clamp(2.6rem, 7vw, 4.5rem);
+  max-width: 900px;
   margin-inline: auto;
-  padding: 0.5rem 0 0.5rem clamp(1.7rem, 5vw, 3.6rem);
+  padding-left: clamp(1.9rem, 6vw, 3.4rem);
 }
 
-/* the rail, and the blush that fills it as she reads down */
+/* the thread, and the brighter length already walked */
 .tl::before,
 .tl::after {
   content: "";
@@ -20,13 +22,17 @@
 }
 
 .tl::before {
-  background: var(--line);
+  background: repeating-linear-gradient(
+    to bottom,
+    var(--line) 0 6px,
+    transparent 6px 12px
+  );
 }
 
 .tl::after {
   bottom: auto;
   height: 100%;
-  background: linear-gradient(180deg, var(--rose), var(--blush) 60%, transparent);
+  background: linear-gradient(180deg, var(--gold), var(--rose) 55%, transparent);
   transform-origin: top;
   transform: scaleY(var(--draw, 0));
   transition: transform 0.18s linear;
@@ -36,95 +42,127 @@
   position: relative;
   display: grid;
   grid-template-columns: 1fr;
-  gap: 1.6rem clamp(2rem, 5vw, 4rem);
+  gap: 1.5rem;
   align-items: center;
 }
 
+/* the node on the thread */
 .tl__item::before {
   content: "";
   position: absolute;
-  left: calc(-1 * clamp(1.7rem, 5vw, 3.6rem) - 5px);
-  top: 0.7em;
+  left: calc(-1 * clamp(1.9rem, 6vw, 3.4rem) - 5px);
+  top: 1.9rem;
   width: 11px;
   height: 11px;
   border-radius: 50%;
   background: var(--paper);
-  border: 1px solid var(--blush);
-  transition: background var(--t-slow) ease, box-shadow var(--t-slow) ease,
-    border-color var(--t-slow) ease;
+  border: 1px solid var(--gold);
+  transition: background var(--t-mid) ease, box-shadow var(--t-mid) ease,
+    transform var(--t-mid) var(--spring);
 }
 
 .tl__item.in::before {
   background: var(--rose);
   border-color: var(--rose);
-  box-shadow: 0 0 0 5px rgba(184, 80, 106, 0.12);
+  transform: scale(1.15);
+  box-shadow: 0 0 0 5px rgba(176, 87, 107, 0.12);
 }
 
-/* a small numbered label, matching the photo grid */
-.tl__num {
+/* the milestone as a small paper card */
+.tl__card {
+  position: relative;
+  padding: clamp(1.4rem, 4vw, 2rem) clamp(1.2rem, 3.5vw, 1.8rem);
+  background: var(--card);
+  box-shadow: var(--sh-2);
+  border-radius: 3px 7px 4px 6px;
+  transition: transform var(--t-mid) var(--ease), box-shadow var(--t-mid) ease;
+}
+
+.tl__card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--sh-3);
+}
+
+.tl__no {
   display: block;
-  margin-bottom: 0.9rem;
-  font-size: 0.6rem;
-  font-weight: 400;
+  margin-bottom: 0.8rem;
+  font-size: 0.58rem;
   letter-spacing: 0.28em;
   color: var(--faint);
 }
 
-.tl__body {
-  position: relative;
-  z-index: 1;
+.tl__date {
+  display: block;
+  margin-bottom: 0.5rem;
 }
 
 .tl__title {
   font-family: var(--display);
-  font-size: var(--fs-h3);
-  line-height: 1.08;
-  letter-spacing: -0.025em;
-  margin-top: 0.45rem;
-  color: var(--ink);
+  font-size: clamp(1.5rem, 4.6vw, 2.1rem);
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
 }
 
 .tl__text {
-  margin-top: 0.85rem;
+  margin-top: 0.7rem;
   color: var(--muted);
-  max-width: 38ch;
+  max-width: 40ch;
 }
 
-/* the print, mounted like the rest of them */
+/* the print beside it */
 .tl__shot {
   position: relative;
-  z-index: 1;
   display: block;
-  width: min(100%, 290px);
+  width: min(100%, 240px);
+  padding: 9px 9px 30px;
   background: var(--card);
-  padding: 9px 9px 9px;
+  box-shadow: var(--sh-3);
   border-radius: 2px;
-  box-shadow: var(--sh-md);
-  transition: transform var(--t-slow) var(--ease), box-shadow var(--t-slow) var(--ease);
+  transform: rotate(var(--tilt, 1.6deg));
+  transition: transform var(--t-slow) var(--ease), box-shadow var(--t-slow) ease;
 }
 
 .tl__shot img {
   width: 100%;
-  aspect-ratio: 3 / 4;
+  aspect-ratio: 1 / 1.05;
   object-fit: cover;
   object-position: center 30%;
   display: block;
+  filter: saturate(0.92);
+  transition: filter var(--t-mid) ease;
 }
 
 .tl__shot:hover,
 .tl__shot:focus-visible {
-  transform: translateY(-7px) rotate(-0.6deg);
-  box-shadow: var(--sh-lg);
+  transform: rotate(0deg) translateY(-7px);
+  box-shadow: var(--sh-lift);
 }
 
-@media (min-width: 880px) {
+.tl__shot:hover img,
+.tl__shot:focus-visible img {
+  filter: saturate(1.02);
+}
+
+.tl__shot .tape {
+  width: 56px;
+  height: 20px;
+  top: -9px;
+  left: 50%;
+  margin-left: -28px;
+}
+
+@media (min-width: 820px) {
   .tl__item {
-    grid-template-columns: 1fr 0.82fr;
-    gap: 0 clamp(2.5rem, 5vw, 5rem);
+    grid-template-columns: 1fr auto;
+    gap: 0 clamp(1.8rem, 4vw, 3.2rem);
   }
 
-  /* the print fills its column — no empty half of the page */
   .tl__shot {
-    width: 100%;
+    width: 230px;
+  }
+
+  .tl__item:nth-child(even) .tl__shot {
+    --tilt: -2deg;
   }
 }

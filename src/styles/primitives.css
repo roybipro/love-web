@@ -1,0 +1,214 @@
+/* =============================================================
+   Scrapbook primitives.
+   Reusable pieces of paper, tape and ink that the sections
+   are assembled from. Nothing here is page-specific.
+   ============================================================= */
+
+/* ---------- a sheet of paper ---------- */
+.paper {
+  position: relative;
+  background: var(--card);
+  /* a hand-cut irregularity rather than a perfect rectangle */
+  border-radius: 3px 7px 4px 6px;
+  box-shadow: var(--sh-2);
+}
+
+/* deckled, torn edge — an SVG displacement filter does the roughening,
+   so it is applied to a spare layer and never to the text itself */
+.paper--torn::before,
+.paper--torn::after {
+  content: "";
+  position: absolute;
+  left: -2px;
+  right: -2px;
+  height: 9px;
+  background: var(--card);
+  filter: url(#deckle);
+  pointer-events: none;
+}
+
+.paper--torn::before {
+  top: -5px;
+}
+
+.paper--torn::after {
+  bottom: -5px;
+}
+
+/* ---------- tape ---------- */
+.tape {
+  position: absolute;
+  z-index: 4;
+  width: clamp(64px, 16vw, 96px);
+  height: 26px;
+  background: linear-gradient(
+    100deg,
+    rgba(238, 226, 203, 0.62),
+    rgba(248, 240, 224, 0.78) 45%,
+    rgba(232, 218, 192, 0.6)
+  );
+  box-shadow: 0 1px 3px rgba(60, 42, 32, 0.16), inset 0 0 0 1px rgba(255, 255, 255, 0.35);
+  /* ragged ends, like it was torn off the roll */
+  clip-path: polygon(3% 0, 97% 4%, 100% 22%, 98% 100%, 2% 96%, 0 20%);
+  transform: rotate(-3deg);
+  pointer-events: none;
+}
+
+.tape--top {
+  top: -12px;
+  left: 50%;
+  margin-left: calc(clamp(64px, 16vw, 96px) / -2);
+}
+
+.tape--left {
+  top: -10px;
+  left: -18px;
+  transform: rotate(-38deg);
+}
+
+.tape--right {
+  top: -10px;
+  right: -18px;
+  left: auto;
+  transform: rotate(34deg);
+}
+
+/* on a phone the corner tape must not push past the screen edge */
+@media (max-width: 700px) {
+  .tape--left {
+    left: -6px;
+  }
+  .tape--right {
+    right: -6px;
+  }
+}
+
+/* ---------- polaroid ---------- */
+.polaroid {
+  position: relative;
+  display: block;
+  background: var(--card);
+  padding: 12px 12px 46px;
+  border-radius: 2px;
+  box-shadow: var(--sh-3);
+  transform: rotate(var(--tilt, 0deg));
+  transition: transform var(--t-slow) var(--ease), box-shadow var(--t-slow) var(--ease);
+  text-align: left;
+}
+
+.polaroid:hover,
+.polaroid:focus-visible {
+  transform: rotate(0deg) translateY(-9px) scale(1.012);
+  box-shadow: var(--sh-lift);
+}
+
+.polaroid__frame {
+  position: relative;
+  display: block;
+  /* prints come in shapes; --ar lets a landscape one show itself whole */
+  aspect-ratio: var(--ar, 1 / 1.06);
+  overflow: hidden;
+  background: var(--paper-2);
+}
+
+.polaroid__frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 30%;
+  filter: saturate(0.9) contrast(1.03) brightness(1.01);
+  transform: translate3d(var(--px, 0px), var(--py, 0px), 0) scale(1.05);
+  transition: transform 1.6s var(--ease), filter var(--t-mid) ease;
+  will-change: transform;
+}
+
+.polaroid:hover .polaroid__frame img,
+.polaroid:focus-visible .polaroid__frame img {
+  transform: translate3d(var(--px, 0px), var(--py, 0px), 0) scale(1.11);
+  filter: saturate(1.02) contrast(1.02);
+}
+
+/* the caption written on the white foot in pen */
+.polaroid__foot {
+  position: absolute;
+  left: 14px;
+  right: 14px;
+  bottom: 9px;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.7rem;
+  font-family: var(--hand);
+  font-size: 1.15rem;
+  line-height: 1.15;
+  color: var(--ink-2);
+}
+
+.polaroid__foot em {
+  font-family: var(--sans);
+  font-style: normal;
+  font-size: 0.55rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--faint);
+  flex: none;
+}
+
+/* ---------- a handwritten note ---------- */
+.note {
+  font-family: var(--hand);
+  font-size: var(--fs-hand);
+  line-height: 1.45;
+  color: var(--burgundy);
+  transform: rotate(var(--tilt, -1.2deg));
+}
+
+/* on its own slip of paper */
+.note--slip {
+  display: inline-block;
+  padding: 0.9rem 1.3rem;
+  background: linear-gradient(180deg, #fdf6e6, #f8eeda);
+  box-shadow: var(--sh-1);
+  border-radius: 2px 5px 3px 4px;
+}
+
+/* ---------- stickers, stamps and doodles ---------- */
+.sticker {
+  display: inline-grid;
+  place-items: center;
+  width: 62px;
+  height: 62px;
+  border-radius: 50%;
+  background: var(--card);
+  box-shadow: var(--sh-1), inset 0 0 0 2px var(--blush-soft);
+  color: var(--rose);
+  font-size: 1.4rem;
+  transform: rotate(var(--tilt, -8deg));
+}
+
+.stamp {
+  display: inline-block;
+  padding: 0.5rem 0.75rem;
+  border: 1px dashed var(--gold);
+  border-radius: 3px;
+  font-size: 0.55rem;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--gold);
+  transform: rotate(var(--tilt, 5deg));
+  opacity: 0.85;
+}
+
+/* a small drawn heart, used as a bullet and in doodles */
+.doodle {
+  display: inline-block;
+  color: var(--rose);
+  opacity: 0.75;
+}
+
+/* ---------- a thin gold rule ---------- */
+.rule {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold-soft), transparent);
+  border: 0;
+}

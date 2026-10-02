@@ -1,82 +1,67 @@
-/* ---------- the scratch card ---------- */
-.section--scratch {
+/* =============================================================
+   The scratch card, kept as the postscript of the letter.
+   ============================================================= */
+.scratch {
+  max-width: 460px;
+  margin-inline: auto;
   text-align: center;
 }
 
-.section--scratch .head__kicker {
-  justify-content: center;
-  margin-bottom: clamp(1.6rem, 5vh, 2.4rem);
-}
-
-.section--scratch .head__kicker::before {
-  display: none;
-}
-
-.scratch {
-  max-width: 520px;
-  margin-inline: auto;
-}
-
 .scratch__prompt {
-  font-family: var(--display);
-  font-style: italic;
-  font-size: clamp(1.6rem, 5.8vw, 2.5rem);
-  line-height: 1.28;
-  letter-spacing: -0.025em;
-  color: var(--ink);
-  margin-bottom: clamp(1.8rem, 5vh, 2.6rem);
+  font-family: var(--hand);
+  font-size: clamp(1.4rem, 5vw, 1.9rem);
+  line-height: 1.4;
+  color: var(--burgundy);
+  margin-bottom: clamp(1.5rem, 4vh, 2.2rem);
 }
 
 .scratch__card {
   position: relative;
-  border-radius: 3px;
+  border-radius: 3px 7px 4px 6px;
   overflow: hidden;
   background: var(--card);
-  border: 1px solid var(--line-soft);
-  box-shadow: var(--sh-lg);
+  box-shadow: var(--sh-lift);
 }
 
 /* what lives under the foil */
 .scratch__prize {
   display: grid;
-  gap: clamp(1rem, 3vw, 1.5rem);
+  gap: clamp(0.9rem, 3vw, 1.4rem);
   justify-items: center;
-  padding: clamp(1.5rem, 5vw, 2.4rem);
+  padding: clamp(1.4rem, 5vw, 2.2rem);
 }
 
 .scratch__frame {
   position: relative;
-  width: min(100%, 290px);
-  aspect-ratio: 3 / 4;
+  width: min(100%, 250px);
   overflow: hidden;
   background: var(--paper-2);
 }
 
 .scratch__frame img {
   width: 100%;
-  height: 100%;
+  aspect-ratio: 3 / 4;
   object-fit: cover;
   object-position: center 26%;
 }
 
 .scratch__prize h3 {
   font-family: var(--display);
-  font-size: clamp(1.6rem, 5.6vw, 2.3rem);
-  line-height: 1.18;
-  letter-spacing: -0.025em;
-  color: var(--ink);
-  max-width: 22ch;
-  margin-top: 0.4rem;
+  font-size: clamp(1.4rem, 5vw, 2rem);
+  font-weight: 400;
+  line-height: 1.2;
+  letter-spacing: -0.03em;
+  max-width: 20ch;
 }
 
 .scratch__prize p:last-of-type {
   color: var(--muted);
   font-weight: 300;
   line-height: 1.9;
-  max-width: 38ch;
+  max-width: 36ch;
 }
 
-/* the foil itself */
+/* the foil */
 .scratch__surface {
   position: absolute;
   inset: 0;
@@ -101,9 +86,9 @@
 /* how much she has cleared */
 .scratch__progress {
   position: relative;
-  width: min(100%, 290px);
+  width: min(100%, 250px);
   height: 2px;
-  margin: clamp(1.4rem, 4vh, 2rem) auto 0;
+  margin: clamp(1.2rem, 4vh, 1.8rem) auto 0;
   background: var(--line);
   border-radius: 2px;
   overflow: hidden;
@@ -125,8 +110,8 @@
 
 .scratch__skip {
   display: inline-block;
-  margin-top: 1.2rem;
-  font-size: 0.58rem;
+  margin-top: 1rem;
+  font-size: 0.56rem;
   letter-spacing: 0.22em;
   text-transform: uppercase;
   color: var(--faint);

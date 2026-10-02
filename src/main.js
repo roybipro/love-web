@@ -1,75 +1,81 @@
 /* =============================================================
-   main.js — boots the page. Nothing here needs editing;
+   main.js — boots the book. Nothing here needs editing;
    all of the words and photos live in content/memory.js
    ============================================================= */
 
 import "./styles/index.css";
 
 import * as content from "./content/memory.js";
-import { mountCopy } from "./components/copy.js";
-import { mountIntro } from "./components/intro.js";
-import { mountGallery } from "./components/gallery.js";
-import { createLightbox } from "./components/lightbox.js";
-import { mountTimeline } from "./components/timeline.js";
-import { mountLoveCards } from "./components/love-cards.js";
-import { mountSurprise } from "./components/surprise.js";
-import { mountScratch } from "./components/scratch.js";
-import { mountSecret } from "./components/secret.js";
-import { mountMusic } from "./components/music.js";
+import { $ } from "./lib/dom.js";
+import { seedDust } from "./lib/motion.js";
 import { observeReveals, watchScroll } from "./lib/scroll.js";
 import { splitWords } from "./lib/typography.js";
-import { seedHearts } from "./lib/motion.js";
-import { $ } from "./lib/dom.js";
 
-/* The opening screen locks scrolling, so a browser that remembers the last
-   scroll position would yank her down the page the moment it unlocks. */
+import { mountCopy } from "./components/copy.js";
+import { mountLoader } from "./components/loader.js";
+import { mountCover } from "./components/cover.js";
+import { mountNav } from "./components/nav.js";
+import { mountHowWeMet, mountFirstMemory, mountFavourites } from "./components/story.js";
+import { mountGallery } from "./components/gallery.js";
+import { createLightbox } from "./components/lightbox.js";
+import { mountSurprise } from "./components/surprise.js";
+import { mountLoveCards } from "./components/love-cards.js";
+import { mountTimeline } from "./components/timeline.js";
+import { mountLetter } from "./components/letter.js";
+import { mountScratch } from "./components/scratch.js";
+import { mountMusic } from "./components/music.js";
+import { mountSecret } from "./components/secret.js";
+import { mountCursor, mountMagnets } from "./components/cursor.js";
+
+/* The cover locks scrolling, so a browser that remembers the last scroll
+   position would yank her down the page the moment it unlocks. */
 if ("scrollRestoration" in history) history.scrollRestoration = "manual";
 
+seedDust($("#bgDust"));
 mountCopy(content);
 
 const lightbox = createLightbox(content.photos);
 
+mountHowWeMet(content.howWeMet);
+mountFirstMemory(content.firstMemory);
 mountGallery({
   photos: content.photos,
   heading: content.galleryHeading,
   quotes: content.pullQuotes,
   onOpen: lightbox.open,
 });
-
+mountFavourites({
+  heading: content.favouritesHeading,
+  photos: content.photos,
+  picks: content.favouritesHeading.picks,
+});
+mountSurprise({ data: content.surprise, sign: content.letter.sign });
+mountLoveCards({ items: content.love });
 mountTimeline({
   items: content.timeline,
   photos: content.photos,
   onOpen: lightbox.open,
 });
-
-mountLoveCards({ items: content.love });
-
-mountSurprise({ data: content.surprise, sign: content.final.sign });
-
-mountScratch({
-  data: content.scratch,
-  onReveal: () => seedHearts($("#finalDrift"), 16),
-});
-
-mountSecret(content.secret);
-
-mountMusic({
-  file: content.music.file,
-  label: content.music.label,
-  startOn: "#openBtn",
-});
+mountLetter(content.letter);
+mountScratch({ data: content.scratch });
 
 /* only once every heading has its final words in it */
 splitWords();
 
 watchScroll();
+mountNav({ items: content.memories });
+mountCursor();
+mountMagnets();
+mountSecret(content.secret);
+mountMusic({ data: content.music, startOn: "#openBtn" });
 
-mountIntro({
-  bleed: [
-    content.photos[0]?.image,
-    content.photos[2]?.image,
-    content.surprise.image,
-    content.photos.find((p) => p.feature)?.image,
-  ].filter(Boolean),
+const cover = mountCover({
+  data: content.cover,
+  herName: content.herName,
   onOpen: observeReveals,
+});
+
+mountLoader({
+  images: cover.images.map((src) => src),
+  onReady: cover.reveal,
 });

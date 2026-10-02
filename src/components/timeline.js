@@ -1,11 +1,14 @@
 import { $, $$, asset, esc, heart, pad2 } from "../lib/dom.js";
+import { play } from "../lib/sound.js";
 
 /**
- * The timeline, in order. Each entry may carry a photo; if that photo also
- * lives in the gallery, tapping it opens the viewer on the right picture.
+ * Memory 07 — our little timeline.
+ * Each milestone is a small paper card on a gold thread, with the
+ * print taped beside it. Tapping the print opens the viewer.
  */
 export function mountTimeline({ items, photos, onOpen }) {
   const list = $("#timeline-list");
+  if (!list) return;
 
   list.innerHTML = items
     .map((entry, i) => {
@@ -14,15 +17,16 @@ export function mountTimeline({ items, photos, onOpen }) {
         entry.image && galleryIndex > -1
           ? `<button class="tl__shot" data-gallery="${galleryIndex}"
                     aria-label="Open photo: ${esc(photos[galleryIndex].title)}">
+                <span class="tape" aria-hidden="true"></span>
                 <img src="${asset(entry.image)}" alt="${esc(entry.title)}" loading="lazy" decoding="async" />
               </button>`
           : "";
 
       return `
       <li class="tl__item" data-reveal style="--rd:${((i % 2) * 0.08).toFixed(2)}s">
-        <div class="tl__body">
-          <span class="tl__num">${pad2(i + 1)}</span>
-          ${entry.date ? `<p class="datestamp tl__date">${esc(entry.date)}</p>` : ""}
+        <div class="tl__card">
+          <span class="tl__no">${pad2(i + 1)}</span>
+          ${entry.date ? `<span class="datestamp tl__date">${esc(entry.date)}</span>` : ""}
           <h3 class="tl__title">${heart(entry.title)}</h3>
           <p class="tl__text">${heart(entry.text)}</p>
         </div>
@@ -32,8 +36,9 @@ export function mountTimeline({ items, photos, onOpen }) {
     .join("");
 
   $$(".tl__shot", list).forEach((shot) =>
-    shot.addEventListener("click", () => onOpen(Number(shot.dataset.gallery), shot)),
+    shot.addEventListener("click", () => {
+      play("photo");
+      onOpen(Number(shot.dataset.gallery), shot);
+    }),
   );
-
-  return list;
 }
