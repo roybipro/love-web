@@ -2,13 +2,13 @@
 .tl {
   position: relative;
   display: grid;
-  gap: clamp(3.4rem, 9vw, 6rem);
-  max-width: 1080px;
+  gap: clamp(3.6rem, 9vw, 6.5rem);
+  max-width: 1040px;
   margin-inline: auto;
-  padding: 0.5rem 0 0.5rem clamp(1.6rem, 5vw, 3.4rem);
+  padding: 0.5rem 0 0.5rem clamp(1.7rem, 5vw, 3.6rem);
 }
 
-/* the rail, and the gold that fills it as she reads down */
+/* the rail, and the blush that fills it as she reads down */
 .tl::before,
 .tl::after {
   content: "";
@@ -20,13 +20,13 @@
 }
 
 .tl::before {
-  background: var(--hair-soft);
+  background: var(--line);
 }
 
 .tl::after {
   bottom: auto;
   height: 100%;
-  background: linear-gradient(180deg, var(--gold), var(--rose) 55%, transparent);
+  background: linear-gradient(180deg, var(--rose), var(--blush) 60%, transparent);
   transform-origin: top;
   transform: scaleY(var(--draw, 0));
   transition: transform 0.18s linear;
@@ -36,21 +36,20 @@
   position: relative;
   display: grid;
   grid-template-columns: 1fr;
-  gap: 1.5rem clamp(2rem, 5vw, 4rem);
+  gap: 1.6rem clamp(2rem, 5vw, 4rem);
   align-items: center;
 }
 
-/* the node that sits on the rail */
 .tl__item::before {
   content: "";
   position: absolute;
-  left: calc(-1 * clamp(1.6rem, 5vw, 3.4rem) - 5px);
+  left: calc(-1 * clamp(1.7rem, 5vw, 3.6rem) - 5px);
   top: 0.7em;
   width: 11px;
   height: 11px;
   border-radius: 50%;
-  background: var(--ink);
-  border: 1px solid var(--gold-dim);
+  background: var(--paper);
+  border: 1px solid var(--blush);
   transition: background var(--t-slow) ease, box-shadow var(--t-slow) ease,
     border-color var(--t-slow) ease;
 }
@@ -58,21 +57,20 @@
 .tl__item.in::before {
   background: var(--rose);
   border-color: var(--rose);
-  box-shadow: 0 0 0 5px rgba(240, 191, 198, 0.1), 0 0 26px rgba(240, 191, 198, 0.6);
+  box-shadow: 0 0 0 5px rgba(184, 80, 106, 0.12);
 }
 
 /* a numeral sitting behind the words, barely there */
 .tl__num {
   position: absolute;
-  left: -0.35em;
-  top: -0.45em;
+  left: -0.32em;
+  top: -0.5em;
   z-index: 0;
   font-family: var(--display);
-  font-weight: 300;
-  font-size: clamp(4.5rem, 17vw, 10rem);
+  font-size: clamp(4.8rem, 18vw, 11rem);
   line-height: 1;
-  letter-spacing: -0.06em;
-  color: var(--ghost);
+  letter-spacing: -0.05em;
+  color: var(--blush-soft);
   pointer-events: none;
   user-select: none;
 }
@@ -84,64 +82,44 @@
 
 .tl__title {
   font-family: var(--display);
-  font-weight: 300;
   font-size: var(--fs-h3);
-  line-height: 1.1;
-  letter-spacing: -0.035em;
-  margin-top: 0.5rem;
+  line-height: 1.08;
+  letter-spacing: -0.025em;
+  margin-top: 0.45rem;
+  color: var(--ink);
 }
 
 .tl__text {
-  margin-top: 0.8rem;
+  margin-top: 0.85rem;
   color: var(--muted);
   max-width: 38ch;
 }
 
+/* the print, mounted like the rest of them */
 .tl__shot {
   position: relative;
   z-index: 1;
   display: block;
-  width: min(100%, 300px);
-  aspect-ratio: 3 / 4;
-  overflow: hidden;
+  width: min(100%, 290px);
+  background: var(--card);
+  padding: 9px 9px 9px;
   border-radius: 2px;
-  background: var(--ink-2);
-  box-shadow: 0 34px 70px -46px #000;
+  box-shadow: var(--sh-md);
   transition: transform var(--t-slow) var(--ease), box-shadow var(--t-slow) var(--ease);
 }
 
 .tl__shot img {
   width: 100%;
-  height: 100%;
+  aspect-ratio: 3 / 4;
   object-fit: cover;
   object-position: center 30%;
-  filter: saturate(0.82) brightness(0.84);
-  transition: transform 1.6s var(--ease), filter 1s ease;
-}
-
-.tl__shot::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border: 1px solid transparent;
-  transition: border-color var(--t-mid) ease;
+  display: block;
 }
 
 .tl__shot:hover,
 .tl__shot:focus-visible {
-  transform: translateY(-6px);
-  box-shadow: 0 46px 84px -46px #000, 0 0 70px -28px rgba(214, 178, 133, 0.34);
-}
-
-.tl__shot:hover::after,
-.tl__shot:focus-visible::after {
-  border-color: var(--hair);
-}
-
-.tl__shot:hover img,
-.tl__shot:focus-visible img {
-  transform: scale(1.08);
-  filter: saturate(1.02) brightness(1);
+  transform: translateY(-7px) rotate(-0.6deg);
+  box-shadow: var(--sh-lg);
 }
 
 @media (min-width: 880px) {
@@ -158,6 +136,6 @@
   }
 
   .tl__shot {
-    width: min(100%, 340px);
+    width: min(100%, 330px);
   }
 }

@@ -1,5 +1,4 @@
 /* ---------- background music ---------- */
-
 .music {
   position: fixed;
   left: clamp(0.9rem, 3vw, 1.8rem);
@@ -10,19 +9,20 @@
   gap: 0.6rem;
   padding: 0.55rem 0.95rem 0.55rem 0.7rem;
   border-radius: 999px;
-  border: 1px solid var(--hair-soft);
-  background: rgba(20, 16, 15, 0.72);
+  background: rgba(255, 253, 251, 0.86);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  color: var(--faint);
-  font-size: 0.6rem;
+  border: 1px solid var(--line);
+  box-shadow: var(--sh-sm);
+  color: var(--muted);
+  font-size: 0.58rem;
   font-weight: 400;
   letter-spacing: 0.2em;
   text-transform: uppercase;
   opacity: 0;
   transform: translateY(10px);
   pointer-events: none;
-  transition: opacity 0.9s ease 1.6s, transform 0.9s var(--ease) 1.6s,
+  transition: opacity 0.9s ease 1.5s, transform 0.9s var(--ease) 1.5s,
     color var(--t-fast) ease, border-color var(--t-fast) ease;
 }
 
@@ -34,8 +34,8 @@ body.opened .music {
 }
 
 .music:hover {
-  color: var(--blush);
-  border-color: var(--hair);
+  color: var(--wine);
+  border-color: var(--blush);
 }
 
 .music[hidden] {
@@ -57,11 +57,12 @@ body.opened .music {
   width: 2px;
   height: 3px;
   border-radius: 1px;
-  background: currentColor;
+  background: var(--blush);
   transform-origin: bottom;
 }
 
 .music.is-on .music__eq i {
+  background: var(--rose);
   animation: eq 0.9s ease-in-out infinite;
 }
 

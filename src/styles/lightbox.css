@@ -16,14 +16,15 @@ body.lb-open {
   overflow: hidden;
 }
 
+/* frosted paper rather than a black room */
 .lb__scrim {
   position: absolute;
   inset: 0;
-  background: rgba(6, 4, 5, 0.92);
-  backdrop-filter: blur(26px) saturate(0.65);
-  -webkit-backdrop-filter: blur(26px) saturate(0.65);
+  background: rgba(250, 246, 240, 0.93);
+  backdrop-filter: blur(22px) saturate(1.05);
+  -webkit-backdrop-filter: blur(22px) saturate(1.05);
   opacity: 0;
-  transition: opacity 0.6s ease;
+  transition: opacity 0.55s ease;
 }
 
 .lb.is-open .lb__scrim {
@@ -40,41 +41,33 @@ body.lb-open {
   width: 100%;
 }
 
-/* --ar comes from whichever tile was tapped, so the zoom never squashes */
 .lb__frame {
   aspect-ratio: var(--ar, 3 / 4);
-  height: min(64dvh, calc((100vw - 2 * var(--pad)) * 4 / 3));
+  height: min(62dvh, calc((100vw - 2 * var(--pad)) * 4 / 3));
   max-width: 100%;
   position: relative;
   overflow: hidden;
+  background: var(--card);
+  padding: 9px 9px 9px;
   border-radius: 2px;
-  background: var(--ink-2);
-  box-shadow: 0 60px 130px -55px #000, 0 0 110px -45px rgba(214, 178, 133, 0.32);
+  box-shadow: var(--sh-lg);
 }
 
 .lb__frame img {
   width: 100%;
   height: 100%;
   object-fit: contain;
+  background: var(--paper-2);
   transform-origin: top left;
   will-change: transform;
 }
 
-.lb__frame::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border: 1px solid var(--hair);
-  border-radius: 2px;
-  pointer-events: none;
-}
-
 .lb__cap {
   text-align: center;
-  max-width: 44ch;
+  max-width: 42ch;
   opacity: 0;
   transform: translateY(12px);
-  transition: opacity 0.8s ease 0.18s, transform 1s var(--ease) 0.18s;
+  transition: opacity 0.7s ease 0.16s, transform 0.9s var(--ease) 0.16s;
 }
 
 .lb.is-open .lb__cap {
@@ -84,26 +77,26 @@ body.lb-open {
 
 .lb__cap h3 {
   font-family: var(--display);
-  font-weight: 300;
-  font-size: clamp(1.45rem, 5vw, 2.1rem);
-  line-height: 1.2;
-  letter-spacing: -0.03em;
-  margin-top: 0.55rem;
+  font-size: clamp(1.5rem, 5vw, 2.2rem);
+  line-height: 1.18;
+  letter-spacing: -0.025em;
+  margin-top: 0.5rem;
+  color: var(--ink);
 }
 
 #lbCaption {
   margin-top: 0.7rem;
   color: var(--muted);
-  font-size: 0.94rem;
+  font-size: 0.95rem;
   font-weight: 300;
   line-height: 1.8;
 }
 
 .lb__count {
-  margin-top: 1.3rem;
+  margin-top: 1.2rem;
   font-size: 0.6rem;
   letter-spacing: 0.32em;
-  color: rgba(247, 242, 234, 0.22);
+  color: var(--faint);
 }
 
 .lb__x,
@@ -115,18 +108,20 @@ body.lb-open {
   width: 46px;
   height: 46px;
   border-radius: 50%;
-  border: 1px solid var(--hair-soft);
-  color: var(--muted);
+  background: var(--card);
+  border: 1px solid var(--line);
+  color: var(--ink-2);
   font-size: 0.95rem;
+  box-shadow: var(--sh-sm);
   transition: color var(--t-fast) ease, border-color var(--t-fast) ease,
-    background var(--t-fast) ease, transform var(--t-fast) var(--ease);
+    box-shadow var(--t-fast) ease, transform var(--t-fast) var(--ease);
 }
 
 .lb__x:hover,
 .lb__nav:hover {
-  color: var(--blush);
-  border-color: var(--hair);
-  background: rgba(92, 23, 39, 0.45);
+  color: var(--wine);
+  border-color: var(--blush);
+  box-shadow: var(--sh-md);
   transform: scale(1.07);
 }
 

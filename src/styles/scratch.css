@@ -13,17 +13,17 @@
 }
 
 .scratch {
-  max-width: 540px;
+  max-width: 520px;
   margin-inline: auto;
 }
 
 .scratch__prompt {
   font-family: var(--display);
   font-style: italic;
-  font-weight: 300;
-  font-size: clamp(1.5rem, 5.5vw, 2.3rem);
-  line-height: 1.32;
+  font-size: clamp(1.6rem, 5.8vw, 2.5rem);
+  line-height: 1.28;
   letter-spacing: -0.025em;
+  color: var(--ink);
   margin-bottom: clamp(1.8rem, 5vh, 2.6rem);
 }
 
@@ -31,7 +31,9 @@
   position: relative;
   border-radius: 3px;
   overflow: hidden;
-  box-shadow: 0 50px 110px -55px #000, 0 0 90px -40px rgba(214, 178, 133, 0.28);
+  background: var(--card);
+  border: 1px solid var(--line-soft);
+  box-shadow: var(--sh-lg);
 }
 
 /* what lives under the foil */
@@ -40,24 +42,14 @@
   gap: clamp(1rem, 3vw, 1.5rem);
   justify-items: center;
   padding: clamp(1.5rem, 5vw, 2.4rem);
-  background: linear-gradient(175deg, var(--ink-3), var(--ink-2) 60%);
 }
 
 .scratch__frame {
   position: relative;
-  width: min(100%, 300px);
+  width: min(100%, 290px);
   aspect-ratio: 3 / 4;
   overflow: hidden;
-  border-radius: 2px;
-  background: var(--ink);
-}
-
-.scratch__frame::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border: 1px solid var(--hair);
-  border-radius: 2px;
+  background: var(--paper-2);
 }
 
 .scratch__frame img {
@@ -69,18 +61,19 @@
 
 .scratch__prize h3 {
   font-family: var(--display);
-  font-weight: 300;
-  font-size: clamp(1.5rem, 5.5vw, 2.1rem);
-  line-height: 1.22;
-  letter-spacing: -0.03em;
-  max-width: 24ch;
+  font-size: clamp(1.6rem, 5.6vw, 2.3rem);
+  line-height: 1.18;
+  letter-spacing: -0.025em;
+  color: var(--ink);
+  max-width: 22ch;
+  margin-top: 0.4rem;
 }
 
 .scratch__prize p:last-of-type {
   color: var(--muted);
   font-weight: 300;
-  line-height: 1.85;
-  max-width: 40ch;
+  line-height: 1.9;
+  max-width: 38ch;
 }
 
 /* the foil itself */
@@ -92,7 +85,7 @@
   display: block;
   touch-action: none;
   cursor: grab;
-  transition: opacity 1s ease, transform 1.2s var(--ease);
+  transition: opacity 0.9s ease, transform 1.1s var(--ease);
 }
 
 .scratch__surface:active {
@@ -101,17 +94,18 @@
 
 .scratch__surface.is-gone {
   opacity: 0;
-  transform: scale(1.04);
+  transform: scale(1.03);
   pointer-events: none;
 }
 
 /* how much she has cleared */
 .scratch__progress {
   position: relative;
-  width: min(100%, 300px);
-  height: 1px;
+  width: min(100%, 290px);
+  height: 2px;
   margin: clamp(1.4rem, 4vh, 2rem) auto 0;
-  background: var(--hair-soft);
+  background: var(--line);
+  border-radius: 2px;
   overflow: hidden;
 }
 
@@ -119,7 +113,7 @@
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(90deg, var(--gold), var(--rose));
+  background: linear-gradient(90deg, var(--blush), var(--rose));
   transform-origin: left;
   transform: scaleX(var(--p, 0));
   transition: transform 0.25s linear, opacity 0.6s ease;
@@ -132,7 +126,7 @@
 .scratch__skip {
   display: inline-block;
   margin-top: 1.2rem;
-  font-size: 0.6rem;
+  font-size: 0.58rem;
   letter-spacing: 0.22em;
   text-transform: uppercase;
   color: var(--faint);

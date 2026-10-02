@@ -1,53 +1,58 @@
 /* =============================================================
    FOR YOU — a small scrapbook
-   Palette lifted from the photos: winter black, boat-day red,
-   the gold embroidery, and a lot of pale sky.
+   Cream paper, printed snapshots, one blush accent.
+   Everything is warm-grey on warm-white; nothing is pure black
+   and nothing is pure white.
    ============================================================= */
 
 :root {
-  /* ink — warm near-blacks, never pure grey */
-  --ink: #090607;
-  --ink-2: #14100f;
-  --ink-3: #1c1618;
+  /* paper */
+  --paper: #faf6f0;
+  --paper-2: #f4ede4;
+  --card: #fffdfb;
 
-  /* the reds from the boat day */
-  --wine: #5c1727;
-  --wine-deep: #2c0a13;
-  --wine-glow: rgba(140, 32, 55, 0.5);
+  /* ink — warm, never black */
+  --ink: #2a2320;
+  --ink-2: #4a403a;
+  --muted: #6d615a;
+  --faint: #a1948b;
 
-  /* soft pinks and creams */
-  --rose: #f0bfc6;
-  --blush: #f9e7ea;
-  --cream: #f7f2ea;
+  /* the blush and the one deep accent */
+  --blush: #e8b4bc;
+  --blush-soft: #f6dfe3;
+  --rose: #b8506a;
+  --wine: #7a2438;
 
-  /* the gold embroidery */
-  --gold: #d6b285;
-  --gold-dim: rgba(214, 178, 133, 0.42);
+  /* hairlines and the gold from her embroidery, quieted down */
+  --line: rgba(42, 35, 32, 0.11);
+  --line-soft: rgba(42, 35, 32, 0.06);
+  --gold: #b08d57;
 
-  --muted: rgba(247, 242, 234, 0.6);
-  --faint: rgba(247, 242, 234, 0.34);
-  --ghost: rgba(247, 242, 234, 0.13);
-  --hair: rgba(214, 178, 133, 0.2);
-  --hair-soft: rgba(247, 242, 234, 0.08);
+  --cream: #fffdfb;
 
-  /* type — Fraunces carries the voice, Inter stays out of its way */
-  --display: "Fraunces", "Hoefler Text", Georgia, serif;
+  /* type */
+  --display: "Instrument Serif", "Hoefler Text", Georgia, serif;
   --sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --script: "Mrs Saint Delafield", "Snell Roundhand", cursive;
 
-  --fs-hero: clamp(3.1rem, 15vw, 7.5rem);
-  --fs-h2: clamp(2.3rem, 8.5vw, 4.4rem);
-  --fs-h3: clamp(1.5rem, 5vw, 2.3rem);
-  --fs-body: clamp(0.94rem, 2.6vw, 1.02rem);
+  --fs-hero: clamp(3.4rem, 16vw, 8rem);
+  --fs-h2: clamp(2.4rem, 9vw, 4.6rem);
+  --fs-h3: clamp(1.6rem, 5.2vw, 2.4rem);
+  --fs-body: clamp(0.95rem, 2.6vw, 1.03rem);
 
-  --pad: clamp(1.25rem, 5vw, 5rem);
-  --max: 1240px;
+  --pad: clamp(1.35rem, 5vw, 5rem);
+  --max: 1180px;
 
-  /* motion — long, soft, unhurried */
+  /* shadows — soft, warm, layered like paper on paper */
+  --sh-sm: 0 1px 2px rgba(42, 35, 32, 0.05), 0 3px 10px rgba(42, 35, 32, 0.05);
+  --sh-md: 0 2px 4px rgba(42, 35, 32, 0.05), 0 12px 30px rgba(42, 35, 32, 0.09);
+  --sh-lg: 0 4px 8px rgba(42, 35, 32, 0.06), 0 26px 60px rgba(42, 35, 32, 0.14);
+
+  /* motion */
   --ease: cubic-bezier(0.16, 0.84, 0.24, 1);
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
   --slow: cubic-bezier(0.76, 0, 0.24, 1);
-  --t-fast: 0.45s;
-  --t-mid: 0.8s;
-  --t-slow: 1.4s;
+  --t-fast: 0.4s;
+  --t-mid: 0.7s;
+  --t-slow: 1.2s;
 }

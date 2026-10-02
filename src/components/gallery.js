@@ -14,16 +14,17 @@ export function mountGallery({ photos, heading, onOpen }) {
       (photo, i) => `
       <button class="tile${photo.feature ? " tile--wide" : ""}" data-reveal data-index="${i}"
               style="--rd:${((i % 3) * 0.09).toFixed(2)}s" aria-label="Open photo: ${esc(photo.title)}">
-        <span class="tile__media">
-          <img src="${asset(photo.image)}" alt="${esc(photo.title)}"
-               loading="${i < 2 ? "eager" : "lazy"}" decoding="async" />
-          <span class="tile__veil"></span>
-          <span class="tile__plus" aria-hidden="true">+</span>
-          <span class="tile__cap">
-            ${photo.date ? `<span class="datestamp tile__date">${esc(photo.date)}</span>` : ""}
-            <span class="tile__title">${heart(photo.title)}</span>
-            <span class="tile__hint">${esc(hint)}</span>
+        <span class="tile__print">
+          <span class="tile__media">
+            <img src="${asset(photo.image)}" alt="${esc(photo.title)}"
+                 loading="${i < 2 ? "eager" : "lazy"}" decoding="async" />
+            <span class="tile__plus" aria-hidden="true">+</span>
           </span>
+        </span>
+        <span class="tile__cap">
+          ${photo.date ? `<span class="datestamp tile__date">${esc(photo.date)}</span>` : ""}
+          <span class="tile__title">${heart(photo.title)}</span>
+          <span class="tile__hint">${esc(hint)}</span>
         </span>
       </button>`,
     )

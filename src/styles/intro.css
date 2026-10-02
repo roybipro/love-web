@@ -7,69 +7,97 @@
   place-items: center;
   padding: var(--pad);
   text-align: center;
-  background: var(--ink);
-  transition: opacity 1s ease, transform 1.3s var(--slow), filter 1s ease, visibility 0s linear 1.25s;
+  background:
+    radial-gradient(80% 60% at 50% 8%, rgba(246, 223, 227, 0.7), transparent 62%),
+    radial-gradient(70% 55% at 50% 100%, rgba(232, 180, 188, 0.28), transparent 60%),
+    var(--paper);
+  transition: opacity 0.9s ease, transform 1.2s var(--slow), filter 0.9s ease,
+    visibility 0s linear 1.15s;
 }
 
-/* the photos, blurred almost past recognition, drifting between one another */
-.intro__bleed {
+/* a few prints tossed on the table around the words */
+.intro__scatter {
   position: absolute;
   inset: 0;
   overflow: hidden;
-  opacity: 0.55;
+  pointer-events: none;
 }
 
-.intro__bleed img {
+.intro__scatter img {
   position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
+  width: clamp(90px, 13vw, 165px);
+  aspect-ratio: 3 / 4;
   object-fit: cover;
-  object-position: center 30%;
+  background: var(--card);
+  padding: 7px 7px 20px;
+  border-radius: 2px;
+  box-shadow: var(--sh-lg);
   opacity: 0;
-  filter: blur(30px) saturate(0.5) brightness(0.4) contrast(1.15);
-  transform: scale(1.2);
-  animation: bleed 32s var(--ease) infinite;
-  will-change: transform, opacity;
+  animation: settle 1.6s var(--ease) forwards, float 9s ease-in-out infinite alternate;
 }
 
-.intro__bleed img:nth-child(2) {
-  animation-delay: 8s;
+.intro__scatter img:nth-child(1) {
+  left: 4%;
+  top: 12%;
+  rotate: -8deg;
+  animation-delay: 0.5s, 0s;
 }
-.intro__bleed img:nth-child(3) {
-  animation-delay: 16s;
+.intro__scatter img:nth-child(2) {
+  right: 5%;
+  top: 18%;
+  rotate: 7deg;
+  animation-delay: 0.7s, 1.2s;
 }
-.intro__bleed img:nth-child(4) {
-  animation-delay: 24s;
+.intro__scatter img:nth-child(3) {
+  left: 9%;
+  bottom: 10%;
+  rotate: 5deg;
+  animation-delay: 0.9s, 2.1s;
+}
+.intro__scatter img:nth-child(4) {
+  right: 8%;
+  bottom: 14%;
+  rotate: -6deg;
+  animation-delay: 1.1s, 3s;
 }
 
-@keyframes bleed {
-  0%,
-  100% {
+@keyframes settle {
+  from {
     opacity: 0;
-    transform: scale(1.2) translate(0, 0);
+    translate: 0 22px;
   }
-  6%,
-  18% {
-    opacity: 0.85;
-  }
-  12% {
-    transform: scale(1.34) translate(-1.5%, 1%);
-  }
-  26% {
-    opacity: 0;
-    transform: scale(1.4) translate(1%, -1.5%);
+  to {
+    opacity: 1;
+    translate: 0 0;
   }
 }
 
-/* keep the words readable over it */
-.intro::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  background: radial-gradient(78% 62% at 50% 50%, rgba(9, 6, 7, 0.5), rgba(9, 6, 7, 0.92) 78%),
-    linear-gradient(180deg, rgba(44, 10, 19, 0.42), transparent 45%, rgba(44, 10, 19, 0.5));
+@keyframes float {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-14px);
+  }
+}
+
+/* on a phone the prints crowd the words — keep two, quieter */
+@media (max-width: 720px) {
+  .intro__scatter img:nth-child(1),
+  .intro__scatter img:nth-child(2) {
+    width: 78px;
+    opacity: 0;
+  }
+  .intro__scatter img:nth-child(3),
+  .intro__scatter img:nth-child(4) {
+    width: 72px;
+    bottom: auto;
+    top: 4%;
+    opacity: 0;
+  }
+  .intro__scatter img {
+    animation-duration: 1.6s, 11s;
+  }
 }
 
 .intro__drift {
@@ -83,27 +111,26 @@
 .intro__inner {
   position: relative;
   z-index: 3;
-  max-width: 900px;
+  max-width: 860px;
 }
 
 .intro__title {
   font-family: var(--display);
-  font-optical-sizing: auto;
-  font-weight: 300;
+  font-weight: 400;
   font-size: var(--fs-hero);
-  line-height: 0.98;
-  letter-spacing: -0.045em;
+  line-height: 0.95;
+  letter-spacing: -0.035em;
+  color: var(--ink);
 }
 
-/* a hairline that draws itself outward from the middle */
 .intro__rule {
   display: block;
   width: clamp(70px, 16vw, 150px);
   height: 1px;
-  margin: clamp(1.6rem, 5vh, 2.6rem) auto;
-  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  margin: clamp(1.7rem, 5vh, 2.7rem) auto;
+  background: linear-gradient(90deg, transparent, var(--rose), transparent);
   transform: scaleX(0);
-  animation: drawRule 1.4s var(--ease) 1.15s forwards;
+  animation: drawRule 1.3s var(--ease) 1.1s forwards;
 }
 
 @keyframes drawRule {
@@ -115,29 +142,28 @@
 .intro__line {
   font-family: var(--display);
   font-style: italic;
-  font-weight: 300;
-  font-size: clamp(1.2rem, 4.6vw, 1.85rem);
-  line-height: 1.45;
+  font-weight: 400;
+  font-size: clamp(1.25rem, 4.8vw, 1.95rem);
+  line-height: 1.4;
+  letter-spacing: -0.015em;
   color: var(--muted);
-  letter-spacing: -0.01em;
 }
 
 .btn--open {
   margin-top: clamp(2.4rem, 7vh, 3.4rem);
 }
 
-/* the hidden note — only reachable by tapping the heart */
+/* the hidden note — reachable only by tapping the heart */
 .intro__secret {
   margin-top: clamp(1.6rem, 5vh, 2.4rem);
   font-family: var(--display);
   font-style: italic;
-  font-weight: 300;
-  font-size: clamp(1.05rem, 4vw, 1.4rem);
+  font-size: clamp(1.1rem, 4vw, 1.5rem);
   color: var(--rose);
   opacity: 0;
-  transform: translateY(10px) scale(0.98);
+  transform: translateY(10px);
   filter: blur(4px);
-  transition: opacity 1.2s ease, transform 1.4s var(--ease), filter 1.2s ease;
+  transition: opacity 1.1s ease, transform 1.3s var(--ease), filter 1.1s ease;
 }
 
 .intro__secret.in {
@@ -153,8 +179,8 @@
 /* the curtain lifts */
 body.opened .intro {
   opacity: 0;
-  transform: scale(1.06);
-  filter: blur(16px);
+  transform: scale(1.05);
+  filter: blur(12px);
   visibility: hidden;
   pointer-events: none;
 }

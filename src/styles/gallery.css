@@ -2,17 +2,22 @@
 .gallery {
   display: grid;
   grid-template-columns: 1fr;
-  grid-auto-flow: row dense; /* keeps a larger print from leaving a hole behind */
-  gap: clamp(2.2rem, 6vw, 3rem) clamp(1.2rem, 3.5vw, 2.4rem);
+  grid-auto-flow: row dense;
+  gap: clamp(2.6rem, 6vw, 4rem) clamp(1.4rem, 3.5vw, 2.6rem);
   max-width: var(--max);
   margin-inline: auto;
 }
 
 .tile {
   grid-column: span 1;
+  position: relative;
+  display: block;
+  width: 100%;
+  text-align: left;
+  background: none;
 }
 
-/* two-up on a tablet: the feature print takes the whole row */
+/* two-up on a tablet */
 @media (min-width: 620px) {
   .gallery {
     grid-template-columns: repeat(4, 1fr);
@@ -23,14 +28,17 @@
   .tile--wide {
     grid-column: span 4;
   }
+  .tile:nth-of-type(even) {
+    margin-top: 3rem;
+  }
 }
 
-/* desktop: six columns, three prints a row, and every so often two
-   larger ones sit side by side like a spread in an album */
+/* desktop: three prints a row, each column dropped a little differently,
+   and every so often two larger ones sit side by side like an album spread */
 @media (min-width: 1000px) {
   .gallery {
     grid-template-columns: repeat(6, 1fr);
-    gap: clamp(2.6rem, 4vw, 4rem) clamp(1.6rem, 2.6vw, 2.6rem);
+    gap: clamp(3rem, 4.5vw, 5rem) clamp(1.8rem, 2.8vw, 2.8rem);
   }
   .tile {
     grid-column: span 2;
@@ -38,20 +46,40 @@
   .tile--wide {
     grid-column: span 3;
   }
+  .tile:nth-of-type(even) {
+    margin-top: 0;
+  }
+  .tile:nth-of-type(3n + 2) {
+    margin-top: 3.8rem;
+  }
+  .tile:nth-of-type(3n + 3) {
+    margin-top: 1.6rem;
+  }
 }
 
-/* one print pinned larger than the rest */
-.tile--wide {
-  width: 100%;
-  margin-top: 0;
-}
-
-.tile {
-  position: relative;
+/* the white mount around the print */
+.tile__print {
   display: block;
-  width: 100%;
-  text-align: left;
-  background: none;
+  background: var(--card);
+  padding: 10px 10px 12px;
+  border-radius: 2px;
+  box-shadow: var(--sh-md);
+  transform: rotate(var(--tilt, 0deg));
+  transition: transform var(--t-slow) var(--ease), box-shadow var(--t-slow) var(--ease);
+}
+
+/* a whisper of rotation, like they were laid down by hand */
+.tile:nth-of-type(4n + 1) .tile__print {
+  --tilt: -0.7deg;
+}
+.tile:nth-of-type(4n + 2) .tile__print {
+  --tilt: 0.5deg;
+}
+.tile:nth-of-type(4n + 3) .tile__print {
+  --tilt: -0.35deg;
+}
+.tile:nth-of-type(4n + 4) .tile__print {
+  --tilt: 0.8deg;
 }
 
 .tile__media {
@@ -59,25 +87,7 @@
   display: block;
   aspect-ratio: 3 / 4;
   overflow: hidden;
-  border-radius: 2px;
-  background: var(--ink-2);
-  transform: rotate(var(--tilt, 0deg));
-  transition: transform var(--t-slow) var(--ease), box-shadow var(--t-slow) var(--ease);
-  box-shadow: 0 26px 60px -40px #000;
-}
-
-/* a whisper of rotation, like they were laid down by hand */
-.tile:nth-of-type(4n + 1) .tile__media {
-  --tilt: -0.6deg;
-}
-.tile:nth-of-type(4n + 2) .tile__media {
-  --tilt: 0.45deg;
-}
-.tile:nth-of-type(4n + 3) .tile__media {
-  --tilt: -0.3deg;
-}
-.tile:nth-of-type(4n + 4) .tile__media {
-  --tilt: 0.7deg;
+  background: var(--paper-2);
 }
 
 .tile__media img {
@@ -85,122 +95,43 @@
   height: 100%;
   object-fit: cover;
   object-position: center 30%;
-  filter: saturate(0.82) brightness(0.82) contrast(1.04);
-  transform: translate3d(var(--px, 0px), var(--py, 0px), 0) scale(1.06);
-  transition: transform 1.6s var(--ease), filter 1s ease;
+  filter: saturate(0.94) contrast(1.01);
+  transform: translate3d(var(--px, 0px), var(--py, 0px), 0) scale(1.04);
+  transition: transform 1.5s var(--ease), filter 0.9s ease;
   will-change: transform;
 }
 
-/* the gradient the words sit on */
-.tile__veil {
-  position: absolute;
-  inset: 0;
-  display: block;
-  background: linear-gradient(
-    to top,
-    rgba(9, 6, 7, 0.94) 0%,
-    rgba(9, 6, 7, 0.72) 22%,
-    rgba(9, 6, 7, 0.16) 46%,
-    transparent 66%
-  );
-  opacity: 0.8;
-  transition: opacity var(--t-mid) ease;
-}
-
-.tile__media::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border: 1px solid transparent;
-  border-radius: 2px;
-  transition: border-color var(--t-mid) ease;
-  pointer-events: none;
-}
-
-.tile:hover .tile__media,
-.tile:focus-visible .tile__media {
-  transform: rotate(0deg) translateY(-6px);
-  box-shadow: 0 46px 90px -44px #000, 0 0 80px -30px rgba(214, 178, 133, 0.32);
-}
-
-.tile:hover .tile__media::after,
-.tile:focus-visible .tile__media::after {
-  border-color: var(--hair);
+.tile:hover .tile__print,
+.tile:focus-visible .tile__print {
+  transform: rotate(0deg) translateY(-8px);
+  box-shadow: var(--sh-lg);
 }
 
 .tile:hover .tile__media img,
 .tile:focus-visible .tile__media img {
-  filter: saturate(1.02) brightness(1) contrast(1.02);
-  transform: translate3d(var(--px, 0px), var(--py, 0px), 0) scale(1.12);
-}
-
-.tile:hover .tile__veil {
-  opacity: 1;
-}
-
-/* caption, sitting inside the photograph */
-.tile__cap {
-  position: absolute;
-  inset: auto 0 0 0;
-  z-index: 2;
-  display: block;
-  padding: clamp(1rem, 3vw, 1.5rem);
-}
-
-.tile__date {
-  display: block;
-  margin-bottom: 0.4rem;
-}
-
-.tile__title {
-  display: block;
-  font-family: var(--display);
-  font-weight: 300;
-  font-size: clamp(1.25rem, 3.6vw, 1.6rem);
-  line-height: 1.18;
-  letter-spacing: -0.025em;
-  color: var(--cream);
-}
-
-.tile__hint {
-  display: block;
-  margin-top: 0.5rem;
-  font-size: 0.6rem;
-  letter-spacing: 0.24em;
-  text-transform: uppercase;
-  color: var(--faint);
-  opacity: 0;
-  transform: translateY(6px);
-  transition: opacity var(--t-mid) ease, transform var(--t-mid) var(--ease), color var(--t-mid) ease;
-}
-
-.tile:hover .tile__hint,
-.tile:focus-visible .tile__hint {
-  opacity: 1;
-  transform: none;
-  color: var(--gold);
+  transform: translate3d(var(--px, 0px), var(--py, 0px), 0) scale(1.1);
+  filter: saturate(1) contrast(1.02);
 }
 
 .tile__plus {
   position: absolute;
-  top: 0.95rem;
-  right: 0.95rem;
+  top: 0.7rem;
+  right: 0.7rem;
   z-index: 2;
   width: 32px;
   height: 32px;
   display: grid;
   place-items: center;
   border-radius: 50%;
-  border: 1px solid rgba(247, 242, 234, 0.22);
-  background: rgba(9, 6, 7, 0.42);
-  backdrop-filter: blur(6px);
-  color: var(--cream);
+  background: rgba(255, 253, 251, 0.9);
+  color: var(--ink);
   font-size: 1rem;
   font-weight: 200;
   line-height: 1;
+  box-shadow: var(--sh-sm);
   opacity: 0;
   transform: scale(0.7) rotate(-40deg);
-  transition: opacity var(--t-mid) ease, transform var(--t-mid) var(--ease);
+  transition: opacity var(--t-fast) ease, transform var(--t-mid) var(--ease);
   pointer-events: none;
 }
 
@@ -210,15 +141,47 @@
   transform: scale(1) rotate(0deg);
 }
 
-/* on touch there is no hover, so let the caption live permanently */
+/* the words under the print, like a caption written in the margin */
+.tile__cap {
+  display: block;
+  padding: 1.1rem 0.2rem 0;
+}
+
+.tile__date {
+  display: block;
+  margin-bottom: 0.45rem;
+}
+
+.tile__title {
+  display: block;
+  font-family: var(--display);
+  font-size: clamp(1.35rem, 3.8vw, 1.75rem);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+
+.tile__hint {
+  display: block;
+  margin-top: 0.45rem;
+  font-size: 0.58rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--faint);
+  opacity: 0;
+  transform: translateY(5px);
+  transition: opacity var(--t-fast) ease, transform var(--t-mid) var(--ease), color var(--t-fast) ease;
+}
+
+.tile:hover .tile__hint,
+.tile:focus-visible .tile__hint {
+  opacity: 1;
+  transform: none;
+  color: var(--rose);
+}
+
 @media (hover: none) {
-  .tile__veil {
-    opacity: 1;
-  }
   .tile__hint {
     display: none;
-  }
-  .tile__media img {
-    filter: saturate(0.94) brightness(0.94);
   }
 }

@@ -6,8 +6,8 @@ import { reduceMotion, seedHearts } from "../lib/motion.js";
  * and unrevealed, so the scroll animations aren't wasted on her.
  */
 export function mountIntro({ bleed = [], onOpen }) {
-  /* a few of them, blurred almost past recognition, drifting between each other */
-  const host = $("#introBleed");
+  /* a few prints scattered around the words */
+  const host = $("#introScatter");
   if (host && bleed.length) {
     host.innerHTML = bleed
       .slice(0, 4)

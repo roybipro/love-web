@@ -2,7 +2,7 @@
 .cards {
   display: grid;
   grid-template-columns: 1fr;
-  gap: clamp(0.9rem, 2.2vw, 1.4rem);
+  gap: clamp(1rem, 2.4vw, 1.6rem);
   max-width: var(--max);
   margin-inline: auto;
 }
@@ -19,52 +19,54 @@
   }
 }
 
-/* a note pinned to a board */
+/* a note cut from slightly brighter paper */
 .card {
   position: relative;
   display: block;
   width: 100%;
   text-align: left;
-  padding: clamp(1.6rem, 4vw, 2.3rem) clamp(1.3rem, 3.5vw, 1.8rem) clamp(1.4rem, 3.5vw, 1.8rem);
-  border: 1px solid var(--hair-soft);
+  padding: clamp(1.7rem, 4vw, 2.4rem) clamp(1.4rem, 3.5vw, 1.9rem) clamp(1.5rem, 3.5vw, 1.9rem);
   border-radius: 3px;
-  background: linear-gradient(175deg, rgba(247, 242, 234, 0.045), rgba(247, 242, 234, 0.008) 60%);
+  background: var(--card);
+  border: 1px solid var(--line-soft);
+  box-shadow: var(--sh-sm);
   overflow: hidden;
   isolation: isolate;
   transition: border-color var(--t-mid) ease, transform var(--t-mid) var(--ease),
     box-shadow var(--t-mid) ease;
 }
 
+.card:nth-of-type(3n + 1) {
+  transform: rotate(-0.4deg);
+}
+.card:nth-of-type(3n + 2) {
+  transform: rotate(0.3deg);
+}
+.card:nth-of-type(3n + 3) {
+  transform: rotate(-0.2deg);
+}
+
+/* a blush wash rises from the top when it opens */
 .card::before {
   content: "";
   position: absolute;
   inset: 0;
   z-index: -1;
-  background: radial-gradient(120% 90% at 50% 0%, rgba(92, 23, 39, 0.85), transparent 72%);
+  background: linear-gradient(180deg, var(--blush-soft), rgba(246, 223, 227, 0) 72%);
   opacity: 0;
   transition: opacity var(--t-slow) ease;
 }
 
-/* each note sits at a slightly different angle */
-.card:nth-of-type(3n + 1) {
-  transform: rotate(-0.35deg);
-}
-.card:nth-of-type(3n + 2) {
-  transform: rotate(0.25deg);
-}
-.card:nth-of-type(3n + 3) {
-  transform: rotate(-0.15deg);
-}
-
 .card:hover {
-  transform: rotate(0deg) translateY(-4px);
-  border-color: var(--gold-dim);
-  box-shadow: 0 34px 70px -46px #000;
+  transform: rotate(0deg) translateY(-5px);
+  box-shadow: var(--sh-md);
+  border-color: var(--line);
 }
 
 .card.open {
-  border-color: rgba(240, 191, 198, 0.3);
-  box-shadow: 0 34px 80px -48px rgba(240, 191, 198, 0.5);
+  transform: rotate(0deg);
+  border-color: var(--blush);
+  box-shadow: var(--sh-md);
 }
 
 .card.open::before {
@@ -81,31 +83,30 @@
 
 .card__idx {
   position: absolute;
-  top: -0.55em;
-  left: -0.1em;
+  top: -0.6em;
+  left: -0.12em;
   z-index: -1;
   font-family: var(--display);
-  font-weight: 300;
-  font-size: clamp(3.4rem, 11vw, 4.6rem);
+  font-size: clamp(3.6rem, 11vw, 5rem);
   line-height: 1;
   letter-spacing: -0.05em;
-  color: var(--ghost);
+  color: var(--blush-soft);
   transition: color var(--t-mid) ease;
 }
 
 .card.open .card__idx {
-  color: rgba(240, 191, 198, 0.16);
+  color: rgba(184, 80, 106, 0.16);
 }
 
 .card__title {
   position: relative;
   font-family: var(--display);
-  font-weight: 300;
-  font-size: clamp(1.4rem, 4.2vw, 1.85rem);
-  line-height: 1.12;
-  letter-spacing: -0.035em;
+  font-size: clamp(1.45rem, 4.2vw, 1.95rem);
+  line-height: 1.1;
+  letter-spacing: -0.025em;
   flex: 1;
-  padding-top: 0.15em;
+  padding-top: 0.18em;
+  color: var(--ink);
 }
 
 .card__toggle {
@@ -113,7 +114,7 @@
   flex: none;
   width: 28px;
   height: 28px;
-  margin-top: 0.45em;
+  margin-top: 0.5em;
 }
 
 .card__toggle::before,
@@ -124,7 +125,7 @@
   top: 50%;
   width: 13px;
   height: 1px;
-  background: var(--gold);
+  background: var(--rose);
   transition: transform var(--t-mid) var(--ease), opacity var(--t-fast) ease;
 }
 
@@ -144,7 +145,7 @@
   position: relative;
   display: grid;
   grid-template-rows: 0fr;
-  transition: grid-template-rows 0.85s var(--ease);
+  transition: grid-template-rows 0.8s var(--ease);
 }
 
 .card.open .card__body {
@@ -157,15 +158,15 @@
 
 .card__text {
   display: block;
-  padding-top: 1.15rem;
+  padding-top: 1.2rem;
   color: var(--muted);
-  font-size: 0.95rem;
+  font-size: 0.96rem;
   font-weight: 300;
-  line-height: 1.85;
-  max-width: 42ch;
+  line-height: 1.9;
+  max-width: 40ch;
   opacity: 0;
-  transform: translateY(10px);
-  transition: opacity 0.7s ease 0.14s, transform 0.9s var(--ease) 0.14s;
+  transform: translateY(9px);
+  transition: opacity 0.65s ease 0.12s, transform 0.85s var(--ease) 0.12s;
 }
 
 .card.open .card__text {

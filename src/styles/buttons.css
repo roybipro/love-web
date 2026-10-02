@@ -1,34 +1,34 @@
-/* buttons — a hairline ring that fills from the left on hover */
+/* buttons — quiet ink on paper that deepens on hover */
 .btn {
   position: relative;
   display: inline-flex;
   align-items: center;
-  gap: 0.9rem;
+  gap: 0.85rem;
   padding: 1rem 2.1rem;
   border-radius: 999px;
-  font-size: 0.72rem;
+  font-size: 0.7rem;
   font-weight: 400;
   letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: var(--blush);
-  border: 1px solid var(--hair);
-  background: rgba(92, 23, 39, 0.2);
-  isolation: isolate;
+  color: var(--paper);
+  background: var(--ink);
+  border: 1px solid var(--ink);
   overflow: hidden;
-  transition: transform var(--t-mid) var(--ease), border-color var(--t-mid) ease,
-    box-shadow var(--t-mid) ease, color var(--t-mid) ease;
+  isolation: isolate;
+  transition: transform var(--t-mid) var(--ease), box-shadow var(--t-mid) ease,
+    background var(--t-mid) ease;
 }
 
-/* the fill */
+/* the blush washes in from the left */
 .btn::before {
   content: "";
   position: absolute;
   inset: 0;
   z-index: -1;
-  background: linear-gradient(100deg, var(--wine), #7d1f34);
+  background: linear-gradient(100deg, var(--rose), var(--wine));
   transform: scaleX(0);
   transform-origin: left;
-  transition: transform 0.7s var(--ease);
+  transition: transform 0.65s var(--ease);
 }
 
 .btn:hover::before {
@@ -37,8 +37,7 @@
 
 .btn:hover {
   transform: translateY(-2px);
-  border-color: rgba(240, 191, 198, 0.55);
-  box-shadow: 0 20px 50px -24px var(--wine-glow), 0 0 0 5px rgba(214, 178, 133, 0.05);
+  box-shadow: 0 14px 34px -14px rgba(122, 36, 56, 0.45);
 }
 
 .btn:active {
@@ -53,7 +52,6 @@
   transform: translateX(6px);
 }
 
-/* the little heart that keeps time */
 .beat {
   display: inline-block;
   animation: beat 2.8s var(--ease) infinite;
@@ -80,7 +78,7 @@
 .fh {
   position: absolute;
   bottom: -8%;
-  color: var(--rose);
+  color: var(--blush);
   font-size: var(--s, 14px);
   opacity: 0;
   will-change: transform, opacity;
