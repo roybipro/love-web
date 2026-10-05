@@ -1,6 +1,53 @@
-/* =============================================================
-   Little moments — a wall of polaroids pinned to the paper.
-   ============================================================= */
+/* ---------- "surprise me" ---------- */
+.dice {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-top: 1.6rem;
+  padding: 0.62rem 1.15rem;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: var(--card);
+  box-shadow: var(--sh-1);
+  color: var(--ink-2);
+  font-size: 0.58rem;
+  font-weight: 400;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  transition: transform var(--t-mid) var(--spring), box-shadow var(--t-fast) ease,
+    color var(--t-fast) ease, border-color var(--t-fast) ease;
+}
+
+.dice:hover {
+  transform: translateY(-2px);
+  color: var(--burgundy);
+  border-color: var(--blush);
+  box-shadow: var(--sh-2);
+}
+
+.dice__spark {
+  display: inline-block;
+  color: var(--gold);
+  font-size: 0.9rem;
+  line-height: 1;
+  transition: transform var(--t-mid) var(--ease);
+}
+
+.dice:hover .dice__spark {
+  transform: rotate(90deg) scale(1.2);
+}
+
+.dice.is-shuffling .dice__spark {
+  animation: shuffle 0.62s var(--ease);
+}
+
+@keyframes shuffle {
+  0% { transform: rotate(0deg) scale(1); }
+  50% { transform: rotate(220deg) scale(1.5); }
+  100% { transform: rotate(360deg) scale(1); }
+}
+
+/* ---------- the wall ---------- */
 .wall {
   display: grid;
   grid-template-columns: 1fr;
