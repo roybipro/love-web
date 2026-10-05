@@ -128,7 +128,7 @@
   position: relative;
   padding: clamp(2.4rem, 8vw, 4.5rem) clamp(1.6rem, 6vw, 3.4rem) clamp(3.4rem, 9vw, 4.5rem);
   background:
-    linear-gradient(180deg, rgba(255, 253, 248, 0.9), rgba(250, 244, 234, 0.9)),
+    linear-gradient(180deg, var(--sheet), var(--sheet-2)),
     var(--card);
   box-shadow: var(--sh-lift);
   border-radius: 3px 9px 4px 7px;
@@ -142,7 +142,7 @@
   background: repeating-linear-gradient(
     to bottom,
     transparent 0 37px,
-    rgba(43, 33, 28, 0.055) 37px 38px
+    var(--rule) 37px 38px
   );
   pointer-events: none;
 }
@@ -222,7 +222,7 @@
 .reply {
   position: relative;
   padding: clamp(2rem, 6vw, 2.8rem) clamp(1.4rem, 4.5vw, 2.2rem) clamp(1.5rem, 4vw, 2rem);
-  background: linear-gradient(180deg, #fdf6e6, #f8eeda);
+  background: linear-gradient(180deg, var(--slip), var(--slip-2));
   box-shadow: var(--sh-3);
   border-radius: 3px 8px 4px 7px;
   transform: rotate(0.5deg);
@@ -250,9 +250,9 @@
   min-height: 118px;
   padding: 0.9rem 1rem;
   resize: vertical;
-  border: 1px solid rgba(43, 33, 28, 0.16);
+  border: 1px solid var(--line);
   border-radius: 3px;
-  background: rgba(255, 253, 248, 0.72);
+  background: var(--float);
   color: var(--ink);
   font-family: var(--hand);
   font-size: clamp(1.2rem, 4vw, 1.5rem);

@@ -13,6 +13,15 @@
       href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500&family=Caveat:wght@400;500&display=swap"
       rel="stylesheet"
     />
+
+    <!-- apply her saved theme before the first paint, so there is no flash -->
+    <script>
+      try {
+        if (localStorage.getItem("our-story:theme") === "night") {
+          document.documentElement.setAttribute("data-theme", "night");
+        }
+      } catch (e) {}
+    </script>
   </head>
   <body class="is-locked">
     <!-- the rough paper edge used by torn sheets -->
@@ -32,6 +41,12 @@
     </div>
     <div class="cursorglow" aria-hidden="true"></div>
     <div class="scrollline" aria-hidden="true"><i id="scrollline"></i></div>
+
+    <!-- THEME -->
+    <button class="theme" id="themeToggle" type="button" aria-pressed="false" aria-label="Switch between paper and night">
+      <span class="theme__glyph" id="themeGlyph" aria-hidden="true">☾</span>
+      <span id="themeLabel">Night</span>
+    </button>
 
     <!-- LOADING -->
     <div class="loader" id="loader">

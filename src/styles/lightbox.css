@@ -131,7 +131,7 @@ body.lb-open {
   padding: 0.55rem 1.1rem;
   border-radius: 999px;
   border: 1px solid var(--line);
-  background: rgba(255, 253, 248, 0.8);
+  background: var(--float);
   color: var(--ink-2);
   font-size: 0.56rem;
   font-weight: 400;
@@ -172,7 +172,7 @@ body.lb-open {
   width: 46px;
   height: 46px;
   border-radius: 50%;
-  background: rgba(255, 253, 248, 0.9);
+  background: var(--float-hi);
   border: 1px solid var(--line);
   color: var(--ink-2);
   font-size: 0.95rem;

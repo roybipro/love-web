@@ -444,3 +444,54 @@ ul {
   text-transform: uppercase;
   color: var(--faint);
 }
+
+/* ---------- paper / night switch ---------- */
+.theme {
+  position: fixed;
+  z-index: 140;
+  top: clamp(0.9rem, 3vw, 1.6rem);
+  right: clamp(0.9rem, 3vw, 1.6rem);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1rem;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: var(--float);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: var(--sh-1);
+  color: var(--ink-2);
+  font-size: 0.56rem;
+  font-weight: 400;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  opacity: 0;
+  transform: translateY(-8px);
+  pointer-events: none;
+  transition: opacity 0.9s ease 1.4s, transform 0.9s var(--ease) 1.4s,
+    color var(--t-fast) ease, border-color var(--t-fast) ease,
+    background var(--t-mid) ease;
+}
+
+body.opened .theme {
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+}
+
+.theme:hover {
+  color: var(--burgundy);
+  border-color: var(--blush);
+}
+
+.theme__glyph {
+  font-size: 0.95rem;
+  line-height: 1;
+  color: var(--gold);
+  transition: transform var(--t-mid) var(--spring);
+}
+
+.theme:hover .theme__glyph {
+  transform: rotate(-18deg) scale(1.15);
+}

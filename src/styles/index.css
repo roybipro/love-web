@@ -4,6 +4,7 @@
    ============================================================= */
 
 @import "./tokens.css";
+@import "./theme-night.css";
 @import "./background.css";
 @import "./primitives.css";
 @import "./base.css";

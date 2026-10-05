@@ -33,6 +33,19 @@
   --line: rgba(43, 33, 28, 0.13);
   --line-soft: rgba(43, 33, 28, 0.07);
 
+  /* frosted chrome floating above the page — nav, player, photo controls */
+  --float: rgba(255, 253, 248, 0.86);
+  --float-hi: rgba(255, 253, 248, 0.95);
+  --float-line: rgba(255, 253, 248, 0.7);
+
+  /* the second stop of each paper sheet, so night can flip the gradient too */
+  --card-2: #fdf8f0;
+  --slip: #fdf6e6;
+  --slip-2: #f8eeda;
+  --sheet: rgba(255, 253, 248, 0.9);
+  --sheet-2: rgba(250, 244, 234, 0.9);
+  --rule: rgba(43, 33, 28, 0.055);
+
   /* type — three families, no more */
   --display: "Instrument Serif", "Hoefler Text", Georgia, serif;
   --sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;

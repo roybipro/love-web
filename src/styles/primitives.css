@@ -167,7 +167,7 @@
 .note--slip {
   display: inline-block;
   padding: 0.9rem 1.3rem;
-  background: linear-gradient(180deg, #fdf6e6, #f8eeda);
+  background: linear-gradient(180deg, var(--slip), var(--slip-2));
   box-shadow: var(--sh-1);
   border-radius: 2px 5px 3px 4px;
 }

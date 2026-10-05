@@ -1,0 +1,129 @@
+/* =============================================================
+   NIGHT — the same book by lamplight.
+
+   Every surface in the site reads its colour from a token, so
+   redefining the tokens here flips the whole thing. Only the
+   background atmosphere and a few decorative marks need a rule
+   of their own, because those are gradients and blend modes
+   rather than flat colours.
+   ============================================================= */
+
+[data-theme="night"] {
+  /* paper → near-black with a brown undertone, never pure black */
+  --ivory: #0b0909;
+  --paper: #12100f;
+  --paper-2: #1b1817;
+  --paper-3: #2a2523;
+  --card: #1a1716;
+  --card-2: #161312;
+  --slip: #201a18;
+  --slip-2: #1a1514;
+  --sheet: rgba(26, 23, 22, 0.92);
+  --sheet-2: rgba(22, 19, 18, 0.92);
+  --rule: rgba(242, 234, 225, 0.05);
+
+  /* ink flips to warm cream */
+  --ink: #f2eae1;
+  --ink-2: #d5c9be;
+  --muted: #a2938a;
+  --faint: #8a7c72;
+
+  /* blush deepens, burgundy lights into a rose you can read */
+  --blush: #6d3143;
+  --blush-soft: #2b1520;
+  --rose: #e2a5b2;
+  --burgundy: #d999a7;
+  --wine: #f0c3cd;
+
+  --gold: #c2a06a;
+  --gold-soft: rgba(194, 160, 106, 0.26);
+
+  --line: rgba(242, 234, 225, 0.13);
+  --line-soft: rgba(242, 234, 225, 0.07);
+
+  --float: rgba(30, 26, 25, 0.86);
+  --float-hi: rgba(34, 29, 28, 0.95);
+  --float-line: rgba(242, 234, 225, 0.12);
+
+  /* shadows have to become darkness, not brown haze */
+  --sh-1: 0 1px 2px rgba(0, 0, 0, 0.5), 0 2px 6px rgba(0, 0, 0, 0.4);
+  --sh-2: 0 2px 4px rgba(0, 0, 0, 0.5), 0 10px 24px rgba(0, 0, 0, 0.55);
+  --sh-3: 0 4px 10px rgba(0, 0, 0, 0.55), 0 22px 50px rgba(0, 0, 0, 0.65);
+  --sh-lift: 0 10px 20px rgba(0, 0, 0, 0.6), 0 38px 78px rgba(0, 0, 0, 0.75);
+}
+
+/* ---------- atmosphere: blend modes do nothing useful on black ---------- */
+
+[data-theme="night"] .bg__paper {
+  background:
+    radial-gradient(120% 80% at 12% -10%, rgba(58, 40, 44, 0.55), transparent 55%),
+    radial-gradient(90% 70% at 92% 8%, rgba(109, 49, 67, 0.3), transparent 60%),
+    radial-gradient(100% 70% at 50% 108%, rgba(38, 30, 26, 0.9), transparent 62%),
+    var(--paper);
+}
+
+[data-theme="night"] .bg__tooth {
+  mix-blend-mode: screen;
+  opacity: 0.16;
+}
+
+[data-theme="night"] .bg__grain {
+  mix-blend-mode: overlay;
+  opacity: 0.4;
+}
+
+[data-theme="night"] .cursorglow {
+  background: radial-gradient(
+    520px circle at var(--mx, 50%) var(--my, 30%),
+    rgba(226, 165, 178, 0.09),
+    transparent 60%
+  );
+}
+
+[data-theme="night"] .loader,
+[data-theme="night"] .cover {
+  background: var(--paper);
+}
+
+[data-theme="night"] .cover__page {
+  background:
+    radial-gradient(90% 70% at 50% 0%, rgba(109, 49, 67, 0.34), transparent 62%),
+    var(--card);
+}
+
+/* the frosted photo backdrop was cream; now it is ink */
+[data-theme="night"] .lb__scrim {
+  background: rgba(9, 7, 7, 0.94);
+}
+
+/* tape reads as aged translucent strips either way */
+[data-theme="night"] .tape {
+  background: linear-gradient(
+    100deg,
+    rgba(120, 104, 78, 0.42),
+    rgba(150, 132, 100, 0.5) 45%,
+    rgba(110, 95, 71, 0.4)
+  );
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5), inset 0 0 0 1px rgba(255, 255, 255, 0.07);
+}
+
+/* ---------- decorative marks that were pale-on-cream ---------- */
+
+/* the ghost numerals and the oversized quote both need to stay faint */
+[data-theme="night"] .head__no {
+  color: #1c1817;
+}
+
+[data-theme="night"] .bigquote {
+  color: rgba(226, 165, 178, 0.16);
+}
+
+[data-theme="night"] .tl__num,
+[data-theme="night"] .titlepage .sticker {
+  color: var(--rose);
+}
+
+[data-theme="night"] ::selection {
+  background: var(--blush);
+  color: var(--ivory);
+}

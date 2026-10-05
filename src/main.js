@@ -26,6 +26,7 @@ import { mountLetter } from "./components/letter.js";
 import { mountReply } from "./components/reply.js";
 import { mountScratch } from "./components/scratch.js";
 import { mountMusic } from "./components/music.js";
+import { mountTheme } from "./components/theme.js";
 import { mountSecret } from "./components/secret.js";
 import { mountCursor, mountMagnets } from "./components/cursor.js";
 
@@ -89,6 +90,7 @@ watchScroll();
 mountNav({ items: content.memories });
 mountCursor();
 mountMagnets();
+mountTheme();
 mountSecret(content.secret);
 mountMusic({ data: content.music, startOn: "#openBtn" });
 

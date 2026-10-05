@@ -29,7 +29,7 @@
   width: 100%;
   text-align: left;
   padding: clamp(1.9rem, 4.5vw, 2.6rem) clamp(1.3rem, 3.5vw, 1.7rem) clamp(1.4rem, 3.5vw, 1.8rem);
-  background: linear-gradient(168deg, var(--card) 0%, #fdf8f0 100%);
+  background: linear-gradient(168deg, var(--card) 0%, var(--card-2) 100%);
   border-radius: 2px 6px 3px 5px;
   box-shadow: var(--sh-2);
   overflow: hidden;

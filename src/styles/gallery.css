@@ -143,7 +143,7 @@
   bottom: 52px;
   z-index: 4;
   padding: 0.6rem 0.8rem;
-  background: rgba(255, 253, 248, 0.94);
+  background: var(--float-hi);
   backdrop-filter: blur(4px);
   box-shadow: var(--sh-1);
   border-left: 2px solid var(--rose);
