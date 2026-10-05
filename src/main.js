@@ -34,24 +34,6 @@ import { mountCursor, mountMagnets } from "./components/cursor.js";
    position would yank her down the page the moment it unlocks. */
 if ("scrollRestoration" in history) history.scrollRestoration = "manual";
 
-function removeQoderWatermark() {
-  const selectors = [
-    '[data-qoder-watermark]',
-    '[data-qoder-sites-badge]',
-    '[data-qoder-site]',
-    'qoder-sites-badge',
-    '[id^="qoder-"]',
-    '[class*="qoder"]',
-    'script[src*="/qoder"]',
-  ];
-
-  document.querySelectorAll(selectors.join(",")).forEach((node) => node.remove());
-}
-
-removeQoderWatermark();
-const qoderObserver = new MutationObserver(() => removeQoderWatermark());
-qoderObserver.observe(document.documentElement, { childList: true, subtree: true });
-
 seedDust($("#bgDust"));
 mountCopy(content);
 
