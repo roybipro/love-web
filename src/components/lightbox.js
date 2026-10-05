@@ -50,6 +50,12 @@ export function createLightbox(photos) {
     note.hidden = !photo.note;
 
     $("#lbCount").textContent = `${pad2(i + 1)} / ${pad2(photos.length)}`;
+
+    /* let her keep the print — same origin, so a plain download works */
+    const save = $("#lbSave");
+    const url = asset(photo.image);
+    save.href = url;
+    save.download = url.split("/").pop() || "our-story.jpg";
   }
 
   function open(i, fromEl) {
