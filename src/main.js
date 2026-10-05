@@ -23,6 +23,7 @@ import { mountSurprise } from "./components/surprise.js";
 import { mountLoveCards } from "./components/love-cards.js";
 import { mountTimeline } from "./components/timeline.js";
 import { mountLetter } from "./components/letter.js";
+import { mountReply } from "./components/reply.js";
 import { mountScratch } from "./components/scratch.js";
 import { mountMusic } from "./components/music.js";
 import { mountSecret } from "./components/secret.js";
@@ -78,6 +79,7 @@ mountTimeline({
   onOpen: lightbox.open,
 });
 mountLetter(content.letter);
+mountReply();
 mountScratch({ data: content.scratch });
 
 /* only once every heading has its final words in it */

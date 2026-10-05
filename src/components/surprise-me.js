@@ -6,7 +6,7 @@ import { play } from "../lib/sound.js";
  * It scrolls the chosen print into view first so the zoom still grows
  * out of the right photograph rather than flying in from off-screen.
  */
-export function mountSurpriseMe({ button = "#surpriseMe", onPick }) {
+export function mountSurpriseMe({ button = "#surpriseMe", onPick } = {}) {
   const btn = $(button);
   if (!btn) return;
 
