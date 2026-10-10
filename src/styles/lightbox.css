@@ -122,9 +122,15 @@ body.lb-open {
 /* keep the print */
 .lb__actions {
   margin-top: 1.1rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
 }
 
-.lb__save {
+.lb__save,
+.lb__play {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
@@ -133,26 +139,40 @@ body.lb-open {
   border: 1px solid var(--line);
   background: var(--float);
   color: var(--ink-2);
+  font-family: inherit;
   font-size: 0.56rem;
   font-weight: 400;
   letter-spacing: 0.2em;
   text-transform: uppercase;
   text-decoration: none;
   box-shadow: var(--sh-1);
+  cursor: pointer;
   transition: color var(--t-fast) ease, border-color var(--t-fast) ease,
     transform var(--t-fast) var(--spring), box-shadow var(--t-fast) ease;
 }
 
-.lb__save:hover {
+.lb__save:hover,
+.lb__play:hover {
   color: var(--burgundy);
   border-color: var(--blush);
   transform: translateY(-2px);
   box-shadow: var(--sh-2);
 }
 
-.lb__save span {
+.lb__save span,
+.lb__play-glyph {
   color: var(--gold);
   font-size: 0.85rem;
+}
+
+/* the lane is running */
+.lb__play.is-playing {
+  color: var(--rose);
+  border-color: var(--rose);
+}
+
+.lb__play.is-playing .lb__play-glyph {
+  color: var(--rose);
 }
 
 .lb__count {

@@ -56,9 +56,12 @@ export function createLightbox(photos) {
     const url = asset(photo.image);
     save.href = url;
     save.download = url.split("/").pop() || "our-story.jpg";
+
+    warm(i);
   }
 
   function open(i, fromEl) {
+    stopShow();
     index = i;
     restoreFocus = document.activeElement;
     paint(i);
@@ -145,16 +148,93 @@ export function createLightbox(photos) {
     }, 240);
   }
 
-  $("#lbX").addEventListener("click", close);
-  $$("[data-lb-close]", lb).forEach((scrim) => scrim.addEventListener("click", close));
-  $("#lbPrev").addEventListener("click", () => go(-1));
-  $("#lbNext").addEventListener("click", () => go(1));
+  /* ---------- memory lane ----------
+     The viewer plays itself: hold on each print, drift to the next, loop.
+     Anything she does by hand takes control back off the page. */
+  const HOLD = 4200;
+  const playBtn = $("#lbPlay");
+  const playLabel = $("#lbPlayLabel");
+  let timer = null;
+  let pausedByHide = false;
+
+  function showIsOn() {
+    return timer !== null;
+  }
+
+  function stopShow() {
+    if (!timer) return;
+    clearInterval(timer);
+    timer = null;
+    pausedByHide = false;
+    playBtn?.classList.remove("is-playing");
+    playBtn?.setAttribute("aria-pressed", "false");
+    if (playLabel) playLabel.textContent = "Play them all";
+  }
+
+  function startShow() {
+    if (!playBtn || timer) return;
+    playBtn.classList.add("is-playing");
+    playBtn.setAttribute("aria-pressed", "true");
+    if (playLabel) playLabel.textContent = "Stop";
+    timer = setInterval(() => go(1), HOLD);
+  }
+
+  /** a manual step: hers from here on */
+  function step(direction) {
+    stopShow();
+    go(direction);
+  }
+
+  /* while the lane runs, keep the next print warm so it never stalls */
+  const warm = (i) => {
+    const next = photos[(i + 1) % photos.length];
+    if (!next) return;
+    const pre = new Image();
+    pre.src = asset(next.image);
+  };
+
+  document.addEventListener("visibilitychange", () => {
+    if (!document.hidden) {
+      if (pausedByHide && !lb.hidden) {
+        pausedByHide = false;
+        startShow();
+      }
+      return;
+    }
+    if (showIsOn()) {
+      clearInterval(timer);
+      timer = null;
+      pausedByHide = true;
+    }
+  });
+
+  playBtn?.addEventListener("click", () => {
+    play("click");
+    showIsOn() ? stopShow() : startShow();
+  });
+
+  $("#lbX").addEventListener("click", () => {
+    stopShow();
+    close();
+  });
+  $$("[data-lb-close]", lb).forEach((scrim) =>
+    scrim.addEventListener("click", () => {
+      stopShow();
+      close();
+    }),
+  );
+  $("#lbPrev").addEventListener("click", () => step(-1));
+  $("#lbNext").addEventListener("click", () => step(1));
 
   window.addEventListener("keydown", (e) => {
     if (lb.hidden) return;
-    if (e.key === "Escape") close();
-    if (e.key === "ArrowLeft") go(-1);
-    if (e.key === "ArrowRight") go(1);
+    if (e.key === "Escape") {
+      stopShow();
+      close();
+    }
+    if (e.key === "ArrowLeft") step(-1);
+    if (e.key === "ArrowRight") step(1);
+    if (e.key === " " && e.target === playBtn) e.preventDefault();
   });
 
   /* swipe, because arrows are off on phones */
@@ -164,7 +244,7 @@ export function createLightbox(photos) {
     "touchend",
     (e) => {
       const dx = e.changedTouches[0].clientX - startX;
-      if (Math.abs(dx) > 48) go(dx < 0 ? 1 : -1);
+      if (Math.abs(dx) > 48) step(dx < 0 ? 1 : -1);
     },
     { passive: true },
   );
