@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>To Ket — our story</title>
+    <meta name="description" content="A little place for all the moments that became our story." />
+    <meta name="theme-color" content="#f4ece0" />
+
+    <!-- lives on her home screen as its own thing, and opens without signal -->
+    <link rel="manifest" href="./manifest.webmanifest" />
+    <link rel="apple-touch-icon" href="./icons/apple-touch-icon.png" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="Our Story" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500&family=Caveat:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- apply her saved theme before the first paint, so there is no flash -->
+    <script>
+      try {
+        if (localStorage.getItem("our-story:theme") === "night") {
+          document.documentElement.setAttribute("data-theme", "night");
+        }
+      } catch (e) {}
+    </script>
+    <script type="module" crossorigin src="./assets/index-BLGts1W1.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-Cw2zjO4Z.css">
+  </head>
+  <body class="is-locked">
+    <!-- the rough paper edge used by torn sheets -->
+    <svg class="svg-defs" aria-hidden="true" focusable="false">
+      <filter id="deckle" x="-6%" y="-60%" width="112%" height="220%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.022 0.1" numOctaves="4" seed="7" result="n" />
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="7" xChannelSelector="R" yChannelSelector="G" />
+      </filter>
+    </svg>
+
+    <!-- layered background -->
+    <div class="bg" aria-hidden="true">
+      <div class="bg__paper"></div>
+      <div class="bg__tooth"></div>
+      <div class="bg__dust" id="bgDust"></div>
+      <div class="bg__grain"></div>
+    </div>
+    <div class="cursorglow" aria-hidden="true"></div>
+    <div class="scrollline" aria-hidden="true"><i id="scrollline"></i></div>
+
+    <!-- THEME -->
+    <button class="theme" id="themeToggle" type="button" aria-pressed="false" aria-label="Switch between paper and night">
+      <span class="theme__glyph" id="themeGlyph" aria-hidden="true">☾</span>
+      <span id="themeLabel">Night</span>
+    </button>
+
+    <!-- LOADING -->
+    <div class="loader" id="loader">
+      <span class="loader__heart" aria-hidden="true">
+        <svg viewBox="0 0 32 29"><path d="M16 29S1 18.6 1 9.9A8 8 0 0 1 16 5.6 8 8 0 0 1 31 9.9C31 18.6 16 29 16 29Z"/></svg>
+      </span>
+      <p class="loader__text">Our story is loading…</p>
+      <span class="loader__bar"><i id="loaderBar"></i></span>
+    </div>
+
+    <!-- THE COVER -->
+    <section class="cover" id="cover">
+      <div class="cover__deco" id="coverDeco" aria-hidden="true"></div>
+
+      <div class="cover__page">
+        <p class="cover__hello" id="coverHello" hidden></p>
+        <p class="cover__kicker" id="coverKicker"></p>
+        <h1 class="cover__title" id="coverTitle" data-split>To you ❤️</h1>
+        <p class="cover__sub" data-fade style="--d:.75s" id="coverSub"></p>
+        <p class="cover__secret" id="coverSecret" hidden></p>
+        <button class="btn btn--cover magnet" id="openBtn" data-fade style="--d:1s">
+          <span id="openBtnLabel">Open Our Story</span>
+          <svg class="btn__arrow" width="26" height="10" viewBox="0 0 26 10" aria-hidden="true">
+            <path d="M0 5h24M20 1l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1" />
+          </svg>
+        </button>
+      </div>
+    </section>
+
+    <!-- NAVIGATION -->
+    <div class="nav" id="nav"></div>
+    <button class="navpill" id="navpill" aria-label="Go to the next memory">
+      <span class="navpill__no" id="pillNo">01 / 08</span>
+      <span class="navpill__name" id="pillName">Home</span>
+      <svg class="navpill__arrow" width="16" height="8" viewBox="0 0 16 8" aria-hidden="true">
+        <path d="M0 4h13M10 1l3 3-3 3" fill="none" stroke="currentColor" stroke-width="1" />
+      </svg>
+    </button>
+
+    <!-- THE BOOK -->
+    <main class="site" id="site">
+      <!-- 01 HOME -->
+      <section class="chapter" id="home">
+        <div class="chapter__inner">
+          <div class="titlepage" data-reveal>
+            <span class="sticker float" style="--tilt:-8deg" aria-hidden="true">♥</span>
+            <p class="titlepage__kicker">the book</p>
+            <h2 class="titlepage__title" data-split>Our story, so far</h2>
+            <p class="titlepage__note hand">
+              Eight pages. All of them about you, whether you like that or not.
+            </p>
+            <hr class="rule" />
+            <p class="titlepage__scroll">Keep going down — or use the memories on the left.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 02 HOW WE MET -->
+      <section class="chapter" id="how-we-met">
+        <div class="chapter__inner" id="howWeMet"></div>
+      </section>
+
+      <!-- 03 OUR FIRST MEMORY -->
+      <section class="chapter" id="first-memory">
+        <div class="chapter__inner" id="firstMemory"></div>
+      </section>
+
+      <!-- 04 LITTLE MOMENTS -->
+      <section class="chapter" id="little-moments">
+        <div class="chapter__inner">
+          <header class="head" data-reveal>
+            <span class="head__no" aria-hidden="true">04</span>
+            <p class="head__label" id="momentsLabel"></p>
+            <h2 class="head__title" id="momentsTitle" data-split></h2>
+            <p class="head__lead" id="momentsLead"></p>
+            <button class="dice" id="surpriseMe" type="button">
+              <span class="dice__spark" aria-hidden="true">✦</span>
+              <span>Surprise me</span>
+            </button>
+          </header>
+          <div class="wall" id="wall"></div>
+        </div>
+      </section>
+
+      <!-- 05 FAVOURITE MEMORIES -->
+      <section class="chapter" id="favourites">
+        <div class="chapter__inner">
+          <header class="head" data-reveal>
+            <span class="head__no" aria-hidden="true">05</span>
+            <p class="head__label" id="favLabel"></p>
+            <h2 class="head__title" id="favTitle" data-split></h2>
+            <p class="head__lead" id="favLead"></p>
+          </header>
+          <div class="favourites" id="favWall"></div>
+
+          <div class="surprise" data-reveal>
+            <div class="surprise__stage" id="surpriseStage">
+              <p class="surprise__prompt" id="spPrompt"></p>
+              <button class="btn btn--gift magnet" id="surpriseBtn">
+                <span class="btn__ribbon" aria-hidden="true"></span>
+                <span id="spBtnLabel">Open it</span>
+                <span class="beat">❤️</span>
+              </button>
+            </div>
+            <figure class="reveal-card" id="surpriseCard" hidden>
+              <div class="reveal-card__frame"><img id="spImg" alt="" /></div>
+              <figcaption>
+                <p class="datestamp" id="spDate"></p>
+                <p class="stamp" id="spPlace"></p>
+                <h3 class="reveal-card__title" id="spTitle"></h3>
+                <p class="reveal-card__text" id="spText"></p>
+                <p class="signature reveal-card__sign" id="spSign"></p>
+              </figcaption>
+            </figure>
+          </div>
+        </div>
+      </section>
+
+      <!-- 06 THINGS I LOVE -->
+      <section class="chapter" id="love">
+        <div class="chapter__inner">
+          <header class="head" data-reveal>
+            <span class="head__no" aria-hidden="true">06</span>
+            <p class="head__label" id="loveLabel"></p>
+            <h2 class="head__title" id="loveTitle" data-split></h2>
+            <p class="head__lead" id="loveLead"></p>
+          </header>
+          <div class="cards" id="cards"></div>
+        </div>
+      </section>
+
+      <!-- 07 OUR TIMELINE -->
+      <section class="chapter" id="timeline">
+        <div class="chapter__inner">
+          <header class="head" data-reveal>
+            <span class="head__no" aria-hidden="true">07</span>
+            <p class="head__label" id="tlLabel"></p>
+            <h2 class="head__title" id="tlTitle" data-split></h2>
+            <p class="head__lead" id="tlLead"></p>
+          </header>
+          <ol class="tl" id="timeline-list"></ol>
+        </div>
+      </section>
+
+      <!-- 08 A LETTER -->
+      <section class="chapter" id="letter">
+        <div class="chapter__inner">
+          <div id="letterPage"></div>
+          <div class="letter__ps" id="scratchSlot" data-reveal></div>
+          <div class="reply-wrap" id="reply" data-reveal></div>
+          <p class="colophon">Made by hand, for one person.</p>
+        </div>
+      </section>
+    </main>
+
+    <!-- THE PHOTO VIEWER -->
+    <div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Photo viewer" hidden>
+      <div class="lb__scrim" data-lb-close></div>
+      <button class="lb__x" id="lbX" aria-label="Close">✕</button>
+      <button class="lb__nav lb__nav--prev" id="lbPrev" aria-label="Previous photo">←</button>
+      <button class="lb__nav lb__nav--next" id="lbNext" aria-label="Next photo">→</button>
+      <figure class="lb__fig">
+        <div class="lb__mat">
+          <span class="tape" aria-hidden="true"></span>
+          <div class="lb__frame"><img id="lbImg" alt="" /></div>
+        </div>
+        <figcaption class="lb__cap">
+          <p class="datestamp" id="lbDate"></p>
+          <p class="stamp" id="lbPlace"></p>
+          <h3 id="lbTitle"></h3>
+          <p id="lbCaption"></p>
+          <p class="hand" id="lbNote"></p>
+          <p class="lb__actions">
+            <a class="lb__save" id="lbSave" download>
+              <span aria-hidden="true">↓</span> Save this print
+            </a>
+            <button class="lb__play" id="lbPlay" type="button" aria-pressed="false">
+              <span class="lb__play-glyph" aria-hidden="true">▸</span>
+              <span id="lbPlayLabel">Play them all</span>
+            </button>
+            <button class="lb__play lb__card" id="lbCard" type="button">
+              <span class="lb__play-glyph" aria-hidden="true">✉</span>
+              <span id="lbCardLabel">Keep a postcard</span>
+            </button>
+          </p>
+          <p class="lb__count" id="lbCount"></p>
+          <p class="lb__hint">swipe for the next one</p>
+        </figcaption>
+      </figure>
+    </div>
+
+    <!-- THE MUSIC PLAYER -->
+    <div class="player" id="player">
+      <div class="player__panel" id="playerPanel">
+        <div class="player__head">
+          <span class="player__label" id="playerTitle">Our song</span>
+          <span class="player__time" id="playerTime">0:00 / 0:00</span>
+        </div>
+        <div class="player__seek" id="playerSeek" role="slider" aria-label="Seek" tabindex="0"><i></i></div>
+        <div class="player__row">
+          <button class="player__play" id="playerPlay" aria-label="Play the music">▶</button>
+          <div class="player__vol" id="playerVol" role="slider" aria-label="Volume" tabindex="0"><i></i></div>
+          <span class="player__viz" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>
+        </div>
+        <p class="player__artist" id="playerArtist"></p>
+        <div class="player__sfx">
+          <span>Interface sounds</span>
+          <button class="player__sfxbtn" id="playerSfx" aria-pressed="false" aria-label="Turn interface sounds on or off"></button>
+        </div>
+      </div>
+      <button class="player__toggle" id="playerToggle" aria-label="Open the music player">
+        <span class="player__disc" aria-hidden="true"></span>
+      </button>
+    </div>
+
+  </body>
+</html>
