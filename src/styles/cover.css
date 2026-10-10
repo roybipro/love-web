@@ -54,6 +54,16 @@
   pointer-events: none;
 }
 
+/* the line that changes with the hour on her phone */
+.cover__hello {
+  font-family: var(--hand);
+  font-size: clamp(1.15rem, 4.5vw, 1.55rem);
+  line-height: 1.2;
+  color: var(--rose);
+  transform: rotate(-1.2deg);
+  margin-bottom: clamp(1rem, 3vh, 1.6rem);
+}
+
 .cover__kicker {
   display: inline-flex;
   align-items: center;

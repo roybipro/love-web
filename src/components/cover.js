@@ -10,10 +10,36 @@ import { play } from "../lib/sound.js";
  * Returns a `reveal` to call once the loading screen has cleared, so
  * the prints can start downloading while she is still waiting.
  */
+
+/**
+ * Pick the greeting for this hour. Entries are read in order of `at`;
+ * an hour before the earliest one falls through to the last entry, so
+ * 2am gets the late-night line rather than "good morning".
+ */
+function greetingFor(list, hour) {
+  if (!list?.length) return "";
+  const ordered = [...list].sort((a, b) => a.at - b.at);
+  let pick = ordered[ordered.length - 1];
+  for (const g of ordered) if (hour >= g.at) pick = g;
+  return pick.text || "";
+}
+
 export function mountCover({ data, herName, onOpen }) {
   const cover = $("#cover");
   const title = $("#coverTitle");
   const deco = $("#coverDeco");
+  const hello = $("#coverHello");
+
+  if (hello) {
+    const line = greetingFor(data.greetings, new Date().getHours()).replaceAll(
+      "{name}",
+      herName || "you",
+    );
+    if (line) {
+      hello.textContent = line;
+      hello.hidden = false;
+    }
+  }
 
   if (title) {
     title.innerHTML = `${esc(data.titleTo || "To")} <em>${esc(herName || "you")}</em> <span class="beat">❤️</span>`;

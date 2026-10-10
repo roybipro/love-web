@@ -28,6 +28,18 @@ export const cover = {
   titleTo: "To", // becomes "To Ket ❤️"
   subtitle: "A little place for all the moments that became our story.",
   button: "Open Our Story",
+  /*  The small line above the title. It reads the hour on her own phone,
+      so opening the book at 7am is not the same as at 1am.
+      `at` is the hour it starts being used, 24 hour clock. Hours before
+      the first one fall back to the last entry, which is why the late
+      one is at the bottom. Write {name} wherever you'd say her name and
+      it picks up `herName` from the top of this file.                  */
+  greetings: [
+    { at: 5, text: "Good morning, {name}." },
+    { at: 12, text: "Good afternoon, {name}." },
+    { at: 17, text: "Good evening, {name}." },
+    { at: 21, text: "Still awake? Read this one slowly." },
+  ],
   /* four prints pinned around the cover — pick the ones you love most */
   deco: [
     "/photos/04-boat-in-lily-pads.jpg",
