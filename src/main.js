@@ -6,7 +6,7 @@
 import "./styles/index.css";
 
 import * as content from "./content/memory.js";
-import { $ } from "./lib/dom.js";
+import { $, $$, asset } from "./lib/dom.js";
 import { seedDust } from "./lib/motion.js";
 import { observeReveals, watchScroll } from "./lib/scroll.js";
 import { splitWords } from "./lib/typography.js";
@@ -89,3 +89,28 @@ mountLoader({
   images: cover.images.map((src) => src),
   onReady: cover.reveal,
 });
+
+/*  Once she has seen a page of this book it should open anywhere,
+    including on a phone with no signal. Never on the dev server, where
+    a live worker would quietly serve her the file being edited.      */
+const canCache = "serviceWorker" in navigator && window.isSecureContext && !import.meta.env.DEV;
+
+if (canCache) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker
+      .register(asset("/sw.js"))
+      .then(() =>
+        /* hand the worker the two files that loaded before it existed */
+        navigator.serviceWorker.ready.then((reg) => {
+          const urls = [
+            ...$$('link[rel="stylesheet"]').map((l) => l.href),
+            ...$$("script[src]").map((s) => s.src),
+          ];
+          reg.active?.postMessage({ type: "warm", urls });
+        }),
+      )
+      .catch(() => {
+        /* offline is a bonus, never a reason to break the page */
+      });
+  });
+}
