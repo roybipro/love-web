@@ -37,7 +37,10 @@ if ("scrollRestoration" in history) history.scrollRestoration = "manual";
 seedDust($("#bgDust"));
 mountCopy(content);
 
-const lightbox = createLightbox(content.photos);
+const lightbox = createLightbox(content.photos, {
+  herName: content.herName,
+  sign: content.letter.sign,
+});
 
 mountHowWeMet(content.howWeMet);
 mountFirstMemory(content.firstMemory);

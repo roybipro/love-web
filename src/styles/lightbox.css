@@ -175,6 +175,13 @@ body.lb-open {
   color: var(--rose);
 }
 
+.lb__play:disabled {
+  opacity: 0.5;
+  cursor: default;
+  transform: none;
+  box-shadow: var(--sh-1);
+}
+
 .lb__count {
   margin-top: 1.1rem;
   font-size: 0.58rem;

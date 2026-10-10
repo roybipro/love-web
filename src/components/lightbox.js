@@ -1,6 +1,7 @@
 import { $, $$, asset, heart, pad2 } from "../lib/dom.js";
 import { reduceMotion } from "../lib/motion.js";
 import { play } from "../lib/sound.js";
+import { savePostcard } from "../lib/postcard.js";
 
 const ZOOM = "transform .62s cubic-bezier(.2,.8,.2,1), opacity .35s ease";
 
@@ -9,7 +10,7 @@ const ZOOM = "transform .62s cubic-bezier(.2,.8,.2,1), opacity .35s ease";
  * tapped — a FLIP animation, so the frame she was looking at becomes
  * the big one rather than a new window appearing.
  */
-export function createLightbox(photos) {
+export function createLightbox(photos, names = {}) {
   const lb = $("#lb");
   const mat = $(".lb__mat");
   const frame = $(".lb__frame");
@@ -211,6 +212,34 @@ export function createLightbox(photos) {
   playBtn?.addEventListener("click", () => {
     play("click");
     showIsOn() ? stopShow() : startShow();
+  });
+
+  /* draw this memory out as a postcard and hand her the file */
+  const cardBtn = $("#lbCard");
+  const cardLabel = $("#lbCardLabel");
+
+  cardBtn?.addEventListener("click", async () => {
+    if (cardBtn.disabled) return;
+    const photo = photos[index];
+    if (!photo) return;
+
+    stopShow();
+    cardBtn.disabled = true;
+    if (cardLabel) cardLabel.textContent = "Drawing…";
+
+    try {
+      await savePostcard(photo, names);
+      play("found");
+      if (cardLabel) cardLabel.textContent = "Saved — again?";
+    } catch {
+      /* a blocked download or an unreadable print: say so, keep the viewer up */
+      if (cardLabel) cardLabel.textContent = "Would not draw";
+    } finally {
+      cardBtn.disabled = false;
+      setTimeout(() => {
+        if (cardLabel) cardLabel.textContent = "Keep a postcard";
+      }, 3200);
+    }
   });
 
   $("#lbX").addEventListener("click", () => {
