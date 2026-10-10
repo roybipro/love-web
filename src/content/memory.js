@@ -20,12 +20,12 @@
     without inventing something about your life. Those are yours.
 */
 
-export const herName = "You";
+export const herName = "Ket";
 
 /*  The cover of the book.                                              */
 export const cover = {
   kicker: "a scrapbook",
-  titleTo: "To", // becomes "To You ❤️"
+  titleTo: "To", // becomes "To Ket ❤️"
   subtitle: "A little place for all the moments that became our story.",
   button: "Open Our Story",
   /* four prints pinned around the cover — pick the ones you love most */
@@ -57,14 +57,14 @@ export const memories = [
 export const howWeMet = {
   label: "Memory 02",
   title: "How we met",
-  lead: "It started with a simple conversation, and somehow it became everything.",
+  lead: "It started at the English private, with you asking me a question.",
   /* one paragraph per string — keep them short, they set as article text */
   paragraphs: [
-    "We met in a moment that felt ordinary at the time, but turned out to be the beginning of something important.",
-    "From the start, there was something easy about being around you. The conversations felt natural, and the time went by quickly.",
-    "What began as a small connection slowly grew into something real and steady.",
-    "I still remember how comfortable it felt to be with you, even from the beginning.",
-    "Now we have our own story, and I am grateful for every step that brought us here.",
+    "It was the English private. You asked me, in person, out of nowhere, what my name was — and that was the whole beginning.",
+    "After that we just texted. On button phones, one letter at a time, as friends, with no plan behind any of it.",
+    "Then somehow we got into the same college. Same classes, same sir, same timing. Everything matching by accident.",
+    "And before the HSC exams, when we should both have been studying, I told you I liked you.",
+    "Now we're together.",
   ],
   note: "and it still feels lucky",
   image: "",
@@ -82,8 +82,8 @@ export const firstMemory = {
   date: "",
   place: "",
   ar: "4 / 3",
-  text: "A simple moment, captured without trying too hard. It felt natural then, and it still feels like us now.",
-  note: "one of my favourites",
+  text: "Blue and gold on one side, green on the other, standing at a railing at night. The first one where we were actually us — not a selfie, not a blur, just the two of us standing there.",
+  note: "we kept this one",
   image: "/photos/16-first-photo.jpg",
 };
 
@@ -259,8 +259,8 @@ export const surprise = {
   image: "/photos/09-you-laughing.jpg",
   date: "",
   place: "",
-  title: "A favorite moment, without needing a reason.",
-  text: "Some memories don't need to be explained. They just feel like home.",
+  title: "If I could relive one day with you, I'd choose this one.",
+  text: "Not the boat, not the river, not the food. This exact second — you, laughing at something I said, head thrown back, not caring who was looking.",
 };
 
 /*  ============================================================
@@ -315,50 +315,50 @@ export const timelineHeading = {
 export const timeline = [
   {
     date: "",
-    title: "The beginning",
-    text: "A simple conversation changed the way my days felt.",
+    title: "The English private",
+    text: "You asked me, in person, what my name was. That was the whole beginning.",
     image: "",
   },
   {
     date: "",
-    title: "The easy part",
-    text: "We started talking and it felt natural from the start.",
+    title: "Button phones",
+    text: "We texted as friends, one letter at a time, with no plan behind any of it.",
     image: "",
   },
   {
     date: "",
-    title: "The connection",
-    text: "What began as small moments became something important.",
+    title: "The same college",
+    text: "Same classes, same sir, same timing. Everything matching by accident.",
     image: "",
   },
   {
     date: "",
-    title: "A feeling I couldn't ignore",
-    text: "I realised how much you meant to me, and it stayed with me.",
+    title: "Before the HSC",
+    text: "When we should have been studying, I told you I liked you.",
     image: "",
   },
   {
     date: "",
     title: "The first photo",
-    text: "A quiet moment, captured with no effort at all.",
+    text: "Blue and gold, green and white, a railing at night.",
     image: "/photos/16-first-photo.jpg",
   },
   {
     date: "",
     title: "The flower",
-    text: "One of those small moments that stayed in my head.",
+    text: "You put a flower behind my ear in the middle of a busy road.",
     image: "/photos/01-flower-behind-ear.jpg",
   },
   {
     date: "",
     title: "The boat day",
-    text: "Simple, easy, and full of laughter.",
+    text: "Red dupatta, lily pads everywhere, and you laughing at absolutely everything.",
     image: "/photos/04-boat-in-lily-pads.jpg",
   },
   {
     date: "",
     title: "Still writing it",
-    text: "Even now, the best part of the day is being with you.",
+    text: "Same person, same laugh, still my favourite part of the day.",
     image: "/photos/14-on-your-shoulder.jpg",
   },
 ];
@@ -371,13 +371,13 @@ export const timeline = [
 export const letter = {
   label: "Memory 08",
   title: "A little letter for you",
-  greeting: "Dear you,",
+  greeting: "Dear Ket,",
   lines: [
-    "Some memories are small, but they stay with you.",
-    "I hope we keep making more of them, together.",
+    "And that's just a few of our memories...",
+    "I can't wait to make many more with you.",
   ],
-  love: "With love ❤️",
-  sign: "— Me",
+  love: "I love you ❤️",
+  sign: "— Bipro",
 };
 
 /*  The scratch card, kept as the letter's postscript.               */
