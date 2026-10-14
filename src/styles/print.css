@@ -1,0 +1,277 @@
+/* =============================================================
+   PRINT — the book on paper.
+
+   He can hand her a physical copy of it, and she can put it in a
+   drawer with the real prints. So the screen-only machinery comes
+   out: the fixed chrome, the reveals that start invisible, the
+   tilts that only make sense under a cursor. What is left is the
+   words, the photographs and the paper.
+
+   Two things matter most here. Everything must be visible without
+   scrolling or tapping, and the night theme must still print as
+   paper rather than a black rectangle.
+   ============================================================= */
+
+@media print {
+  /* ---- paper, even if she left it on night ---- */
+  :root,
+  html[data-theme="night"] {
+    --ivory: #ffffff;
+    --paper: #ffffff;
+    --paper-2: #f6f2ea;
+    --paper-3: #e7ded1;
+    --card: #ffffff;
+    --card-2: #fbf8f3;
+    --slip: #fdf9f2;
+    --slip-2: #f8f2e8;
+    --sheet: #ffffff;
+    --sheet-2: #fdfbf7;
+    --rule: rgba(43, 33, 28, 0.08);
+
+    --ink: #1a1412;
+    --ink-2: #3a2d26;
+    --muted: #5c4c42;
+    --faint: #8a7867;
+
+    --blush: #e2c3c8;
+    --blush-soft: #f7ecee;
+    --rose: #a44f61;
+    --burgundy: #6b1f2f;
+    --wine: #4e1522;
+
+    --gold: #9a7a45;
+    --gold-soft: rgba(154, 122, 69, 0.3);
+
+    --line: rgba(43, 33, 28, 0.18);
+    --line-soft: rgba(43, 33, 28, 0.1);
+
+    --float: #ffffff;
+    --float-hi: #ffffff;
+    --float-line: rgba(43, 33, 28, 0.18);
+
+    --sh-1: none;
+    --sh-2: none;
+    --sh-3: none;
+    --sh-lift: none;
+
+    --pad: 0;
+  }
+
+  @page {
+    size: A4 portrait;
+    margin: 16mm 14mm;
+  }
+
+  html,
+  body {
+    background: #fff !important;
+    color: var(--ink);
+    font-size: 11pt;
+    height: auto !important;
+    overflow: visible !important;
+  }
+
+  body.is-locked {
+    height: auto !important;
+    overflow: visible !important;
+  }
+
+  /* ---- nothing floats, nothing hides ---- */
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    filter: none !important;
+  }
+
+  [data-reveal],
+  [data-fade],
+  .card,
+  .reveal-card,
+  .cover__secret,
+  .cover__deco > * {
+    opacity: 1 !important;
+    transform: none !important;
+    visibility: visible !important;
+  }
+
+  [data-split] .w > i {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  [data-wipe] {
+    clip-path: none !important;
+  }
+
+  .loader,
+  .bg,
+  .bg__grain,
+  .grain,
+  .cursorglow,
+  .scrollline,
+  .cursor-dot,
+  .cursor-ring,
+  .ctrail,
+  .fh,
+  #nav,
+  .navpill,
+  .player,
+  .theme,
+  .lb,
+  .scratch__surface,
+  .scratch__skip,
+  .scratch__progress,
+  .wall__peek,
+  .letter__hear-wrap,
+  .colophon,
+  .folio__rule {
+    display: none !important;
+  }
+
+  /* ---- the cover becomes a title page ---- */
+  .cover,
+  .cover.is-open {
+    position: static;
+    display: block;
+    min-height: 0;
+    height: auto;
+    background: #fff !important;
+    padding: 0;
+    /* she will print it with the book already open, and an opened
+       cover is faded out and set to visibility:hidden on screen */
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: auto;
+    break-after: page;
+  }
+
+  .cover__page {
+    transform: none !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    filter: none !important;
+    background: #fff !important;
+    box-shadow: none;
+    border: none;
+    width: 100%;
+    padding: 30mm 0;
+  }
+
+  .cover__page::before {
+    display: none;
+  }
+
+  .cover .btn,
+  .cover__deco {
+    display: none !important;
+  }
+
+  /* ---- the body of the book ---- */
+  .site {
+    display: block !important;
+    opacity: 1 !important;
+  }
+
+  .chapter {
+    padding: 0 0 10mm;
+    break-before: page;
+  }
+
+  .chapter:first-child {
+    break-before: auto;
+  }
+
+  .section__lead,
+  .head__lead {
+    max-width: none;
+  }
+
+  /* prints sit in tidy rows on paper, not scattered under a cursor */
+  .wall {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8mm;
+  }
+
+  .wall__item {
+    width: 100%;
+    margin-top: 0 !important;
+    break-inside: avoid;
+  }
+
+  .polaroid,
+  .card,
+  .story,
+  .letter__page,
+  .reply,
+  .reveal-card,
+  .tl__item {
+    transform: none !important;
+    box-shadow: none;
+    break-inside: avoid;
+    border: 1px solid var(--line);
+  }
+
+  .tape,
+  .letter__doodles {
+    display: none !important;
+  }
+
+  /* the notes that only appeared on double-tap are worth printing */
+  .wall__item .polaroid__foot {
+    opacity: 1 !important;
+  }
+
+  /* the gift and the scratch prize are already open on paper */
+  .reveal-card[hidden],
+  .surprise__stage {
+    display: block !important;
+  }
+
+  .reveal-card[hidden] {
+    display: flex !important;
+  }
+
+  .scratch__prize {
+    opacity: 1 !important;
+    filter: none !important;
+  }
+
+  /* her reply prints as a blank box to write in */
+  .reply__text {
+    background: #fff !important;
+    min-height: 30mm;
+  }
+
+  /* ---- photographs and tints must actually come out ---- */
+  img {
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+
+  .story,
+  .letter__page,
+  .card,
+  .reply,
+  .note--slip,
+  .wall__today {
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+
+  /* the tag is a date, and a date is worth having on paper */
+  .wall__today {
+    position: static;
+    display: inline-block;
+    transform: none;
+    margin-bottom: 2mm;
+  }
+
+  a[href]::after {
+    content: "";
+  }
+}

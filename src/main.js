@@ -90,6 +90,26 @@ mountLoader({
   onReady: cover.reveal,
 });
 
+/*  Printing the book means every page has to be there already, and
+    the prints below the fold are still lazy and the sections still
+    un-revealed. So on the way to paper, load and open everything.   */
+function readyForPaper() {
+  document.querySelectorAll("img[loading='lazy']").forEach((img) => {
+    img.loading = "eager";
+  });
+  document.querySelectorAll("[data-reveal], [data-fade]").forEach((el) => {
+    el.classList.add("in");
+  });
+  document.body.classList.add("opened");
+  document.body.classList.remove("is-locked");
+}
+
+window.addEventListener("beforeprint", readyForPaper);
+/* Safari has no beforeprint; it does answer the print media query */
+window
+  .matchMedia("print")
+  .addEventListener?.("change", (e) => e.matches && readyForPaper());
+
 /*  Once she has seen a page of this book it should open anywhere,
     including on a phone with no signal. Never on the dev server, where
     a live worker would quietly serve her the file being edited.      */
