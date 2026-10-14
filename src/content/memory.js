@@ -109,6 +109,10 @@ export const galleryHeading = {
   tapHint: "Tap to open",
   issue: "the prints",
   note: "for Ket",
+  /*  One print wears this tag each day, chosen by the date so it turns
+      over on its own and you both see the same one. Change the words,
+      or set it to "" and no print is tagged.                         */
+  today: "today's",
 };
 
 /*  Big lines of type dropped into the wall, the way a magazine

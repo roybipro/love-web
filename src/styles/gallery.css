@@ -109,6 +109,43 @@
   margin-top: 2.6rem;
 }
 
+/* today's print is the one the book opens on, so it gets a tag */
+.wall__today {
+  position: absolute;
+  z-index: 6;
+  top: -14px;
+  left: -10px;
+  padding: 0.28rem 0.62rem;
+  font-family: var(--hand);
+  font-size: 1rem;
+  line-height: 1.1;
+  color: var(--burgundy);
+  background: var(--slip);
+  border: 1px solid var(--gold-soft);
+  border-radius: 2px;
+  box-shadow: var(--sh-1);
+  transform: rotate(-6deg);
+}
+
+/* the tape holds it up, and the print is squared rather than tilted */
+.wall__item.is-today {
+  --tilt: 0deg;
+}
+
+.wall__item.is-today .tape {
+  display: block;
+  background: linear-gradient(
+    100deg,
+    rgba(176, 141, 87, 0.28),
+    rgba(176, 141, 87, 0.42) 45%,
+    rgba(176, 141, 87, 0.28)
+  );
+}
+
+.wall__item.is-today .polaroid__frame {
+  box-shadow: 0 0 0 2px var(--gold-soft), 0 0 0 7px var(--card);
+}
+
 /* a strip of tape on every third print */
 .wall__item:nth-of-type(3n) .tape {
   display: block;

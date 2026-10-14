@@ -7,14 +7,28 @@ import { play } from "../lib/sound.js";
  * Add another object to memory.js and the wall, the numbering and the
  * swipe-through viewer all grow on their own.
  */
+/**
+ * Which print is today's. Uses local midnight rather than UTC so it
+ * turns over when her day turns over, and rounds so a short or long
+ * day near a clock change cannot repeat one.
+ */
+function todayIndex(count) {
+  if (!count) return -1;
+  const now = new Date();
+  const midnight = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  return Math.round(midnight.getTime() / 86400000) % count;
+}
+
 export function mountGallery({ photos, heading, quotes = [], onOpen }) {
   const wall = $("#wall");
   if (!wall) return;
 
+  const tag = heading.today ?? "today's";
+  const todays = tag ? todayIndex(photos.length) : -1;
   const blocks = [];
 
   photos.forEach((photo, i) => {
-    blocks.push(printMarkup(photo, i, heading.tapHint));
+    blocks.push(printMarkup(photo, i, heading.tapHint, i === todays ? tag : ""));
     const quote = quotes[Math.floor(i / 4)];
     if ((i + 1) % 4 === 0 && quote) blocks.push(quoteMarkup(quote));
   });
@@ -44,11 +58,12 @@ export function mountGallery({ photos, heading, quotes = [], onOpen }) {
   });
 }
 
-function printMarkup(photo, i, hint) {
+function printMarkup(photo, i, hint, today) {
   return `
-    <button class="wall__item" data-reveal data-index="${i}"
+    <button class="wall__item${today ? " is-today" : ""}" data-reveal data-index="${i}"
             style="--rd:${((i % 4) * 0.07).toFixed(2)}s${photo.ar ? `;--ar:${photo.ar}` : ""}"
-            aria-label="Open photo: ${esc(photo.title)}">
+            aria-label="Open photo: ${esc(photo.title)}${today ? ` — ${esc(today)} memory` : ""}">
+      ${today ? `<span class="wall__today">${esc(today)}</span>` : ""}
       <span class="polaroid">
         <span class="tape" aria-hidden="true"></span>
         <span class="polaroid__frame">
