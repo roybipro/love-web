@@ -198,6 +198,62 @@
   opacity: 0.55;
 }
 
+/* the line currently being read aloud, picked out like a highlighter */
+.letter__greeting.is-read,
+.letter__line.is-read,
+.letter__love.is-read,
+.letter__sign.is-read {
+  background: var(--blush-soft);
+  box-shadow: 0 0 0 0.35em var(--blush-soft);
+  border-radius: 2px;
+}
+
+/* press to hear the letter in the phone's own voice */
+.letter__hear-wrap {
+  margin-top: clamp(1.6rem, 4vh, 2.4rem);
+  text-align: center;
+}
+
+.letter__hear {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.6rem 1.2rem;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: var(--float);
+  color: var(--ink-2);
+  font-family: inherit;
+  font-size: 0.58rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: var(--sh-1);
+  transition: color var(--t-fast) ease, border-color var(--t-fast) ease,
+    transform var(--t-fast) var(--spring), box-shadow var(--t-fast) ease;
+}
+
+.letter__hear:hover {
+  color: var(--burgundy);
+  border-color: var(--blush);
+  transform: translateY(-2px);
+  box-shadow: var(--sh-2);
+}
+
+.letter__hear-glyph {
+  font-size: 0.7rem;
+  color: var(--gold);
+}
+
+.letter__hear.is-on {
+  color: var(--rose);
+  border-color: var(--rose);
+}
+
+.letter__hear.is-on .letter__hear-glyph {
+  color: var(--rose);
+}
+
 /* the scratch card, kept as the postscript of the letter */
 .letter__ps {
   margin-top: clamp(3.5rem, 9vh, 5.5rem);
