@@ -1,3 +1,15 @@
+/* the two buttons under the wall heading */
+.wall__tools {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.7rem;
+}
+
+.wall__tools .dice {
+  margin-top: 1.6rem;
+}
+
 /* ---------- "surprise me" ---------- */
 .dice {
   display: inline-flex;

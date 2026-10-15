@@ -1,105 +1,34 @@
 /*  ============================================================
-    POSTCARD — draws a memory as a real, printable postcard and
-    hands her the file.
+    POSTCARD — draws one memory as a real, printable postcard
+    and hands her the file.
 
-    Everything here is drawn on a canvas at fixed pixel sizes, so
-    what she saves looks the same on every phone. The card is
-    always paper-coloured, even at night: it is meant to be a
-    physical thing you could put on a fridge.
+    The card is always paper-coloured, even at night: it is meant
+    to be a physical thing she could put on a fridge.
     ============================================================ */
 
 import { asset } from "./dom.js";
+import {
+  BURGUNDY,
+  EDGE,
+  GOLD,
+  INK,
+  INK_SOFT,
+  MUTED,
+  PAPER,
+  ROSE,
+  coverCrop,
+  downloadCanvas,
+  heartAt,
+  letterSpacing,
+  loadImage,
+  loadFont,
+  slug,
+  tapeAt,
+  wrap,
+} from "./paper-art.js";
 
 const W = 1200;
 const H = 800;
-
-/* the palette is hardcoded on purpose — a print does not change theme */
-const PAPER = "#faf6ee";
-const EDGE = "#ded2c0";
-const INK = "#2b211c";
-const INK_SOFT = "#4a3a31";
-const MUTED = "#6e5c51";
-const BURGUNDY = "#6b1f2f";
-const ROSE = "#b0576b";
-const GOLD = "#b08d57";
-
-const loadFont = async (spec) => {
-  try {
-    await document.fonts.load(spec);
-    await document.fonts.ready;
-  } catch {
-    /* the fallback in the ctx.font string takes over */
-  }
-};
-
-/** Draw `src` filling `box`, cropped from the middle rather than squashed. */
-function coverCrop(ctx, img, box) {
-  const scale = Math.max(box.w / img.naturalWidth, box.h / img.naturalHeight);
-  const sw = box.w / scale;
-  const sh = box.h / scale;
-  const sx = (img.naturalWidth - sw) / 2;
-  const sy = (img.naturalHeight - sh) / 2;
-  ctx.drawImage(img, sx, sy, sw, sh, box.x, box.y, box.w, box.h);
-}
-
-/** Greedy word wrap. Returns at most `maxLines`, with the last one ellipsised. */
-function wrap(ctx, text, width, maxLines = 4) {
-  const words = String(text ?? "").split(/\s+/).filter(Boolean);
-  if (!words.length) return [];
-
-  const lines = [];
-  let line = "";
-  let i = 0;
-
-  while (i < words.length) {
-    const trial = line ? `${line} ${words[i]}` : words[i];
-    if (line && ctx.measureText(trial).width > width) {
-      lines.push(line);
-      line = "";
-      if (lines.length === maxLines) break;
-      continue;
-    }
-    line = trial;
-    i += 1;
-  }
-  if (line && lines.length < maxLines) lines.push(line);
-
-  /* words left over means the text was cut, so say so with an ellipsis */
-  const kept = lines.join(" ").split(/\s+/).filter(Boolean).length;
-  if (kept < words.length && lines.length) {
-    let last = lines[lines.length - 1];
-    while (last.length && ctx.measureText(`${last}…`).width > width) {
-      last = last.slice(0, -1).trimEnd();
-    }
-    lines[lines.length - 1] = `${last}…`;
-  }
-  return lines;
-}
-
-function letterSpacing(ctx, text, x, y, spacing) {
-  /* ctx.letterSpacing is still patchy, so place the glyphs by hand */
-  let cursor = x;
-  for (const ch of text) {
-    ctx.fillText(ch, cursor, y);
-    cursor += ctx.measureText(ch).width + spacing;
-  }
-  return cursor - x - spacing;
-}
-
-function heartAt(ctx, x, y, size, colour) {
-  const s = size / 2;
-  ctx.save();
-  ctx.beginPath();
-  ctx.moveTo(x, y + s * 0.75);
-  ctx.bezierCurveTo(x, y + s * 0.3, x - s, y - s * 0.2, x - s, y - s * 0.55);
-  ctx.bezierCurveTo(x - s, y - s, x - s * 0.45, y - s, x, y - s * 0.4);
-  ctx.bezierCurveTo(x + s * 0.45, y - s, x + s, y - s, x + s, y - s * 0.55);
-  ctx.bezierCurveTo(x + s, y - s * 0.2, x, y + s * 0.3, x, y + s * 0.75);
-  ctx.closePath();
-  ctx.fillStyle = colour;
-  ctx.fill();
-  ctx.restore();
-}
 
 function stamp(ctx) {
   const x = W - 64 - 96;
@@ -151,13 +80,7 @@ export async function renderPostcard(photo, { herName = "you", sign = "" } = {})
     loadFont('400 34px "Caveat"'),
   ]);
 
-  const img = await new Promise((resolve, reject) => {
-    const node = new Image();
-    node.onload = () => resolve(node);
-    node.onerror = () => reject(new Error("the print would not load"));
-    node.decoding = "async";
-    node.src = asset(photo.image);
-  });
+  const img = await loadImage(asset(photo.image));
 
   const canvas = document.createElement("canvas");
   canvas.width = W;
@@ -186,18 +109,7 @@ export async function renderPostcard(photo, { herName = "you", sign = "" } = {})
   ctx.shadowColor = "transparent";
 
   coverCrop(ctx, img, box);
-
-  /* a strip of tape across the top corner */
-  ctx.save();
-  ctx.translate(box.x + 34, box.y - 20);
-  ctx.rotate(-0.34);
-  const tape = ctx.createLinearGradient(0, 0, 130, 0);
-  tape.addColorStop(0, "rgba(222, 210, 192, 0.72)");
-  tape.addColorStop(0.5, "rgba(238, 228, 210, 0.8)");
-  tape.addColorStop(1, "rgba(222, 210, 192, 0.72)");
-  ctx.fillStyle = tape;
-  ctx.fillRect(0, 0, 130, 30);
-  ctx.restore();
+  tapeAt(ctx, box.x + 34, box.y - 20, 130, 30, -0.34);
   ctx.restore();
 
   /* the words */
@@ -235,7 +147,13 @@ export async function renderPostcard(photo, { herName = "you", sign = "" } = {})
     y += 30;
     ctx.fillStyle = MUTED;
     ctx.font = '400 11px "Inter", sans-serif';
-    letterSpacing(ctx, [photo.date, photo.place].filter(Boolean).join("  ·  ").toUpperCase(), col, y, 2.6);
+    letterSpacing(
+      ctx,
+      [photo.date, photo.place].filter(Boolean).join("  ·  ").toUpperCase(),
+      col,
+      y,
+      2.6,
+    );
   }
 
   /* signed */
@@ -254,23 +172,5 @@ export async function renderPostcard(photo, { herName = "you", sign = "" } = {})
 /** Draw the card for `photo` and hand her the download. */
 export async function savePostcard(photo, names) {
   const canvas = await renderPostcard(photo, names);
-
-  const blob = await new Promise((resolve, reject) => {
-    canvas.toBlob((out) => (out ? resolve(out) : reject(new Error("canvas was empty"))), "image/png");
-  });
-
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  const slug = String(photo.title || "postcard")
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-|-$/g, "")
-    .slice(0, 40);
-
-  a.href = url;
-  a.download = `${slug || "postcard"}-postcard.png`;
-  document.body.appendChild(a);
-  a.click();
-  a.remove();
-  setTimeout(() => URL.revokeObjectURL(url), 4000);
+  await downloadCanvas(canvas, `${slug(photo.title, "postcard")}-postcard.png`);
 }

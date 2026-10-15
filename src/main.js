@@ -18,6 +18,7 @@ import { mountNav } from "./components/nav.js";
 import { mountHowWeMet, mountFirstMemory, mountFavourites } from "./components/story.js";
 import { mountGallery } from "./components/gallery.js";
 import { mountSurpriseMe } from "./components/surprise-me.js";
+import { mountKeepSheet } from "./components/keep-sheet.js";
 import { createLightbox } from "./components/lightbox.js";
 import { mountSurprise } from "./components/surprise.js";
 import { mountLoveCards } from "./components/love-cards.js";
@@ -52,6 +53,12 @@ mountGallery({
   onOpen: lightbox.open,
 });
 mountSurpriseMe({ onPick: (i, item) => lightbox.open(i, item) });
+
+mountKeepSheet({
+  photos: content.photos,
+  heading: content.galleryHeading,
+  names: { herName: content.herName, sign: content.letter.sign },
+});
 
 mountFavourites({
   heading: content.favouritesHeading,
