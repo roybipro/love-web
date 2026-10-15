@@ -1,4 +1,4 @@
-import { $ } from "../lib/dom.js";
+import { $, asset } from "../lib/dom.js";
 
 /**
  * A short loading moment. The bar is driven by things that genuinely
@@ -26,7 +26,10 @@ export function mountLoader({ images = [], onReady }) {
       .slice(0, 4)
       .map((src) => {
         const img = new Image();
-        img.src = src;
+        /* memory.js holds "/photos/x.jpg", which points at the domain
+           root — wrong under a subfolder like roybipro.github.io/love-web/.
+           Resolve it the way every other image on the page does. */
+        img.src = asset(src);
         return img.decode ? img.decode().catch(() => {}) : new Promise((r) => (img.onload = img.onerror = r));
       }),
   );

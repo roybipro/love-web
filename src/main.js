@@ -95,7 +95,7 @@ const cover = mountCover({
 });
 
 mountLoader({
-  images: cover.images.map((src) => src),
+  images: cover.images,
   onReady: cover.reveal,
 });
 
