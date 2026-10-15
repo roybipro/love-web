@@ -79,8 +79,102 @@
   position: relative;
   display: block;
   width: min(100%, 300px);
+}
+
+.wall__open {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
   background: none;
   text-align: left;
+  cursor: pointer;
+}
+
+/* her own heart on each print — kept on her device, sent nowhere */
+.wall__fav {
+  position: absolute;
+  z-index: 7;
+  top: 6px;
+  right: 6px;
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  background: var(--float-hi);
+  color: var(--faint);
+  font-size: 0.95rem;
+  line-height: 1;
+  cursor: pointer;
+  opacity: 0;
+  transform: scale(0.85);
+  box-shadow: var(--sh-1);
+  transition: opacity var(--t-fast) ease, transform var(--t-fast) var(--spring),
+    color var(--t-fast) ease, border-color var(--t-fast) ease;
+}
+
+/* on a touch screen there is no hover, so the hearts stay put */
+.wall__fav:focus-visible,
+.wall__item:hover .wall__fav,
+.wall__item.is-fav .wall__fav {
+  opacity: 1;
+  transform: scale(1);
+}
+
+@media (hover: none) {
+  .wall__fav {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.wall__item.is-fav .wall__fav {
+  color: var(--rose);
+  border-color: var(--rose);
+}
+
+/* only her shortlist */
+.wall--hers .wall__item:not(.is-fav) {
+  display: none;
+}
+
+.folio__filter {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.34rem 0.8rem;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: var(--float);
+  color: var(--muted);
+  font-family: inherit;
+  font-size: 0.56rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: color var(--t-fast) ease, border-color var(--t-fast) ease;
+}
+
+.folio__filter[hidden] {
+  display: none;
+}
+
+.folio__filter:hover {
+  color: var(--burgundy);
+  border-color: var(--blush);
+}
+
+.folio__filter[aria-pressed="true"] {
+  color: var(--rose);
+  border-color: var(--rose);
+}
+
+.folio__filter span:first-child {
+  font-size: 0.8rem;
+  letter-spacing: 0;
 }
 
 /* every print lands at its own angle */
