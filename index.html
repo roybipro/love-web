@@ -22,11 +22,15 @@
       rel="stylesheet"
     />
 
-    <!-- apply her saved theme before the first paint, so there is no flash -->
+    <!-- apply her saved theme and text size before the first paint, so nothing jumps -->
     <script>
       try {
         if (localStorage.getItem("our-story:theme") === "night") {
           document.documentElement.setAttribute("data-theme", "night");
+        }
+        var size = localStorage.getItem("our-story:text-size");
+        if (size === "lg" || size === "xl") {
+          document.documentElement.setAttribute("data-text", size);
         }
       } catch (e) {}
     </script>
@@ -50,11 +54,17 @@
     <div class="cursorglow" aria-hidden="true"></div>
     <div class="scrollline" aria-hidden="true"><i id="scrollline"></i></div>
 
-    <!-- THEME -->
-    <button class="theme" id="themeToggle" type="button" aria-pressed="false" aria-label="Switch between paper and night">
-      <span class="theme__glyph" id="themeGlyph" aria-hidden="true">☾</span>
-      <span id="themeLabel">Night</span>
-    </button>
+    <!-- READING CONTROLS -->
+    <div class="chrome">
+      <button class="chrome__btn textsize" id="textSize" type="button" aria-label="Change the text size">
+        <span class="textsize__glyph" aria-hidden="true">A</span>
+        <span id="textSizeLabel">Normal</span>
+      </button>
+      <button class="chrome__btn theme" id="themeToggle" type="button" aria-pressed="false" aria-label="Switch between paper and night">
+        <span class="theme__glyph" id="themeGlyph" aria-hidden="true">☾</span>
+        <span id="themeLabel">Night</span>
+      </button>
+    </div>
 
     <!-- LOADING -->
     <div class="loader" id="loader">

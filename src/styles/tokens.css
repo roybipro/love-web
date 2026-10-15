@@ -51,11 +51,16 @@
   --sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --hand: "Caveat", "Segoe Script", cursive;
 
-  --fs-hero: clamp(3.6rem, 15vw, 8.5rem);
-  --fs-h2: clamp(2.4rem, 8.5vw, 4.6rem);
-  --fs-h3: clamp(1.6rem, 5vw, 2.4rem);
-  --fs-body: clamp(0.95rem, 2.5vw, 1.03rem);
-  --fs-hand: clamp(1.25rem, 4vw, 1.7rem);
+  /*  rem scales with her chosen text size; vw does not. So the middle
+      of every clamp is multiplied by this, or the headings would stay
+      put while the words underneath them grew. --text-size.js moves it. */
+  --text-scale: 1;
+
+  --fs-hero: clamp(3.6rem, calc(15vw * var(--text-scale)), 8.5rem);
+  --fs-h2: clamp(2.4rem, calc(8.5vw * var(--text-scale)), 4.6rem);
+  --fs-h3: clamp(1.6rem, calc(5vw * var(--text-scale)), 2.4rem);
+  --fs-body: clamp(0.95rem, calc(2.5vw * var(--text-scale)), 1.03rem);
+  --fs-hand: clamp(1.25rem, calc(4vw * var(--text-scale)), 1.7rem);
 
   --pad: clamp(1.3rem, 5vw, 5rem);
   --max: 1220px;
