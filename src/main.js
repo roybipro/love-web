@@ -7,7 +7,8 @@ import "./styles/index.css";
 
 import * as content from "./content/memory.js";
 import { $, $$, asset } from "./lib/dom.js";
-import { seedDust } from "./lib/motion.js";
+import { reduceMotion, seedDust } from "./lib/motion.js";
+import { clearPendingPrint, pendingPrint } from "./lib/link.js";
 import { observeReveals, watchScroll } from "./lib/scroll.js";
 import { splitWords } from "./lib/typography.js";
 
@@ -88,10 +89,26 @@ mountTextSize();
 mountSecret(content.secret);
 mountMusic({ data: content.music, startOn: "#openBtn" });
 
+/*  If the address named one print — "look at this one" — open the book
+    to it. The cover is still there, because that is the gift; the jump
+    happens the moment she turns the page.                            */
+const linked = pendingPrint(content.photos.length);
+
+function arriveAtPrint() {
+  const item = $$(".wall__item")[linked];
+  if (!item) return;
+  item.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "center" });
+  setTimeout(() => lightbox.open(linked, item), reduceMotion ? 0 : 520);
+  clearPendingPrint();
+}
+
 const cover = mountCover({
   data: content.cover,
   herName: content.herName,
-  onOpen: observeReveals,
+  onOpen: () => {
+    observeReveals();
+    if (linked !== null) setTimeout(arriveAtPrint, 260);
+  },
 });
 
 mountLoader({

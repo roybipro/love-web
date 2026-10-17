@@ -2,6 +2,7 @@ import { $, $$, asset, heart, pad2 } from "../lib/dom.js";
 import { reduceMotion } from "../lib/motion.js";
 import { play } from "../lib/sound.js";
 import { savePostcard } from "../lib/postcard.js";
+import { copyText, memoryUrl } from "../lib/link.js";
 
 const ZOOM = "transform .62s cubic-bezier(.2,.8,.2,1), opacity .35s ease";
 
@@ -240,6 +241,19 @@ export function createLightbox(photos, names = {}) {
         if (cardLabel) cardLabel.textContent = "Keep a postcard";
       }, 3200);
     }
+  });
+
+  /* a link to this one print, so he can send her just this */
+  const linkBtn = $("#lbLink");
+  const linkLabel = $("#lbLinkLabel");
+
+  linkBtn?.addEventListener("click", async () => {
+    const ok = await copyText(memoryUrl(index));
+    if (linkLabel) linkLabel.textContent = ok ? "Copied" : memoryUrl(index);
+    play(ok ? "found" : "click");
+    setTimeout(() => {
+      if (linkLabel) linkLabel.textContent = "Copy a link to this";
+    }, ok ? 2600 : 9000);
   });
 
   $("#lbX").addEventListener("click", () => {
