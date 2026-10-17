@@ -21,5 +21,6 @@
 @import "./music.css";
 @import "./cursor.css";
 @import "./reduced-motion.css";
+@import "./calm.css";
 /* last, so it wins over the screen rules it undoes */
 @import "./print.css";

@@ -1,4 +1,5 @@
 import { $, $$, asset, esc, heart, pad2 } from "../lib/dom.js";
+import { calmOn } from "../lib/calm.js";
 import { burst, reduceMotion } from "../lib/motion.js";
 import { play } from "../lib/sound.js";
 
@@ -174,6 +175,10 @@ function addParallax(item) {
     if (queued) return;
     queued = requestAnimationFrame(() => {
       queued = 0;
+      if (calmOn()) {
+        reset();
+        return;
+      }
       const r = frame.getBoundingClientRect();
       const x = (e.clientX - r.left) / r.width - 0.5;
       const y = (e.clientY - r.top) / r.height - 0.5;

@@ -1,4 +1,5 @@
 import { reduceMotion } from "../lib/motion.js";
+import { calmOn } from "../lib/calm.js";
 import { rnd } from "../lib/dom.js";
 
 /**
@@ -95,6 +96,10 @@ export function mountMagnets() {
       if (frame) return;
       frame = requestAnimationFrame(() => {
         frame = 0;
+        if (calmOn()) {
+          el.style.transform = "";
+          return;
+        }
         const r = el.getBoundingClientRect();
         const dx = (e.clientX - (r.left + r.width / 2)) * 0.22;
         const dy = (e.clientY - (r.top + r.height / 2)) * 0.3;

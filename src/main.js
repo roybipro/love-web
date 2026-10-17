@@ -30,6 +30,7 @@ import { mountScratch } from "./components/scratch.js";
 import { mountMusic } from "./components/music.js";
 import { mountTheme } from "./components/theme.js";
 import { mountTextSize } from "./components/text-size.js";
+import { mountCalm } from "./lib/calm.js";
 import { mountSecret } from "./components/secret.js";
 import { mountCursor, mountMagnets } from "./components/cursor.js";
 
@@ -86,6 +87,7 @@ mountCursor();
 mountMagnets();
 mountTheme();
 mountTextSize();
+mountCalm({ onResume: () => seedDust($("#bgDust")) });
 mountSecret(content.secret);
 mountMusic({ data: content.music, startOn: "#openBtn" });
 

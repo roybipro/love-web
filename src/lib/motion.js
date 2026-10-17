@@ -1,4 +1,5 @@
 import { rnd } from "./dom.js";
+import { calmOn } from "./calm.js";
 
 /** Honour the OS "reduce motion" setting everywhere at once. */
 export const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -8,7 +9,7 @@ export const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)"
  * Negative delays mean the air is already full when she arrives.
  */
 export function seedDust(host, count = 26) {
-  if (!host || reduceMotion || host.childElementCount) return;
+  if (!host || reduceMotion || calmOn() || host.childElementCount) return;
 
   const frag = document.createDocumentFragment();
   for (let i = 0; i < count; i++) {
@@ -26,7 +27,7 @@ export function seedDust(host, count = 26) {
 
 /** A short radial burst of hearts from the centre of `host`. */
 export function burst(host, count = 16, scale = 1) {
-  if (reduceMotion || !host) return;
+  if (reduceMotion || calmOn() || !host) return;
 
   const wrap = document.createElement("div");
   wrap.className = "burst";
@@ -63,7 +64,7 @@ export function burst(host, count = 16, scale = 1) {
  * cover turns. Uses transform and opacity only, so it stays cheap.
  */
 export function throwPaper(originX, originY, count = 22) {
-  if (reduceMotion) return;
+  if (reduceMotion || calmOn()) return;
 
   for (let i = 0; i < count; i++) {
     const flake = document.createElement("i");

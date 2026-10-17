@@ -22,7 +22,7 @@
       rel="stylesheet"
     />
 
-    <!-- apply her saved theme and text size before the first paint, so nothing jumps -->
+    <!-- apply her saved theme, text size and calm choice before the first paint -->
     <script>
       try {
         if (localStorage.getItem("our-story:theme") === "night") {
@@ -31,6 +31,9 @@
         var size = localStorage.getItem("our-story:text-size");
         if (size === "lg" || size === "xl") {
           document.documentElement.setAttribute("data-text", size);
+        }
+        if (localStorage.getItem("our-story:calm") === "on") {
+          document.documentElement.setAttribute("data-calm", "on");
         }
       } catch (e) {}
     </script>
@@ -56,6 +59,10 @@
 
     <!-- READING CONTROLS -->
     <div class="chrome">
+      <button class="chrome__btn" id="calmToggle" type="button" aria-pressed="false" aria-label="Still or restore the drifting motion">
+        <span class="calm__glyph" id="calmGlyph" aria-hidden="true">❋</span>
+        <span id="calmLabel">Calm</span>
+      </button>
       <button class="chrome__btn textsize" id="textSize" type="button" aria-label="Change the text size">
         <span class="textsize__glyph" aria-hidden="true">A</span>
         <span id="textSizeLabel">Normal</span>

@@ -1,0 +1,85 @@
+/* =============================================================
+   CALM — her own switch for stillness.
+
+   The system's prefers-reduced-motion is the right question, but it
+   is all-or-nothing and it lives in an obscure place. This is the
+   same relief, one tap away, for a night when she just wants the
+   page to hold still. Nothing here hides content: the book reads
+   exactly the same, it simply stops fidgeting.
+   ============================================================= */
+
+html[data-calm="on"] {
+  /* the drifting motes, the hearts behind the cursor, the custom cursor */
+  .bg__dust,
+  .ctrail,
+  .cursor-dot,
+  .cursor-ring {
+    display: none !important;
+  }
+
+  /* the paper thrown when the book opens, and the heart bursts on a find */
+  .flake,
+  .burst {
+    display: none !important;
+  }
+
+  /* the grain and vignette slowly breathe; hold them */
+  .bg__grain,
+  .bg__tooth,
+  .grain {
+    animation: none !important;
+  }
+
+  /* prints lean toward the pointer — stop, and let go of any lean */
+  .polaroid__frame {
+    transform: none !important;
+  }
+
+  /* the record on the music button beats while the song plays */
+  .player__disc,
+  .player.is-playing .player__disc {
+    animation: none !important;
+    transform: none !important;
+  }
+
+  /* the equaliser bars */
+  .player__viz i,
+  .player.is-playing .player__viz i {
+    animation: none !important;
+    transform: none !important;
+  }
+
+  /* the cover prints are pinned with a slow float */
+  .cover__deco > *,
+  .cover__snap {
+    animation: none !important;
+    transform: none !important;
+  }
+
+  /* a beating heart in the copy is content, so keep it — just slower */
+  .beat {
+    animation-duration: 3.2s !important;
+  }
+}
+
+/* the switch itself shows what it will do, not what it did */
+.calm__glyph {
+  font-size: 0.9rem;
+  line-height: 1;
+  color: var(--gold);
+  transition: transform var(--t-mid) var(--spring);
+}
+
+.chrome__btn:hover .calm__glyph {
+  transform: rotate(72deg);
+}
+
+html[data-calm="on"] #calmToggle {
+  color: var(--rose);
+  border-color: var(--rose);
+}
+
+html[data-calm="on"] #calmToggle .calm__glyph {
+  color: var(--rose);
+  transform: scale(0.82);
+}
