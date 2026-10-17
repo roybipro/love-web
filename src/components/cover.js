@@ -76,6 +76,19 @@ export function mountCover({ data, herName, onOpen }) {
     setTimeout(onOpen, reduceMotion ? 0 : 700);
   });
 
+  /*  Shut it, so he can hand it to her again, or so she can leave the
+      book closed rather than just leaving the page. The lid swings back
+      on its own transition; everything screen-side goes quiet.       */
+  $("#closeBook")?.addEventListener("click", () => {
+    play("open");
+    window.scrollTo({ top: 0, behavior: "auto" });
+    cover.classList.remove("is-open");
+    document.body.classList.add("is-locked");
+    document.body.classList.remove("opened");
+    $("#site").setAttribute("aria-hidden", "true");
+    $("#closeBook")?.blur();
+  });
+
   return {
     reveal() {
       if (title) setTimeout(() => title.classList.add("in"), reduceMotion ? 0 : 200);

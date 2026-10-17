@@ -11,6 +11,9 @@
   perspective: 1800px;
   perspective-origin: 0% 50%;
   background: var(--paper);
+  /* declared here too, so folding the book back up fades the cover in
+     rather than snapping over the page she was reading */
+  transition: opacity 0.7s ease, visibility 0s;
 }
 
 /* the lid of the book, which is also the whole layout */
